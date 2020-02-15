@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenuroleTable extends Migration
+class CreateMerkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMenuroleTable extends Migration
      */
     public function up()
     {
-        Schema::create('menu_role', function (Blueprint $table) {
+        Schema::create('merk', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('role_name');
-            $table->integer('menus_id')->unsigned();
+            $table->string('kodeMerk', 25)->unique();
+            $table->string('nama', 50);
         });
     }
 
@@ -27,6 +27,6 @@ class CreateMenuroleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_role');
+        Schema::dropIfExists('merk');
     }
 }
