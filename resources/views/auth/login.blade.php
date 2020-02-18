@@ -9,24 +9,24 @@
             <div class="card p-4">
               <div class="card-body">
                 <h1>Login</h1>
-                <p class="text-muted">Sign In to your account</p>
-                <form method="POST" action="{{ route('login') }}">
+                <p class="text-muted">Masuk ke akun anda.</p>
+                <form method="POST" action="{{ route('signin') }}">
                     @csrf
                     <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                         <svg class="c-icon">
-                          <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-user"></use>
+                          <use xlink:href="{{ asset('assets/icons/coreui/free-symbol-defs.svg#cui-user') }}"></use>
                         </svg>
                       </span>
                     </div>
-                    <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" required autofocus>
+                    <input class="form-control" type="text" placeholder="{{ __('Username') }}" name="email" value="{{ old('email') }}" required autofocus>
                     </div>
                     <div class="input-group mb-4">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
                         <svg class="c-icon">
-                          <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-lock-locked"></use>
+                          <use xlink:href="{{ asset('assets/icons/coreui/free-symbol-defs.svg#cui-lock-locked') }}"></use>
                         </svg>
                       </span>
                     </div>
@@ -37,17 +37,14 @@
                         <button class="btn btn-primary px-4" type="submit">{{ __('Login') }}</button>
                     </div>
                     </form>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('password.request') }}" class="btn btn-link px-0">{{ __('Forgot Your Password?') }}</a>
-                    </div>
                     </div>
               </div>
             </div>
             <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
               <div class="card-body text-center">
                 <div>
-                  <h2>Sign up</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <h2>Purchase Order</h2>
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore cumque minus ducimus totam. Eos officiis sequi, facere iusto, eveniet ut totam praesentium illum aliquid architecto labore molestiae, reprehenderit quo dolores.</p>
                   @if (Route::has('password.request'))
                     <a href="{{ route('register') }}" class="btn btn-primary active mt-3">{{ __('Register') }}</a>
                   @endif

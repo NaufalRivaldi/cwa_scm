@@ -16,7 +16,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>CoreUI Free Bootstrap Admin Template</title>
+    <title>Purchase Order</title>
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicon/apple-icon-60x60.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicon/apple-icon-72x72.png') }}">
@@ -34,6 +34,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('') }}assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <meta name="csrf_token" content="{{ csrf_token() }}">
     <!-- Icons-->
     <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
     <link href="{{ asset('css/flag.min.css') }}" rel="stylesheet"> <!-- icons -->
@@ -72,9 +73,10 @@
 
       <div class="c-body">
 
-        <main class="c-main">
+        <main class="c-main" id="app">
 
-          @yield('content') 
+          <!-- @yield('content')  -->
+          <router-view></router-view>
 
         </main>
       </div>

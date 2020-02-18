@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function(){
-   return view('dashboard.base'); 
+   return view('auth.login')->name('login'); 
+});
+
+Route::group(['prefix' => 'auth'], function(){
+   Route::post('login', 'AuthController@login')->name('signin');
+   Route::post('logout', 'AuthController@login')->name('logout');
+});
+
+Route::get('/dashboard', function(){
+   return view('dashboard.homepage');
 });

@@ -16,7 +16,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>CoreUI Free Bootstrap Admin Template</title>
+    <title>Purchase Order</title>
     <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
@@ -34,6 +34,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Icons-->
     <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
     <link href="{{ asset('css/flag-icon.min.css') }}" rel="stylesheet"> <!-- icons -->
@@ -60,11 +61,14 @@
   </head>
   <body class="c-app flex-row align-items-center">
 
-    @yield('content') 
+    <div id="app">
+      @yield('content')
+    </div> 
 
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/pace.min.js') }}"></script> 
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     @yield('javascript')
 
