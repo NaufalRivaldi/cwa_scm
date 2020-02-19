@@ -1,19 +1,19 @@
           
      
-      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ asset('/assets/brand/coreui-base-white.svg') }}" width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="{{ asset('/assets/brand/coreui-signet-white.svg') }}" width="118" height="46" alt="CoreUI Logo"></div>
+      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ asset('/assets/brand/logo.png') }}" width="70%" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="{{ asset('/assets/brand/logo-min.png') }}" width="80%" alt="CoreUI Logo"></div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-          <router-link to="/dashboard" class="c-sidebar-nav-link">
+          <a href="{{ route('dashboard') }}" class="c-sidebar-nav-link">
             <i class="c-sidebar-nav-icon cil-home"></i>
             Dashboard
-          </router-link>
+          </a>
         </li>
         <li class="c-sidebar-nav-title">MASTER</li>
         <li class="c-sidebar-nav-item">
-          <router-link to="/user" class="c-sidebar-nav-link">
+          <a href="{{ route('user.index') }}" class="c-sidebar-nav-link">
             <i class="cil-user c-sidebar-nav-icon"></i>
             User
-          </router-link>
+          </a>
         </li>
         <li class="c-sidebar-nav-item">
           <a href="" class="c-sidebar-nav-link">

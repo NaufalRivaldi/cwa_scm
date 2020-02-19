@@ -41,6 +41,7 @@
     <!-- Main styles for this application-->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/pace.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 
     @yield('css')
 
@@ -64,7 +65,7 @@
 
 
 
-  <body class="c-app">
+  <body class="c-app" id="app">
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
 
       @include('dashboard.shared.nav-admin')
@@ -73,21 +74,27 @@
 
       <div class="c-body">
 
-        <main class="c-main" id="app">
-
-          <!-- @yield('content')  -->
-          <router-view></router-view>
-
+        <main class="c-main">
+          @yield('content') 
         </main>
+        
       </div>
       @include('dashboard.shared.footer')
     </div>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/pace.min.js') }}"></script> 
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+    <script>
+      $(document).ready( function () {
+        $('.dataTable').DataTable();
+      });
+    </script>
+
 
     @yield('javascript')
 

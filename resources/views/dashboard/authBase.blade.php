@@ -59,9 +59,9 @@
     <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
 
   </head>
-  <body class="c-app flex-row align-items-center">
+  <body class="c-app">
 
-    <div id="app">
+    <div id="app" class="display">
       @yield('content')
     </div> 
 

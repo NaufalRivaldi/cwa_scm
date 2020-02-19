@@ -13,13 +13,15 @@ class AuthController extends Controller
 {
     public function login(AuthRequest $req){
         if(Auth::attempt(['username' => $req->username, 'password' => $req->password], true)){
-            return response()->json(Auth::user(), 200);
+            return redirect()->route('dashboard')->with('success', 'Selamat datang '.Auth::user()->nama.', selamat bekerja.');
         }else{
-            return response()->json(['error' => 'Anda tidak bisa login.'], 401);
+            return redirect()->route('login')->with('danger', 'User dan password tidak valid!');
         }
     }
 
     public function logout(){
         Auth::logout();
+
+        return redirect()->route('login')->with('success', 'Kerja lagi we!');
     }
 }

@@ -10,6 +10,7 @@
               <div class="card-body">
                 <h1>Login</h1>
                 <p class="text-muted">Masuk ke akun anda.</p>
+                @include('layouts.alert')
                 <form method="POST" action="{{ route('signin') }}">
                     @csrf
                     <div class="input-group mb-3">
@@ -20,7 +21,7 @@
                         </svg>
                       </span>
                     </div>
-                    <input class="form-control" type="text" placeholder="{{ __('Username') }}" name="email" value="{{ old('email') }}" required autofocus>
+                    <input class="form-control" type="text" placeholder="{{ __('Username') }}" name="username" value="{{ old('email') }}" required autofocus>
                     </div>
                     <div class="input-group mb-4">
                     <div class="input-group-prepend">

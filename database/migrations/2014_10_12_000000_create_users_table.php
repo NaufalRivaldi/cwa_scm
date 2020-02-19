@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
             $table->binary('ttd');
             $table->enum('level', [1,2]);
+            $table->string('remember_token');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }
