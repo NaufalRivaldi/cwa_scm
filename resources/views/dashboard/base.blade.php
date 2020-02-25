@@ -75,6 +75,7 @@
       <div class="c-body">
 
         <main class="c-main">
+          @include('dashboard.shared.alert')
           @yield('content') 
         </main>
         

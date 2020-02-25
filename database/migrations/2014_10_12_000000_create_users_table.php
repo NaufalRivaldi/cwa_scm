@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->binary('ttd');
             $table->enum('level', [1,2]);
             $table->string('remember_token');
+            $table->timestamps();
         });
     }
 

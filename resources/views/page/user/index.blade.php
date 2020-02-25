@@ -37,9 +37,9 @@
                     <td>{{ $row->username }}</td>
                     <td>{{ level($row->level) }}</td>
                     <td>
-                      <a href="" class="btn btn-success cil-cog"></a>
+                      <a href="" class="btn btn-success btn-sm cil-cog"></a>
                       @if(Auth::user()->id != $row->id)
-                      <button class="btn btn-danger cil-trash"></button>
+                      <button class="btn btn-danger btn-sm cil-trash"></button>
                       @endif
                     </td>
                   </tr>
