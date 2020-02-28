@@ -10,7 +10,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use Notifiable;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +19,7 @@ class User extends Authenticatable
     protected $table = 'user';
 
     protected $fillable = [
-        'nama', 'username', 'password', 'ttd', 'level', 'remember_token'
+        'nama', 'username', 'password', 'ttd', 'level', 'remember_token', 'status'
     ];
 
     /**

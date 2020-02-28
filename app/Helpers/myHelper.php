@@ -19,4 +19,22 @@ if (! function_exists('on_php_id')) {
     }
     return $level;
   }
+
+  function status($val){
+    $status = '';
+    switch ($val) {
+      case '1':
+        $status = '<span class="badge badge-primary">Aktif</span>';
+        break;
+
+      case '2':
+        $status = '<span class="badge badge-danger">Tidak Aktif</span>';
+        break;
+      
+      default:
+        # code...
+        break;
+    }
+    return $level;
+  }
 }

@@ -26,16 +26,21 @@ class UserRequest extends FormRequest
         return [
             'required' => 'Kolom ini tidak boleh kosong!',
             'min' => 'Minimal 6 karakter',
-            'mimes' => 'Masukkan tipe file dengan benar!'
+            'mimes' => 'Masukkan tipe file dengan benar!',
+            'unique' => 'Username sudah terpakai, coba yang lain.'
         ];
     }
     
     public function rules()
     {
+        $id = '';
+        if(!empty($this->input('id'))){
+            $id = ','.$this->input('id');
+        }
         return [
             'nama' => 'required|min:6',
-            'username' => 'required|min:6',
-            'ttd' => 'required|mimes:jpeg,jpg,png|max:2048',
+            'username' => 'required|min:6|unique:user,username'.$id,
+            'ttd' => 'mimes:jpeg,jpg,png|max:2048',
             'level' => 'required|numeric'
         ];
     }

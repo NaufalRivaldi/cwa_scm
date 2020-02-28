@@ -1,6 +1,6 @@
           
      
-      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ asset('/assets/brand/logo.png') }}" width="70%" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="{{ asset('/assets/brand/logo-min.png') }}" width="80%" alt="CoreUI Logo"></div>
+      <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ asset('img/logo/logo.png') }}" width="70%" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized" src="{{ asset('img/logo/logo-min.png') }}" width="80%" alt="CoreUI Logo"></div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
           <a href="{{ route('dashboard') }}" class="c-sidebar-nav-link">

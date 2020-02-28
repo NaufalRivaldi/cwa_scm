@@ -25,6 +25,8 @@
                     <th>No</th>
                     <th>Nama</th>
                     <th>Username</th>
+                    <th>Tanda Tangan</th>
+                    <th>Status</th>
                     <th>Level</th>
                     <th>Aksi</th>
                   </tr>
@@ -35,11 +37,19 @@
                     <td>{{ $no++ }}</td>
                     <td>{{ $row->nama }}</td>
                     <td>{{ $row->username }}</td>
+                    <td><img src="{{ asset('upload/ttd/'.$row->ttd) }}" alt="ttd-user" width="50"></td>
                     <td>{{ level($row->level) }}</td>
+                    <td></td>
                     <td>
-                      <a href="" class="btn btn-success btn-sm cil-cog"></a>
+                      @if($row->status == 1)
+                      <a href="{{ route('user.nonactive', ['id' => $row->id]) }}" class="btn btn-danger btn-sm cil-x-circle"></a>
+                      @else
+                      <a href="{{ route('user.active', ['id' => $row->id]) }}" class="btn btn-success btn-sm cil-check"></a>
+                      @endif
+
+                      <a href="{{ route('user.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
                       @if(Auth::user()->id != $row->id)
-                      <button class="btn btn-danger btn-sm cil-trash"></button>
+                      <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
                       @endif
                     </td>
                   </tr>
@@ -59,7 +69,40 @@
 
 @section('javascript')
 
-    <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/coreui-chartjs.bundle.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+  <script src="{{ asset('js/Chart.min.js') }}"></script>
+  <script src="{{ asset('js/coreui-chartjs.bundle.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}" defer></script>
+
+  <script>
+    $(document).on('click', '.btn-delete', function(e){
+      e.preventDefault();
+
+      var id = $(this).data('id');
+      console.log(id);
+      swal({
+        title: "Hapus Data User?",
+        text: "Data akan terhapus secara permanen.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            type: 'POST',
+            data: {
+              'id': id,
+              '_token': '{{ csrf_token() }}'
+            },
+            url: "{{ route('user.destroy') }}",
+            success: function(data){
+              location.reload();
+              // console.log(data);
+            }
+          });
+        }
+      });
+    });
+  </script>
+  
 @endsection

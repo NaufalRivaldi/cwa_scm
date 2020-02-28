@@ -4,7 +4,7 @@
     <button class="c-header-toggler c-class-toggler ml-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true"><span class="c-header-toggler-icon"></span></button> 
     <ul class="c-header-nav ml-auto mr-4">
       <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <div class="c-avatar mr-3"><img class="c-avatar-img" src="{{ asset('/assets/icons/person.svg') }}" alt="{{ Auth::user()->username }}"></div>
+        <div class="c-avatar mr-3"><img class="c-avatar-img" src="{{ asset('img/svg/person.svg') }}" alt="{{ Auth::user()->username }}"></div>
         Halo, {{ Auth::user()->nama }}
         <div class="dropdown-menu dropdown-menu-right pt-0">
           <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
