@@ -22,13 +22,13 @@
           </a>
         </li>
         <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+          <a href="{{ route('cabang.index') }}" class="c-sidebar-nav-link">
           <i class="cil-factory c-sidebar-nav-icon"></i>
           Cabang
           </a>
         </li>
         <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+          <a href="{{ route('wilayah.index') }}" class="c-sidebar-nav-link">
           <i class="cil-send c-sidebar-nav-icon"></i>
           Wilayah
           </a>

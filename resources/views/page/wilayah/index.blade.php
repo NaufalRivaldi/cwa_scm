@@ -11,7 +11,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('user.form') }}" class="btn btn-primary">
+                <a href="{{ route('wilayah.form') }}" class="btn btn-primary">
                   <i class="cil-plus"></i> Tambah
                 </a>
               </div>
@@ -24,35 +24,19 @@
                   <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Username</th>
-                    <th>Tanda Tangan</th>
-                    <th>Level</th>
-                    <th>Status</th>
+                    <th>Keterangan</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($user as $row)
+                  @foreach($wilayah as $row)
                   <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $row->nama }}</td>
-                    <td>{{ $row->username }}</td>
-                    <td><img src="{{ asset('upload/ttd/'.$row->ttd) }}" alt="ttd-user" width="50"></td>
-                    <td>{{ level($row->level) }}</td>
-                    <td>{!! status($row->status) !!}</td>
+                    <td>{{ $row->keterangan }}</td>
                     <td>
-                      @if(Auth::user()->id != $row->id)
-                        @if($row->status == 1)
-                        <a href="{{ route('user.nonactive', ['id' => $row->id]) }}" class="btn btn-danger btn-sm cil-x-circle"></a>
-                        @else
-                        <a href="{{ route('user.active', ['id' => $row->id]) }}" class="btn btn-success btn-sm cil-check"></a>
-                        @endif
-                      @endif
-
-                      <a href="{{ route('user.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
-                      @if(Auth::user()->id != $row->id)
+                      <a href="{{ route('wilayah.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
                       <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
-                      @endif
                     </td>
                   </tr>
                   @endforeach
@@ -78,7 +62,7 @@
       var id = $(this).data('id');
       console.log(id);
       swal({
-        title: "Hapus Data User?",
+        title: "Hapus Data Wilayah?",
         text: "Data akan terhapus secara permanen.",
         icon: "warning",
         buttons: true,
@@ -92,7 +76,7 @@
               'id': id,
               '_token': '{{ csrf_token() }}'
             },
-            url: "{{ route('user.destroy') }}",
+            url: "{{ route('wilayah.destroy') }}",
             success: function(data){
               location.reload();
               // console.log(data);

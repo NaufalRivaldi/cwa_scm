@@ -21,8 +21,8 @@ class CreatePerusahaanTable extends Migration
             $table->string('fax', 7);
             $table->string('email', 100);
             $table->string('pic', 50);
-            $table->binary('logo');
-            $table->binary('cap');
+            $table->string('logo', 50);
+            $table->string('cap', 50);
         });
     }
 

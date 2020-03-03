@@ -24,7 +24,7 @@ if (! function_exists('on_php_id')) {
     $status = '';
     switch ($val) {
       case '1':
-        $status = '<span class="badge badge-primary">Aktif</span>';
+        $status = '<span class="badge badge-info">Aktif</span>';
         break;
 
       case '2':
@@ -35,6 +35,6 @@ if (! function_exists('on_php_id')) {
         # code...
         break;
     }
-    return $level;
+    return $status;
   }
 }

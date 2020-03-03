@@ -45,4 +45,24 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/{id}/nonactive', 'UserController@nonactive')->name('user.nonactive');
       Route::get('/{id}/active', 'UserController@active')->name('user.active');
    });
+
+   // cabang
+   Route::group(['prefix' => 'cabang/', 'middkeware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'CabangController@index')->name('cabang.index');
+      Route::get('/form', 'CabangController@form')->name('cabang.form');
+      Route::get('/{id}/edit', 'CabangController@form')->name('cabang.edit');
+      Route::post('/store', 'CabangController@store')->name('cabang.store');
+      Route::put('/update', 'CabangController@update')->name('cabang.update');
+      Route::post('/destroy', 'CabangController@destroy')->name('cabang.destroy');
+   });
+
+   // wilayah
+   Route::group(['prefix' => 'wilayah/', 'middkeware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'WilayahController@index')->name('wilayah.index');
+      Route::get('/form', 'WilayahController@form')->name('wilayah.form');
+      Route::get('/{id}/edit', 'WilayahController@form')->name('wilayah.edit');
+      Route::post('/store', 'WilayahController@store')->name('wilayah.store');
+      Route::put('/update', 'WilayahController@update')->name('wilayah.update');
+      Route::post('/destroy', 'WilayahController@destroy')->name('wilayah.destroy');
+   });
 });
