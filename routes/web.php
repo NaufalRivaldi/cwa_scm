@@ -65,4 +65,14 @@ Route::group(['middleware' => 'auth'], function(){
       Route::put('/update', 'WilayahController@update')->name('wilayah.update');
       Route::post('/destroy', 'WilayahController@destroy')->name('wilayah.destroy');
    });
+
+   // perusahaan
+   Route::group(['prefix' => 'perusahaan/', 'middleware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'PerusahaanController@index')->name('perusahaan.index');
+      Route::get('/form', 'PerusahaanController@form')->name('perusahaan.form');
+      Route::get('/{id}/edit', 'PerusahaanController@form')->name('perusahaan.edit');
+      Route::post('/store', 'PerusahaanCOntroller@store')->name('perusahaan.store');
+      Route::put('/update', 'PerusahaanCOntroller@update')->name('perusahaan.update');
+      Route::post('/destroy', 'PerusahaanController@destroy')->name('perusahaan.destroy');
+   });
 });

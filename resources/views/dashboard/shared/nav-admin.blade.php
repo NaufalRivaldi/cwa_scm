@@ -48,7 +48,7 @@
         </li>
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+          <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">
           <i class="cil-bank c-sidebar-nav-icon"></i>
           Perusahaan
           </a>
