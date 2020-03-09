@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PerusahaanRequest extends FormRequest
+class SupplierRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,26 +27,29 @@ class PerusahaanRequest extends FormRequest
             'min' => 'Minimal 6 karakter',
             'mimes' => 'Masukkan tipe file dengan benar!',
             'numeric' => 'Format harus numeric',
-            'email' => 'Format harus berupa email : @mail.com'
+            'email' => 'Format harus berupa email : @mail.com',
+            'unique' => 'Kode sudah dipakai pada supplier lain.'
         ];
     }
     
     public function rules()
     {
-        $val = '';
-        if(empty($this->input('id'))){
-            $val = '|required';
+        $id = '';
+        if(!empty($this->input('id'))){
+            $id = ','.$this->input('id');
         }
 
         return [
-            'nama' => 'required|min:6',
+            'kode' => 'required|unique:supplier,kode'.$id,
+            'nama' => 'required',
+            'tax' => 'required',
             'alamat' => 'required',
-            'telp' => 'required|numeric|min:6',
-            'fax' => 'required|numeric',
+            'wilayahId' => 'required',
+            'telp' => 'required|numeric',
+            'fax' => 'required',
             'email' => 'required|email',
-            'pic' => 'required',
-            'logo' => 'mimes:jpeg,jpg,png|max:2048'.$val,
-            'cap' => 'mimes:jpeg,jpg,png|max:2048'.$val
+            'kredit' => 'required',
+            'pic' => 'required'
         ];
     }
 }

@@ -19,6 +19,10 @@ class Wilayah extends Model
     }
 
     public function diskon(){
-        return $this->hasMany('App\diskon', 'wilayahId');
+        return $this->hasMany('App\Diskon', 'wilayahId');
+    }
+
+    public function harga(){
+        return $this->hasMany('App\Harga', 'wilayahId');
     }
 }

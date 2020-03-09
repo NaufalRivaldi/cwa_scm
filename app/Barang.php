@@ -29,4 +29,8 @@ class Barang extends Model
     public function merk(){
         return $this->belongsTo('App\Merk', 'merkId');
     }
+
+    public function harga(){
+        return $this->hasMany('App\Harga', 'barangId');
+    }
 }

@@ -16,7 +16,7 @@
           </a>
         </li>
         <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+          <a href="{{ route('supplier.index') }}" class="c-sidebar-nav-link">
           <i class="cil-truck c-sidebar-nav-icon"></i>
           Supplier
           </a>
@@ -33,11 +33,23 @@
           Wilayah
           </a>
         </li>
-        <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+        <li class="c-sidebar-nav-dropdown">
+          <a href="" class="c-sidebar-nav-dropdown-toggle">
           <i class="cil-barcode c-sidebar-nav-icon"></i>
           Barang
           </a>
+          <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+              <a href="{{ route('merk.index') }}" class="c-sidebar-nav-link">
+                <i class="cil-circle c-sidebar-nav-icon"></i>
+                Merk
+              </a>
+              <a href="" class="c-sidebar-nav-link">
+                <i class="cil-circle c-sidebar-nav-icon"></i>
+                List Barang
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="c-sidebar-nav-title">PEMBELIAN</li>
         <li class="c-sidebar-nav-item">

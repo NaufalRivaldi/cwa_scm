@@ -37,4 +37,24 @@ if (! function_exists('on_php_id')) {
     }
     return $status;
   }
+
+  function boolean($val){
+    $text = '';
+    switch ($val) {
+      case '1':
+        $text = '<span class="badge badge-success">True</span>';
+        break;
+
+      case '0':
+        $text = '<span class="badge badge-danger">false</span>';
+        break;
+      
+      default:
+        # code...
+        break;
+    }
+
+    return $text;
+  }
+
 }

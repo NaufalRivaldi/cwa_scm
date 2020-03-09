@@ -66,13 +66,35 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/destroy', 'WilayahController@destroy')->name('wilayah.destroy');
    });
 
+   // supplier
+   Route::group(['prefix' => 'supplier/', 'middkeware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'SupplierController@index')->name('supplier.index');
+      Route::get('/{id}/view', 'SupplierController@view')->name('supplier.view');
+      Route::get('/form', 'SupplierController@form')->name('supplier.form');
+      Route::get('/cari', 'SupplierController@loadData')->name('wilayah.cari');
+      Route::get('/{id}/edit', 'SupplierController@form')->name('supplier.edit');
+      Route::post('/store', 'SupplierController@store')->name('supplier.store');
+      Route::put('/update', 'SupplierController@update')->name('supplier.update');
+      Route::post('/destroy', 'SupplierController@destroy')->name('supplier.destroy');
+   });
+
+   // Merk
+   Route::group(['prefix' => 'merk/', 'middkeware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'MerkController@index')->name('merk.index');
+      Route::get('/form', 'MerkController@form')->name('merk.form');
+      Route::get('/{id}/edit', 'MerkController@form')->name('merk.edit');
+      Route::post('/store', 'MerkController@store')->name('merk.store');
+      Route::put('/update', 'MerkController@update')->name('merk.update');
+      Route::post('/destroy', 'MerkController@destroy')->name('merk.destroy');
+   });
+
    // perusahaan
    Route::group(['prefix' => 'perusahaan/', 'middleware' => 'AuthLevel:2'], function(){
       Route::get('/', 'PerusahaanController@index')->name('perusahaan.index');
       Route::get('/form', 'PerusahaanController@form')->name('perusahaan.form');
       Route::get('/{id}/edit', 'PerusahaanController@form')->name('perusahaan.edit');
-      Route::post('/store', 'PerusahaanCOntroller@store')->name('perusahaan.store');
-      Route::put('/update', 'PerusahaanCOntroller@update')->name('perusahaan.update');
+      Route::post('/store', 'PerusahaanController@store')->name('perusahaan.store');
+      Route::put('/update', 'PerusahaanController@update')->name('perusahaan.update');
       Route::post('/destroy', 'PerusahaanController@destroy')->name('perusahaan.destroy');
    });
 });

@@ -46,7 +46,7 @@ class WilayahController extends Controller
     public function update(WilayahRequest $request){
         $wilayah = Wilayah::find($request->id);
         $wilayah->nama = $request->nama;
-        $wilayah->keterangan = $request->alamat;
+        $wilayah->keterangan = $request->keterangan;
         $wilayah->save();
 
         return redirect()->route('wilayah.index')->with('success', 'Data berhasil diupdate.');

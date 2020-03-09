@@ -8,7 +8,7 @@ class Supplier extends Model
 {
     protected $table = 'supplier';
     protected $fillable = [
-        'kodeSupplier', 'nama', 'tax', 'alamat', 'telp', 'fax', 'email', 'kredit', 'pic', 'wilayahId'
+        'kode', 'nama', 'tax', 'alamat', 'telp', 'fax', 'email', 'kredit', 'pic', 'wilayahId'
     ];
 
     public $timestamps = false;
