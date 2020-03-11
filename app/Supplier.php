@@ -22,6 +22,10 @@ class Supplier extends Model
         return $this->hasMany('App\Barang', 'supplierId');
     }
 
+    public function supply(){
+        return $this->hasMany('App\Supply', 'supplierId');
+    }
+
     public function wilayah(){
         return $this->belongsTo('App\Wilayah', 'wilayahId');
     }

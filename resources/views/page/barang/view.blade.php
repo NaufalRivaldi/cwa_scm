@@ -11,7 +11,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('supplier.index') }}" class="btn btn-success">
+                <a href="{{ route('barang.index') }}" class="btn btn-success">
                   <i class="cil-arrow-circle-left"></i> Kembali
                 </a>
               </div>
@@ -22,43 +22,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
-
-        <div class="card">
-          <div class="card-header">
-            <h3>Data Supplier</h3>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Kode Supplier</h6>
-                <p>{{ $supplier->kode }}</p>
-                <h6>Nama</h6>
-                <p>{{ $supplier->nama }}</p>
-                <h6>Alamat</h6>
-                <p>{{ $supplier->alamat }}</p>
-                <h6>Wilayah</h6>
-                <p>{{ $supplier->wilayah->nama }}</p>
-                <h6>Telepon</h6>
-                <p>{{ $supplier->telp }}</p>
-                <h6>Fax</h6>
-                <p>{{ $supplier->fax }}</p>
-                <h6>Email</h6>
-                <p>{{ $supplier->email }}</p>
-                <h6>Tax</h6>
-                <p>{!! boolean($supplier->tax) !!}</p>
-                <h6>Kredit</h6>
-                <p>{!! boolean($supplier->kredit) !!}</p>
-                <h6>PIC</h6>
-                <p>{{ $supplier->pic }}</p>
-              </div>  
-            </div>  
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-md-6">
+      <div class="col-md-5">
 
         <div class="card">
           <div class="card-header">
@@ -67,24 +31,52 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
+                <h6>Merk</h6>
+                <p>{{ $barang->merk->kodeMerk.' - '.$barang->merk->nama }}</p>
+                <h6>Kode</h6>
+                <p>{{ $barang->kodeBarang }}</p>
+                <h6>Nama</h6>
+                <p>{{ $barang->nama }}</p>
+                <h6>Base</h6>
+                <p>{!! boolean($barang->base) !!}</p>
+                <h6>Berat (Kg)</h6>
+                <p>{{ $barang->berat }}</p>
+              </div>  
+            </div>  
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-7">
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Daftar Harga</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-striped dataTable">
                     <thead>
                       <tr>
-                        <th>Kode</th>
-                        <th>Merk</th>
-                        <th>Nama</th>
+                        <th>Supplier</th>
+                        <th>Wilayah</th>
+                        <th>Harga(Rp)</th>
+                        <th>Diskon(%)</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($barang as $row)
+                      @foreach($barang->supply as $row)
                       <tr>
-                        <td>{{ $row->barang->kodeBarang }}</td>
-                        <td>{{ $row->barang->merk->nama }}</td>
-                        <td>{{ $row->barang->nama }}</td>
+                        <td>{{ $row->supplier->nama }}</td>
+                        <td>{{ $row->supplier->wilayah->nama }}</td>
+                        <td>{{ $row->harga }}</td>
+                        <td>{{ $row->diskon }}</td>
                         <td>
-                          <a href ="" class="btn btn-info btn-sm cil-magnifying-glass"></a>
+                          <a href ="" class="btn btn-warning btn-sm cil-cog"></a>
                         </td>
                       </tr>
                       @endforeach
@@ -96,6 +88,16 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            Histori PO
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -118,7 +120,7 @@
       var id = $(this).data('id');
       console.log(id);
       swal({
-        title: "Hapus Data Supplier?",
+        title: "Hapus Data barang?",
         text: "Data akan terhapus secara permanen.",
         icon: "warning",
         buttons: true,
@@ -132,7 +134,7 @@
               'id': id,
               '_token': '{{ csrf_token() }}'
             },
-            url: "{{ route('supplier.destroy') }}",
+            url: "{{ route('barang.destroy') }}",
             success: function(data){
               location.reload();
               // console.log(data);

@@ -103,12 +103,14 @@
                   <div class="form-group">
                     <label for="logo">Logo</label>
                     <br>
-                    <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo-perusahaan" width="100px" class="mb-2">
+                    @if(!empty($perusahaan->logo))
+                      <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo-perusahaan" width="100px" class="mb-2">
+                    @endif
                     <input type="file" class="form-control" id="logo" name="logo">
                     <small class="mini-text text-muted">Logo perusahaan terkait.</small>
                     @if(!empty($perusahaan->logo))
-                    <small class="mini-text text-danger">Jika tidak merubah gambar tidak perlu upload gambar baru.</small>
-                    <input type="hidden" name="logoOld" value="{{ $perusahaan->logo }}">
+                      <small class="mini-text text-danger">Jika tidak merubah gambar tidak perlu upload gambar baru.</small>
+                      <input type="hidden" name="logoOld" value="{{ $perusahaan->logo }}">
                     @endif
 
                     <!-- error -->
@@ -122,12 +124,14 @@
                   <div class="form-group">
                     <label for="cap">Cap</label>
                     <br>
-                    <img src="{{ asset('upload/cap/'.$perusahaan->cap) }}" alt="logo-perusahaan" width="100px" class="mb-2">
+                    @if(!empty($perusahaan->logo))
+                      <img src="{{ asset('upload/cap/'.$perusahaan->cap) }}" alt="logo-perusahaan" width="100px" class="mb-2">
+                    @endif
                     <input type="file" class="form-control" id="cap" name="cap">
                     <small class="mini-text text-muted">Cap perusahaan terkait.</small>
                     @if(!empty($perusahaan->cap))
-                    <small class="mini-text text-danger">Jika tidak merubah gambar tidak perlu upload gambar baru.</small>
-                    <input type="hidden" name="capOld" value="{{ $perusahaan->cap }}">
+                      <small class="mini-text text-danger">Jika tidak merubah gambar tidak perlu upload gambar baru.</small>
+                      <input type="hidden" name="capOld" value="{{ $perusahaan->cap }}">
                     @endif
 
                     <!-- error -->

@@ -8,6 +8,7 @@ use App\Http\Requests\SupplierRequest;
 use App\Supplier;
 use App\Wilayah;
 use App\Barang;
+use App\Supply;
 
 class SupplierController extends Controller
 {
@@ -19,7 +20,7 @@ class SupplierController extends Controller
 
     public function view($id){
         $data['supplier'] = Supplier::find($id);
-        $data['barang'] = Barang::where('supplierId', $data['supplier']->id)->get();
+        $data['barang'] = Supply::where('supplierId', $data['supplier']->id)->get();
 
         return view('page.supplier.view', $data);
     }
@@ -88,8 +89,11 @@ class SupplierController extends Controller
     public function loadData(Request $request){
         if($request->has('q')){
             $cari = $request->q;
-            $data = Wilayah::where('nama', 'like', '%'.$cari.'%')->get();
-            return response()->json($data);
+        }else{
+            $cari = '';
         }
+
+        $data = Wilayah::where('nama', 'like', '%'.$cari.'%')->get();
+        return response()->json($data);
     }
 }

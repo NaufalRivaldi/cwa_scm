@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // cabang
-   Route::group(['prefix' => 'cabang/', 'middkeware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'cabang/', 'middleware' => 'AuthLevel:2'], function(){
       Route::get('/', 'CabangController@index')->name('cabang.index');
       Route::get('/form', 'CabangController@form')->name('cabang.form');
       Route::get('/{id}/edit', 'CabangController@form')->name('cabang.edit');
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // wilayah
-   Route::group(['prefix' => 'wilayah/', 'middkeware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'wilayah/', 'middleware' => 'AuthLevel:2'], function(){
       Route::get('/', 'WilayahController@index')->name('wilayah.index');
       Route::get('/form', 'WilayahController@form')->name('wilayah.form');
       Route::get('/{id}/edit', 'WilayahController@form')->name('wilayah.edit');
@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // supplier
-   Route::group(['prefix' => 'supplier/', 'middkeware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'supplier/', 'middleware' => 'AuthLevel:2'], function(){
       Route::get('/', 'SupplierController@index')->name('supplier.index');
       Route::get('/{id}/view', 'SupplierController@view')->name('supplier.view');
       Route::get('/form', 'SupplierController@form')->name('supplier.form');
@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // Merk
-   Route::group(['prefix' => 'merk/', 'middkeware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'merk/', 'middleware' => 'AuthLevel:2'], function(){
       Route::get('/', 'MerkController@index')->name('merk.index');
       Route::get('/form', 'MerkController@form')->name('merk.form');
       Route::get('/{id}/edit', 'MerkController@form')->name('merk.edit');
@@ -96,5 +96,19 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/store', 'PerusahaanController@store')->name('perusahaan.store');
       Route::put('/update', 'PerusahaanController@update')->name('perusahaan.update');
       Route::post('/destroy', 'PerusahaanController@destroy')->name('perusahaan.destroy');
+   });
+
+   // barang
+   Route::group(['prefix' => 'barang/', 'middleware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'BarangController@index')->name('barang.index');
+      Route::get('/form', 'BarangController@form')->name('barang.form');
+      Route::get('/{id}/edit', 'BarangController@form')->name('barang.edit');
+      Route::get('/{id}/view', 'BarangController@view')->name('barang.view');
+      Route::get('/cari/supplier', 'BarangController@loadSupplier')->name('barang.supplier');
+      Route::get('/cari/merk', 'BarangController@loadMerk')->name('barang.merk');
+      Route::post('/store', 'BarangController@store')->name('barang.store');
+      Route::put('/update', 'BarangController@update')->name('barang.update');
+      Route::post('/destroy', 'BarangController@destroy')->name('barang.destroy');
+      
    });
 });

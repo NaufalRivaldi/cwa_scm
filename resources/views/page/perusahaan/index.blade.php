@@ -20,7 +20,7 @@
                 <a href="{{ route('perusahaan.form') }}" class="btn btn-primary {{ (!empty($perusahaan))? 'disabled' : '' }}">
                   <i class="cil-pencil"></i> Set Data
                 </a>
-                <a href="{{ route('perusahaan.edit', ['id' => $id]) }}" class="btn btn-success {{ (empty($perusahaan))? 'disabled' : '' }}">
+                <a href="{{ (!empty($perusahaan))?route('perusahaan.edit', ['id' => $id]):'' }}" class="btn btn-success {{ (empty($perusahaan))? 'disabled' : '' }}">
                   <i class="cil-cog"></i> Edit Data
                 </a>
               </div>

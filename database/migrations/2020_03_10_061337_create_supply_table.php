@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHargaTable extends Migration
+class CreateSupplyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateHargaTable extends Migration
      */
     public function up()
     {
-        Schema::create('harga', function (Blueprint $table) {
+        Schema::create('supply', function (Blueprint $table) {
             $table->unsignedBigInteger('barangId')->index();
-            $table->unsignedBigInteger('wilayahId')->index();
+            $table->unsignedBigInteger('supplierId')->index();
             $table->double('harga');
+            $table->double('diskon');
             $table->timestamps();
 
             // fk
@@ -26,16 +27,11 @@ class CreateHargaTable extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
-            $table->foreign('wilayahId')
+            $table->foreign('supplierId')
                     ->references('id')
-                    ->on('wilayah')
+                    ->on('supplier')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-        });
-
-        // drop column harga
-        Schema::table('barang', function(Blueprint $table){
-            $table->dropColumn('harga');
         });
     }
 
@@ -46,6 +42,6 @@ class CreateHargaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('harga');
+        Schema::dropIfExists('supply');
     }
 }

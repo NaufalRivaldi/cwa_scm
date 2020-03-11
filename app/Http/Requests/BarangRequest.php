@@ -13,7 +13,7 @@ class BarangRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,34 @@ class BarangRequest extends FormRequest
      *
      * @return array
      */
+    public function messages(){
+        return [
+            'required' => 'Kolom ini tidak boleh kosong!',
+            'min' => 'Minimal 4 karakter',
+            'unique' => 'Kode barang sudah terpakai, coba yang lain.',
+            'numeric' => 'Harus bertipe numeric.'
+        ];
+    }
+    
     public function rules()
     {
+        $id = '';
+        if(!empty($this->input('id'))){
+            $id = ','.$this->input('id');
+        }
+
         return [
-            //
+            'merkId' => 'required',
+            'kodeBarang' => 'required|min:4|unique:barang,kodeBarang'.$id,
+            'nama' => 'required',
+            'base' => 'required',
+            'berat' => 'required|numeric',
+            'supplierId' => 'required|array',
+            'supplierId.*' => 'required',
+            'harga' => 'required|array',
+            'harga.*' => 'required',
+            'diskon' => 'required|array',
+            'diskon.*' => 'required'
         ];
     }
 }

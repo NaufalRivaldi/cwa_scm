@@ -44,7 +44,7 @@
                 <i class="cil-circle c-sidebar-nav-icon"></i>
                 Merk
               </a>
-              <a href="" class="c-sidebar-nav-link">
+              <a href="{{ route('barang.index') }}" class="c-sidebar-nav-link">
                 <i class="cil-circle c-sidebar-nav-icon"></i>
                 List Barang
               </a>

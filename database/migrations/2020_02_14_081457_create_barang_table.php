@@ -17,22 +17,14 @@ class CreateBarangTable extends Migration
             $table->bigIncrements('id');
             $table->string('kodeBarang', 25)->unique;
             $table->string('nama', 50);
-            $table->enum('enum', [0,1]);
-            $table->double('harga');
+            $table->enum('base', [0,1]);
             $table->double('berat');
             $table->unsignedBigInteger('merkId');
-            $table->unsignedBigInteger('supplierId');
 
             // fk
             $table->foreign('merkId')
                     ->references('id')
                     ->on('merk')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            
-            $table->foreign('supplierId')
-                    ->references('id')
-                    ->on('supplier')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
         });
