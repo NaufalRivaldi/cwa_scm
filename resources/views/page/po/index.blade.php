@@ -11,7 +11,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('supplier.form') }}" class="btn btn-primary">
+                <a href="{{ route('po.form') }}" class="btn btn-primary">
                   <i class="cil-plus"></i> Tambah
                 </a>
               </div>
@@ -22,31 +22,27 @@
               <table class="table table-striped dataTable">
                 <thead>
                   <tr>
-                    <th>Kode</th>
-                    <th>Nama</th>
-                    <th>Wilayah</th>
-                    <th>Telp</th>
-                    <th>Email</th>
-                    <th>Tax</th>
-                    <th>Kredit</th>
-                    <th>Pic</th>
+                    <th>No</th>
+                    <th>NO PO</th>
+                    <th>Tanggal</th>
+                    <th>Supplier</th>
+                    <th>Total</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($supplier as $row)
+                  @foreach($po as $row)
                   <tr>
-                    <td>{{ $row->kode }}</td>
-                    <td>{{ $row->nama }}</td>
-                    <td>{{ $row->wilayah->nama }}</td>
-                    <td>{{ $row->telp }}</td>
-                    <td>{{ $row->email }}</td>
-                    <td>{!! boolean($row->tax) !!}</td>
-                    <td>{{ $row->kredit }} Hari</td>
-                    <td>{{ $row->pic }}</td>
+                    <td>{{ $no++ }}</td>
+                    <td>{{ $row->nomer }}</td>
+                    <td>{{ dateReverse($row->tglPO) }}</td>
+                    <td>{{ $row->supplier->nama }}</td>
+                    <td>{{ number_format($row->grandTotal) }}</td>
                     <td>
-                      <a href ="{{ route('supplier.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
-                      <a href="{{ route('supplier.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
+                      <a href ="{{ route('po.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
+                      @if(Auth::user()->level == '2')
+                      <a href="{{ route('po.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
+                      @endif
                       <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
                     </td>
                   </tr>
@@ -79,7 +75,7 @@
       var id = $(this).data('id');
       console.log(id);
       swal({
-        title: "Hapus Data Supplier?",
+        title: "Hapus Data PO?",
         text: "Data akan terhapus secara permanen.",
         icon: "warning",
         buttons: true,
@@ -93,7 +89,7 @@
               'id': id,
               '_token': '{{ csrf_token() }}'
             },
-            url: "{{ route('supplier.destroy') }}",
+            url: "{{ route('po.destroy') }}",
             success: function(data){
               location.reload();
               // console.log(data);

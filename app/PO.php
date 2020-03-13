@@ -3,13 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PO extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'po';
     protected $fillable = [
         'nomer', 'tglPO', 'tglPengiriman', 'total', 'ppn', 'disc', 'grandTotal', 'status', 'userId', 'cabangId', 'supplierId'
     ];
+    protected $dates = ['deleted_at'];
 
     public $timestamps = true;
 

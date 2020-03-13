@@ -53,7 +53,7 @@
         </li>
         <li class="c-sidebar-nav-title">PEMBELIAN</li>
         <li class="c-sidebar-nav-item">
-          <a href="" class="c-sidebar-nav-link">
+          <a href="{{ route('po.index') }}" class="c-sidebar-nav-link">
           <i class="cil-file c-sidebar-nav-icon"></i>
           PO
           </a>

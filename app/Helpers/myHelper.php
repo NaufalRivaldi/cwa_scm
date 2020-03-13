@@ -57,4 +57,8 @@ if (! function_exists('on_php_id')) {
     return $text;
   }
 
+  function dateReverse($date){
+    return date('d-m-Y', strtotime($date));
+  }
+
 }

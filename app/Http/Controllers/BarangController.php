@@ -64,7 +64,35 @@ class BarangController extends Controller
             ]);
         }
 
-        return redirect()->route('barang.index')->with('Data berhasil disimpan.');
+        return redirect()->route('barang.index')->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function update(BarangRequest $request){
+        $data = Barang::find($request->id);
+        $data->kodeBarang = $request->kodeBarang;
+        $data->nama = $request->nama;
+        $data->base = $request->base;
+        $data->berat = $request->berat;
+        $data->merkId = $request->merkId;
+        $data->save();
+
+        Supply::where('barangId', $request->id)->delete();
+        for($i=0; $i<count($request->supplierId); $i++){
+            // echo $request->diskon[$i];
+            Supply::create([
+                'barangId' => $request->id,
+                'supplierId' => $request->supplierId[$i],
+                'harga' => $request->harga[$i],
+                'diskon' => $request->diskon[$i]
+            ]);
+        }
+
+        return redirect()->route('barang.index')->with('success', 'Data berhasil diupdate.');
+    }
+
+    public function destroy(Request $request){
+        $data = Barang::find($request->id);
+        $data->delete();
     }
 
     public function loadSupplier(Request $request){

@@ -111,4 +111,20 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/destroy', 'BarangController@destroy')->name('barang.destroy');
       
    });
+
+   // po
+   Route::group(['prefix' => 'po/', 'middleware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'PoController@index')->name('po.index');
+      Route::get('/form', 'PoController@form')->name('po.form');
+      Route::get('/{id}/edit', 'PoController@form')->name('po.edit');
+      Route::get('/{id}/view', 'PoController@view')->name('po.view');
+      Route::get('/cari/supplier', 'PoController@loadSupplier')->name('po.supplier');
+      Route::get('/cari/barang', 'PoController@loadBarang')->name('po.barang');
+      Route::get('/cari/merk', 'PoController@loadMerk')->name('po.merk');
+      Route::post('/data/supplier', 'PoController@dataSupplier')->name('po.data.supplier');
+      Route::post('/store', 'PoController@store')->name('po.store');
+      Route::put('/update', 'PoController@update')->name('po.update');
+      Route::post('/destroy', 'PoController@destroy')->name('po.destroy');
+      
+   });
 });

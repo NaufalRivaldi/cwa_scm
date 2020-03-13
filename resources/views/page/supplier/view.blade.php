@@ -48,7 +48,7 @@
                 <h6>Tax</h6>
                 <p>{!! boolean($supplier->tax) !!}</p>
                 <h6>Kredit</h6>
-                <p>{!! boolean($supplier->kredit) !!}</p>
+                <p>{{ $supplier->kredit }} Hari</p>
                 <h6>PIC</h6>
                 <p>{{ $supplier->pic }}</p>
               </div>  

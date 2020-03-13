@@ -132,11 +132,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="kredit">Kredit</label>
-                    <select name="kredit" id="kredit" class="form-control">
-                      <option value="0" {{ ($supplier->kredit == 0)?'selected':'' }}>False</option>
-                      <option value="1" {{ ($supplier->kredit == 1)?'selected':'' }}>True</option>
-                    </select>
+                    <label for="kredit">Kredit <span class="text-info">*Hari</span></label>
+                    <input type="text" class="form-control" id="kredit" name="kredit" value="{{ $supplier->kredit }}">
 
                     <!-- error -->
                     @if($errors->has('kredit'))
