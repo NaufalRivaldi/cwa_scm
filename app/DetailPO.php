@@ -8,11 +8,11 @@ class DetailPO extends Model
 {
     protected $table = 'detail_po';
     protected $fillable = [
-        'poId', 'barangId', 'qty', 'satuan', 'disc'
+        'poId', 'barangId', 'qty', 'satuan', 'disc', 'harga'
     ];
-    protected $primaryKey = ['poId', 'barangId'];
+    // protected $primaryKey = ['poId', 'barangId'];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     // fk
     public function barang(){

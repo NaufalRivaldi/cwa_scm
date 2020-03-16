@@ -76,6 +76,23 @@
                       </div>
                     @endif
                   </div>
+
+                  <div class="form-group">
+                    <label for="cabangId">Penerima</label>
+                    <select name="cabangId" id="" class="cabangId form-control formSelect2">
+                      @if(!empty($po->cabangId))
+                        <option value="{{ $po->cabangId }}">{{ $po->supplier->nama }}</option>
+                      @endif
+                    </select>
+                    <small class="mini-text text-muted">Cari berdasarkan nama cabang.</small>
+    
+                    <!-- error -->
+                    @if($errors->has('cabangId'))
+                      <div class="text-danger">
+                        {{ $errors->first('cabangId') }}
+                      </div>
+                    @endif
+                  </div>
                   
                   <div class="form-group">
                     <label for="tglPO">Tanggal Pengajuan</label>
@@ -119,10 +136,12 @@
               <hr>
               <div class="row mb-3">
                 <div class="col-md-12">
+                  
                   <div id="formPlus">
-                    <div class="form-row mb-2">
-                      <div class="col-md-4">
-                        <select name="barangId" name="barangId" id="barangId1" class="barangId form-control formSelect2">
+                    <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
+                      <div class="col-md-3">
+                        <label for="barangId">Barang</label>
+                        <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1">
                         </select>
 
                         <!-- error -->
@@ -133,7 +152,8 @@
                         @endif
                       </div>
                       <div class="col-md-1">
-                        <input type="number" name="qty" class="form-control" placeholder="Qty" step="0.01">
+                        <label for="qty">Qty</label>
+                        <input type="number" name="qty[]" class="form-control dataQty1" placeholder="Qty" step="0.01">
 
                         <!-- error -->
                         @if($errors->has('qty'))
@@ -142,9 +162,20 @@
                           </div>
                         @endif
                       </div>
+                      <div class="col-md-1">
+                        <label for="kemasan">Kemasan</label>
+                        <input type="number" name="kemasan[]" class="form-control dataKemasan1 kemasan1" placeholder="" step="0.01" readonly>
+
+                        <!-- error -->
+                        @if($errors->has('kemasan'))
+                          <div class="text-danger">
+                            {{ $errors->first('kemasan') }}
+                          </div>
+                        @endif
+                      </div>
                       <div class="col-md-3">
-                        <input type="number" name="harga" class="form-control" placeholder="Harga">
-                        <small>Set Harga : <span class="price1"></span></small>
+                        <label for="harga">Harga</label>
+                        <input type="number" name="harga[]" id="harga1" class="form-control price1 dataHarga1" placeholder="Harga">
 
                         <!-- error -->
                         @if($errors->has('harga'))
@@ -154,7 +185,8 @@
                         @endif
                       </div>
                       <div class="col-md-1">
-                        <input type="number" name="disc" class="form-control" placeholder="Disc" step="0.01">
+                        <label for="diskon">Diskon</label>
+                        <input type="number" name="disc[]" class="form-control disc1 dataDiskon1" placeholder="Disc" step="0.01">
 
                         <!-- error -->
                         @if($errors->has('disc'))
@@ -164,14 +196,49 @@
                         @endif
                       </div>
                       <div class="col-md-3">
-                        <input type="number" name="total" class="form-control total" placeholder="Total">
+                        <label for="total">Jumlah</label>
+                        <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary"><i class="cil-save"></i> Simpan</button>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row justify-content-end">
+                    <div class="col-md-3">
+                      <label for="jml">Total</label>
+                      <input type="number" name="jml" class="form-control jml" step="0.01" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row justify-content-end">
+                    <div class="col-md-3">
+                      <label for="ppn">ppn <span class="text-danger">*10%</span></label>
+                      <input type="number" name="ppn" class="form-control ppn" step="0.01" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-row justify-content-end">
+                    <div class="col-md-3">
+                      <label for="grandTotal">Grand Total</label>
+                      <input type="number" name="grandTotal" class="form-control grandTotal" step="0.01" readonly>
+
+                      <button type="submit" class="btn btn-primary mt-3"><i class="cil-save"></i> Simpan</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -184,6 +251,9 @@
 
 @section('javascript')
   <script>
+    var supId;
+    var i = 1;
+
     $('.supplierId').select2({
       placeholder: 'Cari supplier...',
       theme: 'bootstrap',
@@ -206,8 +276,31 @@
       }
     });
 
+    $('.cabangId').select2({
+      placeholder: 'Cari cabang...',
+      theme: 'bootstrap',
+      ajax: {
+        type: 'GET',
+        url: '{{ route("po.cabang") }}',
+        dataType: 'json',
+        delay: 250,
+        processResults: function(data){
+          return {
+            results: $.map(data, function(item){
+              return {
+                text: item.nama,
+                id: item.id
+              }
+            })
+          };
+        },
+        cache: true
+      }
+    });
+
     $('.supplierId').change(function(){
       var supplierId = $(this).val();
+      supId = supplierId;
 
       $.ajax({
         type: 'POST',
@@ -263,8 +356,7 @@
       $('#row'+button_id+'').remove();
     });
 
-    var i = 1;
-    $(document).on('keydown', 'input[name=total]', function(e){
+    $(document).on('keydown', '.total', function(e){
       i++;
       
       var code = e.keyCode || e.which;
@@ -272,9 +364,9 @@
         console.log('asd');
         $('#formPlus').append(`
         <div id="row`+i+`">
-          <div class="form-row mb-2">
-            <div class="col-md-4">
-              <select name="barangId" name="barangId" id="barangId`+i+`" class="barangId form-control formSelect2">
+          <div class="form-row mb-2 formChange" data-classqty="dataQty`+i+`" data-classharga="dataHarga`+i+`" data-classdiskon="dataDiskon`+i+`" data-classtotal="dataTotal`+i+`">
+            <div class="col-md-3">
+              <select name="barangId[]" name="barangId" id="barangId`+i+`" class="barangId form-control formSelect2" data-setharga="price`+i+`" data-setdisc="disc`+i+`" data-setkemasan="kemasan`+i+`">
               </select>
 
               <!-- error -->
@@ -285,7 +377,7 @@
               @endif
             </div>
             <div class="col-md-1">
-              <input type="number" name="qty" class="form-control" placeholder="Qty" step="0.01">
+              <input type="number" name="qty[]" class="form-control dataQty`+i+`" placeholder="Qty" step="0.01">
 
               <!-- error -->
               @if($errors->has('qty'))
@@ -294,9 +386,18 @@
                 </div>
               @endif
             </div>
+            <div class="col-md-1">
+              <input type="number" name="kemasan[]" class="form-control dataKemasan`+i+` kemasan`+i+`" placeholder="" step="0.01" readonly>
+
+              <!-- error -->
+              @if($errors->has('kemasan'))
+                <div class="text-danger">
+                  {{ $errors->first('kemasan') }}
+                </div>
+              @endif
+            </div>
             <div class="col-md-3">
-              <input type="number" name="harga" class="form-control" id="harga`+i+`" placeholder="Harga">
-              <span class="price`+i+`"></span>
+              <input type="number" name="harga[]" class="form-control price`+i+` dataHarga`+i+`" id="harga`+i+`" placeholder="Harga">
 
               <!-- error -->
               @if($errors->has('harga'))
@@ -306,7 +407,7 @@
               @endif
             </div>
             <div class="col-md-1">
-              <input type="number" name="disc" class="form-control" placeholder="Disc" step="0.01">
+              <input type="number" name="disc[]" class="form-control disc`+i+` dataDiskon`+i+`" placeholder="Disc" step="0.01">
 
               <!-- error -->
               @if($errors->has('disc'))
@@ -317,7 +418,7 @@
             </div>
             <div class="col-md-3">
               <div class="input-group">
-                <input type="number" name="total" class="form-control total" placeholder="Total">
+                <input type="number" name="total[]" class="form-control total dataTotal`+i+`" placeholder="Total" readonly>
                 <div class="input-group-append">
                   <button class="btn btn-danger cil-minus remove" type="button" id="`+i+`"></button>
                 </div>
@@ -354,12 +455,87 @@
     $(document).on('click', '.remove', function(){
         var button_id = $(this).attr("id");
         $('#row'+button_id+'').remove();
+        
+        let total = 0;
+        let ppn = 0;
+        let grandTotal = 0;
+        let classQty = '.'+$(this).data('classqty');
+        let classHarga = '.'+$(this).data('classharga');
+        let classDiskon = '.'+$(this).data('classdiskon');
+        let classTotal = '.'+$(this).data('classtotal');
+
+        let qty = $(classQty).val();
+        let harga = $(classHarga).val();
+        let diskon = $(classDiskon).val();
+
+        total = (harga * qty) - ((qty * harga)*(diskon/100));
+        $(classTotal).val(total);
+        
+        // ppn
+        let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
+        console.log(arrayTotal);
+        for(let i=0; i<arrayTotal.length; i++){
+          grandTotal += parseFloat(arrayTotal[i]);
+        }
+        ppn = grandTotal * 0.1;
+        $('.ppn').val(ppn);
+        $('.jml').val(grandTotal);
+        grandTotal = grandTotal - ppn;
+        $('.grandTotal').val(grandTotal);
     });
 
     // price set
     $(document).on('change', '.barangId', function(){
       var id = $(this).val();
-      
+      var setharga = '.'+$(this).data('setharga');
+      var setdisc = '.'+$(this).data('setdisc');
+      var setkemasan = '.'+$(this).data('setkemasan');
+
+      $.ajax({
+        url: "{{ route('po.data.harga') }}",
+        type: 'GET',
+        data: {
+          'barangId': id,
+          'supplierId': supId,
+          '_token': '{{ csrf_token() }}'
+        },
+        success: function(data){
+          $(setharga).val(data.harga);
+          $(setdisc).val(data.diskon);
+          $(setkemasan).val(data.berat);
+        }
+      });
     });
+
+    $(document).on('change', '.formChange', function(){
+      let total = 0;
+      let ppn = 0;
+      let grandTotal = 0;
+      let classQty = '.'+$(this).data('classqty');
+      let classHarga = '.'+$(this).data('classharga');
+      let classDiskon = '.'+$(this).data('classdiskon');
+      let classTotal = '.'+$(this).data('classtotal');
+
+      let qty = $(classQty).val();
+      let harga = $(classHarga).val();
+      let diskon = $(classDiskon).val();
+
+      total = (harga * qty) - ((qty * harga)*(diskon/100));
+      $(classTotal).val(total);
+      
+      // ppn
+      let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
+      console.log(arrayTotal);
+      for(let i=0; i<arrayTotal.length; i++){
+        grandTotal += parseFloat(arrayTotal[i]);
+      }
+      ppn = grandTotal * 0.1;
+      $('.ppn').val(ppn);
+      $('.jml').val(grandTotal);
+      grandTotal = grandTotal - ppn;
+      $('.grandTotal').val(grandTotal);
+    });
+
+    
   </script>
 @endsection

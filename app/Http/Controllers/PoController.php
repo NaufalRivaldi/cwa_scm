@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PoRequest;
 
 use App\PO;
 use App\Supplier;
 use App\Barang;
+use App\Supply;
+use App\Cabang;
+use App\DetailPO;
+
+use Auth;
 
 class PoController extends Controller
 {
@@ -39,6 +45,41 @@ class PoController extends Controller
         return view('page.po.form', $data);
     }
 
+    public function store(PoRequest $request){
+        $status = 1;
+        if($request->grandTotal > 20000000){
+            $status = 2;
+        }
+        PO::create([
+            'nomer' => $request->nomer,
+            'tglPO' => $request->tglPO,
+            'tglPengiriman' => $request->tglPengiriman,
+            'total' => $request->jml,
+            'ppn' => $request->ppn,
+            'grandTotal' => $request->grandTotal,
+            'status' => $status,
+            'userId' => Auth::user()->id,
+            'cabangId' => $request->cabangId,
+            'supplierId' => $request->supplierId
+        ]);
+                
+        $data = PO::orderBy('id', 'desc')->first();
+        if(!empty($request->barangId)){
+            for($i=0; $i<count($request->barangId); $i++){
+                DetailPO::create([
+                    'poId' => $data->id,
+                    'barangId' => $request->barangId[$i],
+                    'qty' => $request->qty[$i],
+                    'satuan' => $request->kemasan[$i],
+                    'disc' => $request->disc[$i],
+                    'harga' => $request->harga[$i]
+                ]);
+            }
+        }
+
+        return redirect()->route('po.index')->with('success', 'PO berhasil di buat.');
+    }
+
     public function loadSupplier(Request $request){
         if($request->has('q')){
             $cari = $request->q;
@@ -46,6 +87,17 @@ class PoController extends Controller
             $cari = '';
         }
         $data = Supplier::where('nama', 'like', '%'.$cari.'%')->get();
+
+        return response()->json($data);
+    }
+
+    public function loadCabang(Request $request){
+        if($request->has('q')){
+            $cari = $request->q;
+        }else{
+            $cari = '';
+        }
+        $data = Cabang::where('nama', 'like', '%'.$cari.'%')->get();
 
         return response()->json($data);
     }
@@ -65,6 +117,17 @@ class PoController extends Controller
        $data = Supplier::find($request->id);
         
        return response()->json($data);
+    }
+
+    public function dataHarga(Request $request){
+        $data = Supply::where('barangId', $request->barangId)->where('supplierId', $request->supplierId)->first();
+        $array = [
+            'harga' => $data->harga,
+            'diskon' => $data->diskon,
+            'berat' => $data->barang->berat
+        ];
+
+        return response()->json($array);
     }
 
     public function nomerPo(){
@@ -89,4 +152,5 @@ class PoController extends Controller
         $array = array('0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII');
         return $array[$bulan];
     }
+
 }

@@ -119,9 +119,11 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/{id}/edit', 'PoController@form')->name('po.edit');
       Route::get('/{id}/view', 'PoController@view')->name('po.view');
       Route::get('/cari/supplier', 'PoController@loadSupplier')->name('po.supplier');
+      Route::get('/cari/cabang', 'PoController@loadCabang')->name('po.cabang');
       Route::get('/cari/barang', 'PoController@loadBarang')->name('po.barang');
       Route::get('/cari/merk', 'PoController@loadMerk')->name('po.merk');
       Route::post('/data/supplier', 'PoController@dataSupplier')->name('po.data.supplier');
+      Route::get('/data/harga', 'PoController@dataHarga')->name('po.data.harga');
       Route::post('/store', 'PoController@store')->name('po.store');
       Route::put('/update', 'PoController@update')->name('po.update');
       Route::post('/destroy', 'PoController@destroy')->name('po.destroy');

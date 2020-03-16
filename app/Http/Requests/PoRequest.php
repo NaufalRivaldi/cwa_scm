@@ -13,7 +13,7 @@ class PoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,23 @@ class PoRequest extends FormRequest
      *
      * @return array
      */
+    public function messages(){
+        return [
+            'required' => 'Kolom ini tidak boleh kosong!',
+            'date' => 'Harus berformat tanggal!',
+            'numeric' => 'Harus berformat numeric!'
+        ];
+    }
+    
     public function rules()
     {
         return [
-            //
+            'supplierId' => 'required',
+            'nomer' => 'required',
+            'tglPO' => 'required|date',
+            'tglPengiriman' => 'required|date',
+            'ppn' => 'required|numeric',
+            'grandTotal' => 'required|numeric'
         ];
     }
 }
