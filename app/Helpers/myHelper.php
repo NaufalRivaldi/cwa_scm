@@ -61,4 +61,23 @@ if (! function_exists('on_php_id')) {
     return date('d-m-Y', strtotime($date));
   }
 
+  function statusPO($val){
+    $text = '';
+    switch ($val) {
+      case '1':
+        $text = '<span class="badge badge-warning">Pending</span>';
+        break;
+
+      case '2':
+        $text = '<span class="badge badge-success">Acc</span>';
+        break;
+      
+      default:
+        $text = '<span class="badge badge-danger">Ditolak</span>';
+        break;
+    }
+
+    return $text;
+  }
+
 }

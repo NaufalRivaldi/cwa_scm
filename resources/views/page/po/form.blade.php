@@ -81,7 +81,7 @@
                     <label for="cabangId">Penerima</label>
                     <select name="cabangId" id="" class="cabangId form-control formSelect2">
                       @if(!empty($po->cabangId))
-                        <option value="{{ $po->cabangId }}">{{ $po->supplier->nama }}</option>
+                        <option value="{{ $po->cabangId }}" selected>{{ $po->cabang->nama }}</option>
                       @endif
                     </select>
                     <small class="mini-text text-muted">Cari berdasarkan nama cabang.</small>
@@ -138,6 +138,7 @@
                 <div class="col-md-12">
                   
                   <div id="formPlus">
+                    @if(empty($po->id))
                     <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
                       <div class="col-md-3">
                         <label for="barangId">Barang</label>
@@ -200,41 +201,127 @@
                         <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
                       </div>
                     </div>
+                    
+                    @else
+                      @php $i = 1; @endphp
+                      @foreach($po->detailPO as $row) 
+                      <div id="row{{ $i }}">
+                        <div class="form-row mb-2 formChange" data-classqty="dataQty{{ $i }}" data-classharga="dataHarga{{ $i }}" data-classdiskon="dataDiskon{{ $i }}" data-classtotal="dataTotal{{ $i }}">
+                          <div class="col-md-3">
+                            @if(!empty($po->id))
+                            <label for="barang">Barang</label>
+                            @endif
+                            <select name="barangId[]" name="barangId" id="barangId{{ $i }}" class="barangId form-control formSelect2" data-setharga="price{{ $i }}" data-setdisc="disc{{ $i }}" data-setkemasan="kemasan{{ $i }}">
+                              <option value="{{ $row->barangId }}" selected>{{ $row->barang->kodeBarang.' - '.$row->barang->nama }}</option>
+                            </select>
+              
+                            <!-- error -->
+                              @if($errors->has('barangId'))
+                              <div class="text-danger">
+                                {{ $errors->first('barangId') }}
+                              </div>
+                            @endif
+                          </div>
+                          <div class="col-md-1">
+                            @if(!empty($po->id))
+                            <label for="qty">Qty</label>
+                            @endif
+                            <input type="number" name="qty[]" class="form-control dataQty{{ $i }}" placeholder="Qty" step="0.01" value="<?= $row->qty ?>">
+              
+                            <!-- error -->
+                            @if($errors->has('qty'))
+                              <div class="text-danger">
+                                {{ $errors->first('qty') }}
+                              </div>
+                            @endif
+                          </div>
+                          <div class="col-md-1">
+                            @if(!empty($po->id))
+                            <label for="kemasan">Kemasan</label>
+                            @endif
+                            <input type="number" name="kemasan[]" class="form-control dataKemasan{{ $i }} kemasan{{ $i }}" placeholder="" step="0.01" readonly value="<?= $row->satuan ?>">
+              
+                            <!-- error -->
+                            @if($errors->has('kemasan'))
+                              <div class="text-danger">
+                                {{ $errors->first('kemasan') }}
+                              </div>
+                            @endif
+                          </div>
+                          <div class="col-md-3">
+                            @if(!empty($po->id))
+                            <label for="harga">Harga</label>
+                            @endif
+                            <input type="number" name="harga[]" class="form-control price{{ $i }} dataHarga{{ $i }}" id="harga{{ $i }}" placeholder="Harga" value="<?= $row->harga ?>">
+              
+                            <!-- error -->
+                            @if($errors->has('harga'))
+                              <div class="text-danger">
+                                {{ $errors->first('harga') }}
+                              </div>
+                            @endif
+                          </div>
+                          <div class="col-md-1">
+                            @if(!empty($po->id))
+                            <label for="disc">Disc</label>
+                            @endif
+                            <input type="number" name="disc[]" class="form-control disc{{ $i }} dataDiskon{{ $i }}" placeholder="Disc" step="0.01" value="<?= $row->disc ?>">
+              
+                            <!-- error -->
+                            @if($errors->has('disc'))
+                              <div class="text-danger">
+                                {{ $errors->first('disc') }}
+                              </div>
+                            @endif
+                          </div>
+
+                          @php
+                            $total = ($row->harga * $row->qty) - (($row->harga * $row->qty) * ($row->disc / 100));
+                          @endphp
+
+                          <div class="col-md-3">
+                            @if(!empty($po->id))
+                            <label for="total">Jumlah</label>
+                            @endif
+                            <div class="input-group">
+                              <input type="number" name="total[]" class="form-control total dataTotal{{ $i }}" placeholder="Total" readonly value="{{ $total }}">
+                              @if($i != 1)
+                              <div class="input-group-append">
+                                <button class="btn btn-danger cil-minus remove" type="button" id="{{ $i }}"></button>
+                              </div>
+                              @endif
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @php $i++ @endphp
+                      @endforeach
+                    @endif
+
                   </div>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-row justify-content-end">
-                    <div class="col-md-3">
-                      <label for="jml">Total</label>
-                      <input type="number" name="jml" class="form-control jml" step="0.01" readonly>
-                    </div>
-                  </div>
+                <div class="col-md-9">
+                  <label for="note">Note</label>
+                    <textarea name="note" id="note" rows="9" class="form-control">{{ $po->note }}</textarea>
+
+                    <button type="submit" class="btn btn-primary mt-3"><i class="cil-save"></i> {{ (empty($po->id))?'Simpan':'Update' }}</button>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-row justify-content-end">
-                    <div class="col-md-3">
-                      <label for="ppn">ppn <span class="text-danger">*10%</span></label>
-                      <input type="number" name="ppn" class="form-control ppn" step="0.01" readonly>
-                    </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="jml">Total</label>
+                    <input type="number" name="jml" class="form-control jml" step="0.01" readonly value="{{ $po->total }}">
                   </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-row justify-content-end">
-                    <div class="col-md-3">
-                      <label for="grandTotal">Grand Total</label>
-                      <input type="number" name="grandTotal" class="form-control grandTotal" step="0.01" readonly>
-
-                      <button type="submit" class="btn btn-primary mt-3"><i class="cil-save"></i> Simpan</button>
-                    </div>
+                  <div class="form-group">
+                    <label for="ppn">ppn <span class="text-danger">*10%</span></label>
+                    <input type="number" name="ppn" class="form-control ppn" step="0.01" readonly value="{{ $po->ppn }}">
+                  </div>
+                  <div class="form-group">
+                    <label for="grandTotal">Grand Total</label>
+                    <input type="number" name="grandTotal" class="form-control grandTotal" step="0.01" readonly value="{{ $po->grandTotal }}">
                   </div>
                 </div>
               </div>
@@ -251,8 +338,8 @@
 
 @section('javascript')
   <script>
-    var supId;
-    var i = 1;
+    var supId = {{ (!empty($po->id))? $po->supplierId : '0' }};
+    var i = {{ (!empty($po->id))? $i : '1' }};
 
     $('.supplierId').select2({
       placeholder: 'Cari supplier...',
@@ -536,6 +623,35 @@
       $('.grandTotal').val(grandTotal);
     });
 
+    $(document).ready(function(){
+      // isi supplier jika edit
+      @if(!empty($po->id))
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('po.data.supplier') }}",
+        data: {
+          'id': '{{ $po->supplierId }}',
+          '_token': '{{ csrf_token() }}'
+        },
+        success: function(data){
+          $('.kredit').val(data.kredit);
+          $('.dataSupplier').empty();
+          $('.dataSupplier').append(`
+            <h6>Kode</h6>
+            <p>`+data.kode+`</p>
+            <h6>Nama</h6>
+            <p>`+data.nama+`</p>
+            <h6>Alamat</h6>
+            <p>`+data.alamat+`</p>
+            <h6>Telp / Fax</h6>
+            <p>`+data.telp+` / `+data.fax+`</p>
+            <h6>PIC</h6>
+            <p>`+data.pic+`</p>
+          `);
+        }
+      });
+      @endif
+    });
     
   </script>
 @endsection

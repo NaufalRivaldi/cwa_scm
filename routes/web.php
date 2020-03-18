@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/form', 'PoController@form')->name('po.form');
       Route::get('/{id}/edit', 'PoController@form')->name('po.edit');
       Route::get('/{id}/view', 'PoController@view')->name('po.view');
+      Route::get('/{id}/print', 'PoController@print')->name('po.print');
       Route::get('/cari/supplier', 'PoController@loadSupplier')->name('po.supplier');
       Route::get('/cari/cabang', 'PoController@loadCabang')->name('po.cabang');
       Route::get('/cari/barang', 'PoController@loadBarang')->name('po.barang');
@@ -127,6 +128,19 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/store', 'PoController@store')->name('po.store');
       Route::put('/update', 'PoController@update')->name('po.update');
       Route::post('/destroy', 'PoController@destroy')->name('po.destroy');
+   });
+   
+   // verifikasi
+   Route::group(['prefix' => 'verifikasi/', 'middleware' => 'AuthLevel:2'], function(){
+      Route::get('/', 'VerifikasiController@index')->name('verifikasi.index');
+      Route::get('/form', 'VerifikasiController@form')->name('verifikasi.form');
+      Route::get('/{id}/edit', 'VerifikasiController@form')->name('verifikasi.edit');
+      Route::get('/{id}/view', 'VerifikasiController@view')->name('verifikasi.view');
+      Route::get('/{id}/validasi', 'VerifikasiController@validasi')->name('verifikasi.validasi');
+      Route::post('/store', 'VerifikasiController@store')->name('verifikasi.store');
+      Route::put('/update', 'VerifikasiController@update')->name('verifikasi.update');
+      Route::post('/destroy', 'VerifikasiController@destroy')->name('verifikasi.destroy');
       
    });
+
 });

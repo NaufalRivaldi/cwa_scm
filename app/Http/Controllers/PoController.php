@@ -33,6 +33,7 @@ class PoController extends Controller
                 'ppn' => '',
                 'disc' => '',
                 'grandTotal' => '',
+                'note' => '',
                 'status' => '',
                 'userId' => '',
                 'cabangId' => '',
@@ -43,6 +44,13 @@ class PoController extends Controller
         }
 
         return view('page.po.form', $data);
+    }
+
+    public function view($id){
+        $data['no'] = 1;
+        $data['po'] = PO::find($id);
+
+        return view('page.po.view', $data);
     }
 
     public function store(PoRequest $request){
@@ -57,6 +65,7 @@ class PoController extends Controller
             'total' => $request->jml,
             'ppn' => $request->ppn,
             'grandTotal' => $request->grandTotal,
+            'note' => $request->note,
             'status' => $status,
             'userId' => Auth::user()->id,
             'cabangId' => $request->cabangId,
@@ -78,6 +87,39 @@ class PoController extends Controller
         }
 
         return redirect()->route('po.index')->with('success', 'PO berhasil di buat.');
+    }
+
+    public function update(PoRequest $request){
+        $po = PO::find($request->id);
+        $po->tglPengiriman = $request->tglPengiriman;
+        $po->total = $request->jml;
+        $po->ppn = $request->ppn;
+        $po->grandTotal = $request->grandTotal;
+        $po->note = $request->note;
+        $po->cabangId = $request->cabangId;
+        $po->supplierId = $request->supplierId;
+        $po->save();
+
+        $detailPo = DetailPO::where('poId', $request->id)->delete();
+        if(!empty($request->barangId)){
+            for($i=0; $i<count($request->barangId); $i++){
+                DetailPO::create([
+                    'poId' => $request->id,
+                    'barangId' => $request->barangId[$i],
+                    'qty' => $request->qty[$i],
+                    'satuan' => $request->kemasan[$i],
+                    'disc' => $request->disc[$i],
+                    'harga' => $request->harga[$i]
+                ]);
+            }
+        }
+
+        return redirect()->route('po.index')->with('success', 'PO berhasil diupdate.');
+    }
+
+    public function destroy(Request $request){
+        $data = PO::find($request->id);
+        $data->delete();
     }
 
     public function loadSupplier(Request $request){

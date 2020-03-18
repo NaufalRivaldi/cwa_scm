@@ -11,8 +11,8 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('po.form') }}" class="btn btn-primary">
-                  <i class="cil-plus"></i> Tambah
+                <a href="{{ route('po.form') }}" class="btn btn-success disabled">
+                  <i class="cil-check"></i> Verifikasi
                 </a>
               </div>
             </div>
@@ -22,7 +22,7 @@
               <table class="table table-striped dataTable">
                 <thead>
                   <tr>
-                    <th>No</th>
+                    <th><input type="checkbox" name="cekAll" class="cekAll"></th>
                     <th>NO PO</th>
                     <th>Tanggal</th>
                     <th>Supplier</th>
@@ -35,7 +35,7 @@
                 <tbody>
                   @foreach($po as $row)
                   <tr>
-                    <td>{{ $no++ }}</td>
+                    <td><input type="checkbox" name="cek[]" class="cek" value="{{ $row->id }}"></td>
                     <td>{{ $row->nomer }}</td>
                     <td>{{ dateReverse($row->tglPO) }}</td>
                     <td>{{ $row->supplier->nama }}</td>
@@ -43,11 +43,7 @@
                     <td>{!! statusPO($row->status) !!}</td>
                     <td>{{ $row->user->nama }}</td>
                     <td>
-                      <a href ="{{ route('po.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
-                      @if(Auth::user()->id == $row->userId && $row->status == '1')
-                        <a href="{{ route('po.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
-                        <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
-                      @endif
+                      <a href ="{{ route('verifikasi.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
                     </td>
                   </tr>
                   @endforeach
@@ -99,6 +95,19 @@
               // console.log(data);
             }
           });
+        }
+      });
+    });
+
+    $(document).ready(function(){
+      let i = 0;
+      $('.cekAll').click(function(){
+        if(i == 0){
+          $('.cek').attr('checked', 'checked');
+          i = 1;
+        }else{
+          $('.cek').removeAttr('checked');
+          i = 0;
         }
       });
     });

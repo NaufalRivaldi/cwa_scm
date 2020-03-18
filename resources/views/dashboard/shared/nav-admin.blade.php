@@ -58,6 +58,12 @@
           PO
           </a>
         </li>
+        <li class="c-sidebar-nav-item">
+          <a href="{{ route('verifikasi.index') }}" class="c-sidebar-nav-link">
+          <i class="cil-file c-sidebar-nav-icon"></i>
+          Verifikasi PO
+          </a>
+        </li>
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">
