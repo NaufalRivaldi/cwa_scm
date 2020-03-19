@@ -11,9 +11,13 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-6">
-                <a href="{{ route('po.form') }}" class="btn btn-success disabled">
-                  <i class="cil-check"></i> Verifikasi
-                </a>
+                <form action="{{ route('verifikasi.verifikasi') }}" method="POST" id="formValidasi">
+                  @csrf
+                  <input type="hidden" name="cek" class="inputCek">
+                  <input type="hidden" name="setVerifikasi" class="setVerifikasi">
+                  
+                </form>
+                <button class="btn btn-success btn-verifikasi" disabled="disabled" data-toggle="modal" data-target="#exampleModal"><i class="cil-check"></i> Verifikasi</button>
               </div>
             </div>
           </div>
@@ -62,7 +66,32 @@
 
 @section('modal')
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Verifikasi PO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-success btn-block setVerifikasi" data-set="1">Diterima</button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-block setVerifikasi" data-set="2">Ditolak</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p>User ini bertanggung jawab atas verifikasi form PO ini.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
@@ -109,7 +138,46 @@
           $('.cek').removeAttr('checked');
           i = 0;
         }
+
+        setVerifikasi();
       });
+
+      $('.cek').click(function(){
+        setVerifikasi();
+      });
+
+      $('.setVerifikasi').click(function(){
+        let set = $(this).data('set');
+        console.log(set);
+        switch (set) {
+          case 1:
+            $('.setVerifikasi').val('1');
+            $('#formValidasi').submit();
+            break;
+        
+          default:
+            $('.setVerifikasi').val('2');
+            $('#formValidasi').submit();
+            break;
+        }
+      });
+
+      function setVerifikasi(){
+        let cek = [];
+
+        if($('.cek').is(":checked")){
+          $('.btn-verifikasi').removeAttr('disabled');
+        }else{
+          $('.btn-verifikasi').attr('disabled', 'disabled');
+        }
+
+        $.each($('.cek:checked'),function(){
+          cek.push($(this).val());
+        });
+
+        $('.inputCek').val(cek)
+        console.log($('.inputCek').val());
+      }
     });
   </script>
   

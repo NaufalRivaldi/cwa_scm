@@ -11,8 +11,10 @@ use App\Barang;
 use App\Supply;
 use App\Cabang;
 use App\DetailPO;
+use App\Perusahaan;
 
 use Auth;
+use PDF;
 
 class PoController extends Controller
 {
@@ -51,6 +53,18 @@ class PoController extends Controller
         $data['po'] = PO::find($id);
 
         return view('page.po.view', $data);
+    }
+
+    public function print($id){
+        $po = PO::find($id);
+        $date = date('Y-m-d', strtotime($po->tglPO));
+        $data['no'] = 1;
+        $data['po'] = $po;
+        $data['perusahaan'] = Perusahaan::orderBy('id', 'asc')->first();
+
+        $pdf = PDF::loadview('page.po.print', $data);
+        return $pdf->download('po-'.$date.'-'.$po->supplier->kode.'.pdf');
+        // return view('page.po.print', $data);
     }
 
     public function store(PoRequest $request){

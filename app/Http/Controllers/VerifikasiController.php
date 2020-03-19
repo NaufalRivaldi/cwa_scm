@@ -22,4 +22,21 @@ class VerifikasiController extends Controller
 
         return view('page.verifikasi.view', $data);
     }
+
+    public function verifikasi(Request $request){
+        // dd($request->all());
+        if($request->setVerifikasi == 1){
+            $status = 2;
+        }else{
+            $status = 3;
+        }
+        $data = explode(',', $request->cek);
+        for($i=0; $i<count($data); $i++){
+            $po = PO::find($data[$i]);
+            $po->status = $status;
+            $po->save();
+        }
+
+        return redirect()->route('verifikasi.index')->with('success', 'PO sudah di verifikasi');
+    }
 }

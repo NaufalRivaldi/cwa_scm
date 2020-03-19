@@ -36,6 +36,11 @@
               <div class="col-md-12">
                 <table class="table">
                   <tr>
+                    <td width="20%">Status</td>
+                    <td width="1%">:</td>
+                    <td>{!! statusPO($po->status) !!}</td>
+                  </tr>
+                  <tr>
                     <td width="20%">Nomer PO</td>
                     <td width="1%">:</tdw>
                     <td>{{ $po->nomer }}</td>
