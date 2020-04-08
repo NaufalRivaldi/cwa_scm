@@ -35,7 +35,6 @@ class PoRequest extends FormRequest
             'supplierId' => 'required',
             'nomer' => 'required',
             'tglPO' => 'required|date',
-            'tglPengiriman' => 'required|date',
             'ppn' => 'required|numeric',
             'grandTotal' => 'required|numeric'
         ];

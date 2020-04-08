@@ -20,7 +20,20 @@ class PoController extends Controller
 {
     public function index(){
         $data['no'] = 1;
-        $data['po'] = PO::orderBy('id', 'desc')->get();
+        $data['supplier'] = Supplier::orderBy('nama', 'asc')->get();
+
+        if($_GET){
+            $status = $_GET['status'];
+            $tglPO = $_GET['tglPO'];
+            $supplierId = $_GET['supplierId'];
+            if(!empty($supplierId)){
+                $data['po'] = PO::where('supplierId', $supplierId)->where('tglPO', 'like', '%'.$tglPO.'%')->where('status', 'like', '%'.$status.'%')->orderBy('id', 'desc')->get();
+            }else{
+                $data['po'] = PO::where('tglPO', 'like', '%'.$tglPO.'%')->where('status', 'like', '%'.$status.'%')->orderBy('id', 'desc')->get();
+            }
+        }else{
+            $data['po'] = PO::orderBy('id', 'desc')->get();
+        }
 
         return view('page.po.index', $data);
     }
@@ -62,20 +75,27 @@ class PoController extends Controller
         $data['po'] = $po;
         $data['perusahaan'] = Perusahaan::orderBy('id', 'asc')->first();
 
-        $pdf = PDF::loadview('page.po.print', $data);
-        return $pdf->download('po-'.$date.'-'.$po->supplier->kode.'.pdf');
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadview('page.po.print_invoice', $data)->setPaper('a5', 'potrait');
+        return $pdf->stream();
         // return view('page.po.print', $data);
-    }
+    }   
 
     public function store(PoRequest $request){
         $status = 1;
-        if($request->grandTotal > 20000000){
+        $tglPengiriman = '1000-01-01';
+        if($request->grandTotal < 20000000){
             $status = 2;
         }
+
+        if(!empty($request->tglPengiriman)){
+            $tglPengiriman = $request->tglPengiriman;
+        }
+
         PO::create([
             'nomer' => $request->nomer,
             'tglPO' => $request->tglPO,
-            'tglPengiriman' => $request->tglPengiriman,
+            'tglPengiriman' => $tglPengiriman,
             'total' => $request->jml,
             'ppn' => $request->ppn,
             'grandTotal' => $request->grandTotal,
@@ -105,13 +125,18 @@ class PoController extends Controller
 
     public function update(PoRequest $request){
         $po = PO::find($request->id);
-        $po->tglPengiriman = $request->tglPengiriman;
         $po->total = $request->jml;
         $po->ppn = $request->ppn;
         $po->grandTotal = $request->grandTotal;
         $po->note = $request->note;
         $po->cabangId = $request->cabangId;
         $po->supplierId = $request->supplierId;
+
+        $tglPengiriman = '1000-01-01';
+        if(!empty($request->tglPengiriman)){
+            $tglPengiriman = $request->tglPengiriman;
+        }
+        $po->tglPengiriman = $tglPengiriman;
         $po->save();
 
         $detailPo = DetailPO::where('poId', $request->id)->delete();

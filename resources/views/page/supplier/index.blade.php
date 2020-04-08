@@ -15,6 +15,35 @@
                   <i class="cil-plus"></i> Tambah
                 </a>
               </div>
+              <div class="col-md-6">
+                @php
+                  $tax = '';
+                  $wilayahId = '';  
+                  if($_GET){
+                    $tax = $_GET['tax'];
+                    $wilayahId = $_GET['wilayahId'];
+                  }
+                @endphp
+                <form method="GET" action="" id="form-filter">
+                  <div class="form-row">
+                    <div class="col">
+                      <select name="wilayahId" id="wilayahId" class="form-control">
+                        <option value="">Pilih Wilayah...</option>
+                        @foreach($wilayah as $wly)
+                          <option value="{{ $wly->id }}" {{ ($wilayahId == $wly->id)?'selected':'' }}>{{ $wly->nama }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select name="tax" id="tax" class="form-control">
+                        <option value="">Pilih Tax...</option>
+                        <option value="1" {{ ($tax == '1')?'selected':'' }}>True</option>
+                        <option value="0" {{ ($tax == '0')?'selected':'' }}>False</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
           <div class="card-body">

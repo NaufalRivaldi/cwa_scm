@@ -14,6 +14,7 @@ class CreateDetailPoTable extends Migration
     public function up()
     {
         Schema::create('detail_po', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('poId')->index();
             $table->unsignedBigInteger('barangId')->index();
             $table->integer('qty');

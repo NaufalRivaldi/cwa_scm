@@ -13,7 +13,19 @@ use App\Supply;
 class SupplierController extends Controller
 {
     public function index(){
-        $data['supplier'] = Supplier::orderBy('kode', 'asc')->get();
+        $data['wilayah'] = Wilayah::orderBy('nama', 'asc')->get();
+
+        if($_GET){
+            $tax = $_GET['tax'];
+            $wilayahId = $_GET['wilayahId'];
+            if(!empty($wilayahId)){
+                $data['supplier'] = Supplier::where('wilayahId', $wilayahId)->where('tax', 'like', '%'.$tax.'%')->orderBy('kode', 'asc')->get();
+            }else{
+                $data['supplier'] = Supplier::where('tax', 'like', '%'.$tax.'%')->orderBy('kode', 'asc')->get();
+            }
+        }else{
+            $data['supplier'] = Supplier::orderBy('kode', 'asc')->get();
+        }
 
         return view('page.supplier.index', $data);
     }

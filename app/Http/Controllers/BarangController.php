@@ -14,7 +14,14 @@ class BarangController extends Controller
 {
     public function index(){
         $data['no'] = 1;
-        $data['barang'] = Barang::orderBy('kodeBarang', 'asc')->get();
+        $data['merk'] = Merk::orderBy('nama', 'asc')->get();
+        
+        if($_GET){
+            $merkId = $_GET['merkId'];
+            $data['barang'] = Barang::where('merkId', $merkId)->orderBy('kodeBarang', 'asc')->get();
+        }else{
+            $data['barang'] = Barang::orderBy('kodeBarang', 'asc')->get();
+        }
 
         return view('page.barang.index', $data);
     }

@@ -64,6 +64,12 @@
           Verifikasi PO
           </a>
         </li>
+        <li class="c-sidebar-nav-item">
+          <a href="{{ route('rekap.index') }}" class="c-sidebar-nav-link">
+          <i class="cil-notes c-sidebar-nav-icon"></i>
+          Rekap PO
+          </a>
+        </li>
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">

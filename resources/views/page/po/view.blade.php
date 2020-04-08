@@ -14,7 +14,7 @@
                 <a href="{{ route('po.index') }}" class="btn btn-success">
                   <i class="cil-arrow-circle-left"></i> Kembali
                 </a>
-                <a href="{{ route('po.print', ['id' => $po->id]) }}" class="btn btn-primary">
+                <a href="{{ route('po.print', ['id' => $po->id]) }}" class="btn btn-primary {{ ($po->status == '2')?'':'disabled' }}" target="_BLANK">
                   <i class="cil-print"></i> Print
                 </a>
               </div>
@@ -38,7 +38,7 @@
                   <tr>
                     <td width="20%">Status</td>
                     <td width="1%">:</td>
-                    <td>{!! statusPO($po->status) !!}</td>
+                    <td>{!! statusPO($po->status) !!} {{ ($po->status != '2')?' , Tidak dapat melakukan print PO.':'' }}</td>
                   </tr>
                   <tr>
                     <td width="20%">Nomer PO</td>
@@ -53,7 +53,7 @@
                   <tr>
                     <td width="20%">Tanggal Pengiriman</td>
                     <td width="1%">:</td>
-                    <td>{{ dateReverse($po->tglPengiriman) }}</td>
+                    <td>{{ ($po->tglPengiriman != '1000-01-01')?dateReverse($po->tglPengiriman):'Pengiriman Bertahap' }}</td>
                   </tr>
                   <tr>
                     <td width="20%">Masa Pembayaran</td>

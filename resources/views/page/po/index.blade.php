@@ -10,10 +10,45 @@
         <div class="card">
           <div class="card-header">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-3">
                 <a href="{{ route('po.form') }}" class="btn btn-primary">
                   <i class="cil-plus"></i> Tambah
                 </a>
+              </div>
+              <div class="col-md-9">
+                @php
+                  $status = '';
+                  $tglPO = '';
+                  $supplierId = '';
+                  if($_GET){
+                    $status = $_GET['status'];
+                    $tglPO = $_GET['tglPO'];
+                    $supplierId = $_GET['supplierId'];
+                  }
+                @endphp
+                <form action="" method="GET" id="form-filter">
+                  <div class="form-row">
+                    <div class="col">
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Pilih Status...</option>
+                        <option value="1" {{ ($status == '1')?'selected':'' }}>Pending</option>
+                        <option value="2" {{ ($status == '2')?'selected':'' }}>Acc</option>
+                        <option value="3" {{ ($status == '3')?'selected':'' }}>Ditolak</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <input type="date" name="tglPO" id="tglPo" class="form-control" value="{{ $tglPO }}">
+                    </div>
+                    <div class="col">
+                      <select name="supplierId" id="supplierId" class="form-control">
+                        <option value="">Pilih Supplier...</option>
+                        @foreach($supplier as $sply)
+                          <option value="{{ $sply->id }}" {{ ($supplierId == $sply->id)?'selected':'' }}>{{ $sply->nama }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

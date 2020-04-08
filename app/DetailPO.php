@@ -22,4 +22,8 @@ class DetailPO extends Model
     public function po(){
         return $this->belongsTo('App\PO', 'poId');
     }
+
+    public function rekap(){
+        return $this->hasMany('App\Rekap', 'detailPoId');
+    }
 }

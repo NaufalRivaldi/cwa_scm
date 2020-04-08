@@ -144,6 +144,13 @@ Route::group(['middleware' => 'auth'], function(){
       Route::put('/update', 'VerifikasiController@update')->name('verifikasi.update');
       Route::post('/destroy', 'VerifikasiController@destroy')->name('verifikasi.destroy');
       
+      Route::post('/verifikasi-self', 'VerifikasiController@verself')->name('verifikasi.self');
+   });
+
+   Route::group(['prefix' => 'rekap/', 'middleware' => 'AuthLevel:1,2'], function(){
+      Route::get('/', 'RekapController@index')->name('rekap.index');
+      Route::get('/nopo', 'RekapController@nopo')->name('rekap.nopo');
+      Route::post('/store', 'RekapController@store')->name('rekap.store');
    });
 
 });

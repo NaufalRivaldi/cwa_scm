@@ -109,7 +109,12 @@
   
                   <div class="form-group">
                     <label for="tglPengiriman">Tanggal Pengiriman</label>
-                    <input type="date" class="form-control" id="tglPengiriman" name="tglPengiriman" value="{{ $po->tglPengiriman }}">
+                    <input type="date" class="form-control" id="tglPengiriman" name="tglPengiriman" value="{{ ($po->tglPengiriman == '1000-01-01')?'':$po->tglPengiriman }}" {{ ($po->tglPengiriman == '1000-01-01')?'readonly':'' }}>
+
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="pengiriman" {{ ($po->tglPengiriman == '1000-01-01')?'checked':'' }}>
+                      <label class="form-check-label" for="pengiriman">Pengiriman Bertahap</label>
+                    </div>
     
                     <!-- error -->
                     @if($errors->has('tglPengiriman'))
@@ -567,7 +572,7 @@
         ppn = grandTotal * 0.1;
         $('.ppn').val(ppn);
         $('.jml').val(grandTotal);
-        grandTotal = grandTotal - ppn;
+        grandTotal = grandTotal + ppn;
         $('.grandTotal').val(grandTotal);
     });
 
@@ -619,7 +624,7 @@
       ppn = grandTotal * 0.1;
       $('.ppn').val(ppn);
       $('.jml').val(grandTotal);
-      grandTotal = grandTotal - ppn;
+      grandTotal = grandTotal + ppn;
       $('.grandTotal').val(grandTotal);
     });
 
@@ -651,6 +656,16 @@
         }
       });
       @endif
+
+      // pengiriman bertahap
+      $('#pengiriman').on('click', function(){
+        if($(this).is(':checked')){
+          $('#tglPengiriman').val('');
+          $('#tglPengiriman').attr('readonly', 'readonly');
+        }else{
+          $('#tglPengiriman').removeAttr('readonly');
+        }
+      });
     });
     
   </script>

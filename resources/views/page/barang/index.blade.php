@@ -15,6 +15,16 @@
                   <i class="cil-plus"></i> Tambah
                 </a>
               </div>
+              <div class="col-md-6">
+                <form action="" method="GET" id="form-filter">
+                  <select name="merkId" id="merkId" class="form-control col-md-6 float-right">
+                    <option value="">Pilih Merk...</option>
+                    @foreach($merk as $mr)
+                      <option value="{{ $mr->id }}">{{ $mr->nama }}</option>
+                    @endforeach
+                  </select>
+                </form>
+              </div>
             </div>
           </div>
           <div class="card-body">

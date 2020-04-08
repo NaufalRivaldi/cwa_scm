@@ -172,16 +172,18 @@
             <h5>Verifikasi PO</h5>
           </div>
           <div class="card-body">
-            <form action="" method="POST">
+            <form action="{{ route('verifikasi.self') }}" method="POST">
+              @csrf
+              <input type="hidden" name="id" value="{{ $po->id }}">
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="verifikasiSwitch">
+                <input type="checkbox" class="custom-control-input" id="verifikasiSwitch" name="verifikasi" value="1">
                 <label class="custom-control-label" for="verifikasiSwitch">{{ Auth::user()->nama }} <span class="badge badge-success">{{ level(Auth::user()->level) }}</span></label><br>
                 <small class="mini-text text-muted">Dengan ini anda menyetujui pembuatan PO tersebut.</small>
               </div>
               <button type="submit" class="btn btn-primary mt-3"><i class="cil-save"></i> Simpan</button>
             </form>
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   </div>

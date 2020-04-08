@@ -39,4 +39,16 @@ class VerifikasiController extends Controller
 
         return redirect()->route('verifikasi.index')->with('success', 'PO sudah di verifikasi');
     }
+
+    public function verself(Request $request){
+        $po = PO::find($request->id);
+        if(!empty($request->verifikasi)){
+            $po->status = '2';
+        }else{
+            $po->status = '3';
+        }
+
+        $po->save();
+        return redirect()->route('verifikasi.index')->with('success', 'PO sudah di verifikasi');
+    }
 }
