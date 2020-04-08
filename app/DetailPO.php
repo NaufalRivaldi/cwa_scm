@@ -24,6 +24,6 @@ class DetailPO extends Model
     }
 
     public function rekap(){
-        return $this->hasMany('App\Rekap', 'detailPoId');
+        return $this->hasOne('App\Rekap', 'detailPoId');
     }
 }

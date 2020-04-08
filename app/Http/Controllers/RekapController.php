@@ -55,6 +55,20 @@ class RekapController extends Controller
         }
     }
 
+    public function status(Request $request){
+        $id = $request->id;
+        $val = $request->val;
+        $data = PO::find($id);
+        
+        if($val == '1'){
+            $data->status = '4';
+        }else{
+            $data->status = '2';
+        }
+
+        $data->save();
+    }
+
     public function setTRD($id, $val){
         $data = Rekap::where('detailPoId', $id)->first();
         if(empty($data)){

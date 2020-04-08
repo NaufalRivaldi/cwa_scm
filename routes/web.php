@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/', 'RekapController@index')->name('rekap.index');
       Route::get('/nopo', 'RekapController@nopo')->name('rekap.nopo');
       Route::post('/store', 'RekapController@store')->name('rekap.store');
+      Route::post('/status', 'RekapController@status')->name('rekap.status');
    });
 
 });

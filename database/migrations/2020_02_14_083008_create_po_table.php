@@ -22,7 +22,7 @@ class CreatePoTable extends Migration
             $table->double('ppn');
             $table->double('disc');
             $table->double('grandTotal');
-            $table->enum('status', [1,2,3]);
+            $table->enum('status', [1,2,3,4]);
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('cabangId');
             $table->unsignedBigInteger('supplierId');

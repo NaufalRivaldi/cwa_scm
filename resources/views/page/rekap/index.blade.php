@@ -31,7 +31,24 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h4>Nomer PO : {{ $po->nomer }}</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Nomer PO : {{ $po->nomer }}</h4>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="status" class="float-right col-form-label">Status PO : </label>
+                  </div>
+                  <div class="col-md-6">
+                    <select name="status" id="status" class="form-control" data-id="{{ $po->id }}">
+                      <option value="0" {{ ($po->status < '4')?'selected':'' }}>Progress</option>
+                      <option value="1" {{ ($po->status == '4')?'selected':'' }}>Selesai</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -72,10 +89,10 @@
                       <td>{{ $row->qty }}</td>
                       <td>{{ $row->satuan }}</td>
                       <td>{{ $row->satuan * $row->qty }}</td>
-                      <td><input type="date" name="trd" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="1"></td>
-                      <td><input type="date" name="tdo" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="2"></td>
-                      <td><input type="date" name="td" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="3"></td>
-                      <td><input type="text" name="keterangan" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="4"></td>
+                      <td><input type="date" name="trd" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="1" value="{{ $row->rekap->trd }}"></td>
+                      <td><input type="date" name="tdo" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="2" value="{{ $row->rekap->tdo }}"></td>
+                      <td><input type="date" name="td" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="3" value="{{ $row->rekap->td }}"></td>
+                      <td><input type="text" name="keterangan" class="form-control form-control-sm form-rekap" style="width:250px" data-id="{{ $row->id }}" data-type="4" value="{{ $row->rekap->keterangan }}"></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -146,6 +163,29 @@
         error: function(){
           alertify.set('notifier','position', 'top-right');
           alertify.error('Data gagal diinputkan!');
+        }
+      });
+    });
+
+    $('#status').on('change', function(){
+      let id = $(this).data('id');
+      let val = $(this).val();
+
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('rekap.status') }}",
+        data: {
+          'id' : id,
+          'val' : val,
+          '_token' : '{{ csrf_token() }}'
+        },
+        success: function(){
+          alertify.set('notifier','position', 'top-right');
+          alertify.success('Data PO berhasil diupdate.');
+        },
+        error: function(){
+          alertify.set('notifier','position', 'top-right');
+          alertify.error('Data PO gagal diupdate!');
         }
       });
     });

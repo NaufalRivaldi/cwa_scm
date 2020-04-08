@@ -34,6 +34,7 @@
                         <option value="1" {{ ($status == '1')?'selected':'' }}>Pending</option>
                         <option value="2" {{ ($status == '2')?'selected':'' }}>Acc</option>
                         <option value="3" {{ ($status == '3')?'selected':'' }}>Ditolak</option>
+                        <option value="4" {{ ($status == '4')?'selected':'' }}>Selesai</option>
                       </select>
                     </div>
                     <div class="col">

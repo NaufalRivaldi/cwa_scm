@@ -71,9 +71,13 @@ if (! function_exists('on_php_id')) {
       case '2':
         $text = '<span class="badge badge-success">Acc</span>';
         break;
+
+      case '3':
+        $text = '<span class="badge badge-danger">Ditolak</span>';
+        break;
       
       default:
-        $text = '<span class="badge badge-danger">Ditolak</span>';
+        $text = '<span class="badge badge-info">Selesai</span>';
         break;
     }
 
