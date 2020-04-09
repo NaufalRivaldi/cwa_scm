@@ -15,10 +15,10 @@ class CreateRekapTable extends Migration
     {
         Schema::create('rekap', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('trd');
-            $table->date('tdo');
-            $table->date('td');
-            $table->text('keterangan');
+            $table->date('trd')->nullable();
+            $table->date('tdo')->nullable();
+            $table->date('td')->nullable();
+            $table->text('keterangan')->nullable();
             $table->unsignedBigInteger('detailPoId');
             $table->timestamps();
 

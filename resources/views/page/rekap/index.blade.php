@@ -89,10 +89,10 @@
                       <td>{{ $row->qty }}</td>
                       <td>{{ $row->satuan }}</td>
                       <td>{{ $row->satuan * $row->qty }}</td>
-                      <td><input type="date" name="trd" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="1" value="{{ $row->rekap->trd }}"></td>
-                      <td><input type="date" name="tdo" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="2" value="{{ $row->rekap->tdo }}"></td>
-                      <td><input type="date" name="td" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="3" value="{{ $row->rekap->td }}"></td>
-                      <td><input type="text" name="keterangan" class="form-control form-control-sm form-rekap" style="width:250px" data-id="{{ $row->id }}" data-type="4" value="{{ $row->rekap->keterangan }}"></td>
+                      <td><input type="date" name="trd" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="1" value="{{ (!empty($row->rekap->trd))?$row->rekap->trd:'' }}"></td>
+                      <td><input type="date" name="tdo" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="2" value="{{ (!empty($row->rekap->tdo))?$row->rekap->tdo:'' }}"></td>
+                      <td><input type="date" name="td" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="3" value="{{ (!empty($row->rekap->td))?$row->rekap->td:'' }}"></td>
+                      <td><input type="text" name="keterangan" class="form-control form-control-sm form-rekap" style="width:250px" data-id="{{ $row->id }}" data-type="4" value="{{ (!empty($row->rekap->keterangan))?$row->rekap->keterangan:'' }}"></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -146,6 +146,7 @@
       let val = $(this).val();
       let id = $(this).data('id');
       let type = $(this).data('type');
+      // console.log('val: '+val+ ', id: '+id+', type:'+type);
       
       $.ajax({
         type: "POST",

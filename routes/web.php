@@ -154,4 +154,12 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/status', 'RekapController@status')->name('rekap.status');
    });
 
+   Route::group(['prefix' => 'laporan/'], function(){
+      Route::group(['prefix' => 'rekap'], function(){
+         Route::get('/', 'Laporan\RekapController@index')->name('laporan.rekap.index');
+         Route::get('/export', 'Laporan\RekapController@export')->name('laporan.rekap.export');
+         Route::get('/view', 'Laporan\RekapController@view')->name('laporan.rekap.view');
+      });
+   });
+
 });

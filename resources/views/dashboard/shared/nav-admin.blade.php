@@ -8,6 +8,7 @@
             Dashboard
           </a>
         </li>
+
         <li class="c-sidebar-nav-title">MASTER</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('user.index') }}" class="c-sidebar-nav-link">
@@ -51,6 +52,7 @@
             </li>
           </ul>
         </li>
+
         <li class="c-sidebar-nav-title">PEMBELIAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('po.index') }}" class="c-sidebar-nav-link">
@@ -70,6 +72,15 @@
           Rekap PO
           </a>
         </li>
+
+        <li class="c-sidebar-nav-title">LAPORAN</li>
+        <li class="c-sidebar-nav-item">
+          <a href="{{ route('laporan.rekap.index') }}" class="c-sidebar-nav-link">
+          <i class="cil-file c-sidebar-nav-icon"></i>
+          Rekap PO
+          </a>
+        </li>
+
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">
