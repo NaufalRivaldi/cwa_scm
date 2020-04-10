@@ -10,12 +10,14 @@
         </li>
 
         <li class="c-sidebar-nav-title">MASTER</li>
+        @if(isSU(Auth::user()->status))
         <li class="c-sidebar-nav-item">
           <a href="{{ route('user.index') }}" class="c-sidebar-nav-link">
             <i class="cil-user c-sidebar-nav-icon"></i>
             User
           </a>
         </li>
+        @endif
         <li class="c-sidebar-nav-item">
           <a href="{{ route('supplier.index') }}" class="c-sidebar-nav-link">
           <i class="cil-truck c-sidebar-nav-icon"></i>
@@ -60,12 +62,14 @@
           PO
           </a>
         </li>
+        @if(isSU(Auth::user()->status))
         <li class="c-sidebar-nav-item">
           <a href="{{ route('verifikasi.index') }}" class="c-sidebar-nav-link">
           <i class="cil-file c-sidebar-nav-icon"></i>
           Verifikasi PO
           </a>
         </li>
+        @endif
         <li class="c-sidebar-nav-item">
           <a href="{{ route('rekap.index') }}" class="c-sidebar-nav-link">
           <i class="cil-notes c-sidebar-nav-icon"></i>
@@ -80,7 +84,8 @@
           Rekap PO
           </a>
         </li>
-
+        
+        @if(isSU(Auth::user()->status))
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">
@@ -88,6 +93,7 @@
           Perusahaan
           </a>
         </li>
+        @endif
       </ul>
 
       <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

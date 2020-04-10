@@ -84,4 +84,12 @@ if (! function_exists('on_php_id')) {
     return $text;
   }
 
+  function isSU($status){
+    if($status == '2'){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

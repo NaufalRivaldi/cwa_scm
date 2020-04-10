@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // cabang
-   Route::group(['prefix' => 'cabang/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'cabang/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'CabangController@index')->name('cabang.index');
       Route::get('/form', 'CabangController@form')->name('cabang.form');
       Route::get('/{id}/edit', 'CabangController@form')->name('cabang.edit');
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // wilayah
-   Route::group(['prefix' => 'wilayah/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'wilayah/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'WilayahController@index')->name('wilayah.index');
       Route::get('/form', 'WilayahController@form')->name('wilayah.form');
       Route::get('/{id}/edit', 'WilayahController@form')->name('wilayah.edit');
@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // supplier
-   Route::group(['prefix' => 'supplier/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'supplier/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'SupplierController@index')->name('supplier.index');
       Route::get('/{id}/view', 'SupplierController@view')->name('supplier.view');
       Route::get('/form', 'SupplierController@form')->name('supplier.form');
@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // Merk
-   Route::group(['prefix' => 'merk/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'merk/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'MerkController@index')->name('merk.index');
       Route::get('/form', 'MerkController@form')->name('merk.form');
       Route::get('/{id}/edit', 'MerkController@form')->name('merk.edit');
@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // barang
-   Route::group(['prefix' => 'barang/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'barang/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'BarangController@index')->name('barang.index');
       Route::get('/form', 'BarangController@form')->name('barang.form');
       Route::get('/{id}/edit', 'BarangController@form')->name('barang.edit');
@@ -113,7 +113,7 @@ Route::group(['middleware' => 'auth'], function(){
    });
 
    // po
-   Route::group(['prefix' => 'po/', 'middleware' => 'AuthLevel:2'], function(){
+   Route::group(['prefix' => 'po/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'PoController@index')->name('po.index');
       Route::get('/form', 'PoController@form')->name('po.form');
       Route::get('/{id}/edit', 'PoController@form')->name('po.edit');
