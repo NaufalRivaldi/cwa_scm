@@ -7,13 +7,16 @@
         <div class="c-avatar"><i class="fa fa-user"></i></div>
         Halo, {{ Auth::user()->nama }}
         <div class="dropdown-menu dropdown-menu-right pt-0">
-          <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
+          <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
+          <a class="dropdown-item" href="{{ route('profile.index') }}">
             <svg class="c-icon mr-2">
               <use xlink:href="{{ asset('/assets/icons/coreui/free-symbol-defs.svg#cui-user') }}"></use>
-            </svg> Profile</a><a class="dropdown-item" href="#">
+            </svg> Profile</a>
+          <a class="dropdown-item" href="{{ route('profile.ubahpassword') }}">
             <svg class="c-icon mr-2">
               <use xlink:href="{{ asset('/assets/icons/coreui/free-symbol-defs.svg#cui-settings') }}"></use>
-            </svg> Settings</a><a class="dropdown-item" href="#">
+            </svg> Ubah Password</a>
+          <a class="dropdown-item" href="#">
             <svg class="c-icon mr-2">
               <use xlink:href="{{ asset('/assets/icons/coreui/free-symbol-defs.svg#cui-account-logout') }}"></use>
             </svg><form action="{{ route('logout') }}" method="POST"> @csrf <button type="submit" class="btn btn-ghost-dark btn-block">Logout</button></form></a>

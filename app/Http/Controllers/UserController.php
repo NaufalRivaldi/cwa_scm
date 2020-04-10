@@ -74,7 +74,9 @@ class UserController extends Controller
     public function update(UserRequest $request){
         $ttd = $request->ttdOld;
         if($request->hasFile('ttd')){
-            unlink(public_path('upload/ttd/'.$request->ttdOld));
+            if($request->ttdOld != 'ttd.png'){
+                unlink(public_path('upload/ttd/'.$request->ttdOld));
+            }
             $ttd = $this->upload($request);
         }
 

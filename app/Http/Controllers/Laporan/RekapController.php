@@ -29,4 +29,11 @@ class RekapController extends Controller
         
         return view('page.laporan.rekap.index', $data);
     }
+
+    public function view($id){
+        $data['no'] = '1';
+        $data['po'] = PO::find($id);
+
+        return view('page.laporan.rekap.view', $data);
+    }
 }

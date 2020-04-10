@@ -158,8 +158,16 @@ Route::group(['middleware' => 'auth'], function(){
       Route::group(['prefix' => 'rekap'], function(){
          Route::get('/', 'Laporan\RekapController@index')->name('laporan.rekap.index');
          Route::get('/export', 'Laporan\RekapController@export')->name('laporan.rekap.export');
-         Route::get('/view', 'Laporan\RekapController@view')->name('laporan.rekap.view');
+         Route::get('/{id}/view', 'Laporan\RekapController@view')->name('laporan.rekap.view');
       });
+   });
+
+   Route::group(['prefix' => 'profile/'], function(){
+      Route::get('/', 'ProfileController@index')->name('profile.index');
+      Route::get('/{id}/edit', 'ProfileController@edit')->name('profile.edit');
+      Route::put('/update', 'ProfileController@update')->name('profile.update');
+      Route::get('/ubah-password', 'ProfileController@ubahPassword')->name('profile.ubahpassword');
+      Route::post('/repassword', 'ProfileController@repassword')->name('profile.repassword');
    });
 
 });

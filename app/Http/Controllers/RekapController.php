@@ -26,7 +26,7 @@ class RekapController extends Controller
         }else{
             $cari = '';
         }
-        $data = PO::where('status', '2')->where('nomer', 'like', '%'.$cari.'%')->get();
+        $data = PO::where('status', '!=', '1')->where('status', '!=', '3')->where('nomer', 'like', '%'.$cari.'%')->get();
 
         return response()->json($data);
     }
