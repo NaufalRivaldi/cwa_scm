@@ -97,6 +97,33 @@
           <div class="card-header">
             Histori PO
           </div>
+          <div class="card-body">
+            <table class="table table-bordered dataTable">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No PO</th>
+                  <th>Tanggal</th>
+                  <th>Supplier</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                @php $no = 1; @endphp
+                @foreach($barang->detailPO as $row)
+                  @if($row->po->status != '3')
+                    <tr>
+                      <td>{{ $no++ }}</td>
+                      <td>{{ $row->po->nomer }}</td>
+                      <td>{{ $row->po->tglPO }}</td>
+                      <td>{{ $row->po->supplier->nama }}</td>
+                      <td>{{ $row->qty }}</td>
+                    </tr>
+                  @endif
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
