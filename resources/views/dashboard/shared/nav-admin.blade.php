@@ -10,7 +10,7 @@
         </li>
 
         <li class="c-sidebar-nav-title">MASTER</li>
-        @if(isSU(Auth::user()->status))
+        @if(isSU(Auth::user()->level))
         <li class="c-sidebar-nav-item">
           <a href="{{ route('user.index') }}" class="c-sidebar-nav-link">
             <i class="cil-user c-sidebar-nav-icon"></i>
@@ -62,7 +62,7 @@
           PO
           </a>
         </li>
-        @if(isSU(Auth::user()->status))
+        @if(isSU(Auth::user()->level))
         <li class="c-sidebar-nav-item">
           <a href="{{ route('verifikasi.index') }}" class="c-sidebar-nav-link">
           <i class="cil-file c-sidebar-nav-icon"></i>
@@ -85,7 +85,7 @@
           </a>
         </li>
         
-        @if(isSU(Auth::user()->status))
+        @if(isSU(Auth::user()->level))
         <li class="c-sidebar-nav-title">PENGATURAN</li>
         <li class="c-sidebar-nav-item">
           <a href="{{ route('perusahaan.index') }}" class="c-sidebar-nav-link">

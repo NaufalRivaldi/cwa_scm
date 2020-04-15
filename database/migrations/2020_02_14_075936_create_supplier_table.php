@@ -18,12 +18,12 @@ class CreateSupplierTable extends Migration
             $table->string('kode', 10)->unique();
             $table->string('nama', 50);
             $table->enum('tax', [0,1]);
-            $table->text('alamat');
-            $table->string('telp', 50);
-            $table->string('fax', 7);
-            $table->string('email', 100);
-            $table->integer('kredit');
-            $table->string('pic', 25);
+            $table->text('alamat')->nullable();
+            $table->string('telp', 50)->nullable();
+            $table->string('fax', 7)->nullable();
+            $table->string('email', 100)->nullable();
+            $table->integer('kredit')->nullable();
+            $table->string('pic', 25)->nullable();
             $table->unsignedBigInteger('wilayahId');
 
             // fk
