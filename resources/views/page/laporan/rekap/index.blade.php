@@ -11,7 +11,13 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-3">
-                <a href="{{ route('laporan.rekap.export') }}" class="btn btn-primary">
+              
+                <?php
+                    $url = '';
+                    if($_GET)
+                        $url = '?'.$_SERVER['QUERY_STRING'];
+                ?>
+                <a href="{{ route('laporan.rekap.export').$url }}" class="btn btn-primary">
                   <i class="cil-print"></i> Export
                 </a>
               </div>
