@@ -159,6 +159,7 @@ Route::group(['middleware' => 'auth'], function(){
          Route::get('/', 'Laporan\RekapController@index')->name('laporan.rekap.index');
          Route::get('/export', 'Laporan\RekapController@export')->name('laporan.rekap.export');
          Route::get('/{id}/view', 'Laporan\RekapController@view')->name('laporan.rekap.view');
+         Route::get('/export', 'Laporan\RekapController@export')->name('laporan.rekap.export');
       });
    });
 
