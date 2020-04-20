@@ -78,7 +78,7 @@ class PoController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadview('page.po.print_invoice', $data)->setPaper('a5', 'potrait');
         return $pdf->stream();
-        // return view('page.po.print', $data);
+        // return view('page.po.print_invoice', $data);
     }   
 
     public function store(PoRequest $request){

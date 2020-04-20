@@ -44,12 +44,24 @@
       top: 15;
       opacity: .5;
     }
+
+    .table-custom > thead > tr > th{
+      border: 1px solid #000 !important;
+    }
+
+    .table-custom > tbody > tr > td{
+      border: 1px solid #000 !important;
+    }
+
+    .table-custom > tfoot > tr > th{
+      border: 1px solid #000 !important;
+    }
   </style>
 </head>
 <body>
   <div class="row-n">
     <div class="header1">
-      <img src="{{ asset('img/logo/logo-trans.png') }}" alt="logo" width="70px">
+      <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
     </div>
     <div class="header2">
       <p>
@@ -59,7 +71,7 @@
         NO.{{ $po->nomer }}
       </p>
     </div>
-    <div class="header1">
+    <div class="header1" style="font-size:.8em">
       <p>
         No Form : FO-SCM-001<br>
         No Revisi : 01<br>
@@ -136,7 +148,7 @@
   </div>
   <br><br><br><br><br><br><br><br><br><br>
   <div class="row-n">
-    <table class='table-bordered' width="100%">
+    <table class='table-custom' width="100%">
       <thead>
         <tr>
           <th width="5%">No</th>
@@ -187,25 +199,29 @@
   </div>
   <br><br><br><br>
   <div class="row-n">
-    <table class='table table-bordered'>
-      <tr>
-        <th>Alamat Pengiriman:</th>
-        <th>Alamat Penagihan:</th>
-      </tr>
-      <tr>
-        <th>
-          {{ $po->cabang->nama }}<br>
-          {{ $po->cabang->alamat }}<br>
-          P : {{ $po->cabang->alamat }}<br>
-          UP : {{ $po->cabang->pic }}
-        </th>
-        <th>
-          {{ $perusahaan->nama }}<br>
-          {{ $perusahaan->alamat }}<br>
-          P : {{ $perusahaan->alamat }}<br>
-          UP : {{ $perusahaan->pic }}
-        </th>
-      </tr>
+    <table class='table table-custom'>
+      <thead>
+        <tr>
+          <th>Alamat Pengiriman:</th>
+          <th>Alamat Penagihan:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{ $po->cabang->nama }}<br>
+            {{ $po->cabang->alamat }}<br>
+            P : {{ $po->cabang->alamat }}<br>
+            UP : {{ $po->cabang->pic }}
+          </td>
+          <td>
+            {{ $perusahaan->nama }}<br>
+            {{ $perusahaan->alamat }}<br>
+            P : {{ $perusahaan->alamat }}<br>
+            UP : {{ $perusahaan->pic }}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
