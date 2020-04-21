@@ -202,11 +202,33 @@ class PoController extends Controller
 
     public function dataHarga(Request $request){
         $data = Supply::where('barangId', $request->barangId)->where('supplierId', $request->supplierId)->first();
-        $array = [
-            'harga' => $data->harga,
-            'diskon' => $data->diskon,
-            'berat' => $data->barang->berat
-        ];
+        $barang = Barang::find($request->barangId);
+        
+        if(empty($data)){
+            $array = [
+                'harga' => '0',
+                'diskon' => '0',
+                'berat' => $barang->berat
+            ];
+        }elseif(empty($data->harga)){
+            $array = [
+                'harga' => '0',
+                'diskon' => $data->diskon,
+                'berat' => $barang->berat
+            ];
+        }elseif(empty($data->diskon)){
+            $array = [
+                'harga' => $data->harga,
+                'diskon' => '0',
+                'berat' => $barang->berat
+            ];
+        }else{
+            $array = [
+                'harga' => $data->harga,
+                'diskon' => $data->diskon,
+                'berat' => $barang->berat
+            ];
+        }
 
         return response()->json($array);
     }

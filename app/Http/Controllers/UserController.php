@@ -46,7 +46,7 @@ class UserController extends Controller
         User::create([
             'nama' => $request->nama,
             'username' => $request->username,
-            'password' => bcrypt('12346'),
+            'password' => bcrypt('12345'),
             'ttd' => $ttd,
             'level' => $request->level,
             'remember_token' => Str::random(20)
