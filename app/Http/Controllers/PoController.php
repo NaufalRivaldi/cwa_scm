@@ -41,7 +41,7 @@ class PoController extends Controller
     public function form($id = null){
         if(empty($id)){
             $data['po'] = (object)[
-                'nomer' => $this->nomerPo(),
+                'nomer' => '',
                 'tglPO' => date('Y-m-d'),
                 'tglPengiriman' => '',
                 'total' => '',
@@ -233,19 +233,33 @@ class PoController extends Controller
         return response()->json($array);
     }
 
-    public function nomerPo(){
+    public function nomerPo(Request $request){
         $nomor = '';
+        $supplierId = $request->id;
+        $supplier = Supplier::find($supplierId);
+        $kodeSupplier = $supplier->kode.'-'.$supplier->wilayah->nama;
+        
         $bulan = $this->romawi(date('n'));
         $tahun = date('Y');
-        $key = $bulan.'/'.$tahun;
+        $key = $kodeSupplier.'/'.$bulan.'/'.$tahun;
 
         $data = PO::where('nomer', 'like', '%'.$key.'%')->orderBy('id', 'desc')->first();
         if(empty($data)){
-            $nomor = '1/WLDN-DPS/'.$bulan.'/'.$tahun;
+            $nomor = '0001/'.$kodeSupplier.'/'.$bulan.'/'.$tahun;
         }else{
             $row = explode('/', $data->nomer);
             $row[0] += 1;
-            $nomor = $row[0].'/'.$row[1].'/'.$row[2].'/'.$row[3];
+            
+            if(strlen($row[0]) == 1){
+                $que = '000'.$row[0];
+            }elseif(strlen($row[0]) == 2){
+                $que = '00'.$row[0];
+            }elseif(strlen($row[0]) == 3){
+                $que = '0'.$row[0];
+            }else{
+                $que = $row[0];
+            }
+            $nomor = $que.'/'.$row[1].'/'.$row[2].'/'.$row[3];
         }
 
         return $nomor;

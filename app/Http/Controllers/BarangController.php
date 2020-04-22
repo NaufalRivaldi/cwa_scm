@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\BarangRequest;
+use App\Imports\BarangImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Barang;
 use App\Supplier;
@@ -72,6 +74,20 @@ class BarangController extends Controller
         }
 
         return redirect()->route('barang.index')->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function import(Request $request){
+        $this->validate($request,[
+            'file' => 'required|mimes:csv,xlsx,xls'
+        ]);
+
+        $file = $request->file('file');
+        $fileName = date('Y-m-d').'-barang.'.$file->getClientOriginalExtension();
+        $file->move(public_path('import/barang'), $fileName);
+
+        Excel::import(new BarangImport, public_path('/import/barang/'.$fileName));
+        
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diimport');
     }
 
     public function update(BarangRequest $request){
