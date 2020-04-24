@@ -40,6 +40,7 @@
                     <th>Merk</th>
                     <th>Nama</th>
                     <th>Berat (Kg)</th>
+                    <th>Kemasan</th>
                     <th>Base</th>
                     <th>Aksi</th>
                   </tr>
@@ -52,6 +53,7 @@
                     <td>{{ $row->merk->kodeMerk }}</td>
                     <td>{{ $row->nama }}</td>
                     <td>{{ $row->berat }}</td>
+                    <td>{{ $row->kemasan }}</td>
                     <td>{!! boolean($row->base) !!}</td>
                     <td>
                       <a href ="{{ route('barang.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>

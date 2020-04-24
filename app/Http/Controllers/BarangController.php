@@ -36,6 +36,7 @@ class BarangController extends Controller
                 'nama' => '',
                 'base' => '',
                 'berat' => '',
+                'kemasan' => '',
                 'merkId' => '',
             ];
         }else{
@@ -58,6 +59,7 @@ class BarangController extends Controller
             'nama' => $request->nama,
             'base' => $request->base,
             'berat' => $request->berat,
+            'kemasan' => $request->kemasan,
             'merkId' => $request->merkId
         ]);
 
@@ -96,6 +98,7 @@ class BarangController extends Controller
         $data->nama = $request->nama;
         $data->base = $request->base;
         $data->berat = $request->berat;
+        $data->kemasan = $request->kemasan;
         $data->merkId = $request->merkId;
         $data->save();
 

@@ -11,7 +11,7 @@ class PO extends Model
 
     protected $table = 'po';
     protected $fillable = [
-        'nomer', 'tglPO', 'tglPengiriman', 'total', 'ppn', 'disc', 'grandTotal', 'note', 'status', 'userId', 'cabangId', 'supplierId'
+        'nomer', 'tglPO', 'tglPengiriman', 'total', 'ppn', 'disc', 'grandTotal', 'note', 'status', 'metodePembayaran', 'userId', 'cabangId', 'supplierId'
     ];
     protected $dates = ['deleted_at'];
 

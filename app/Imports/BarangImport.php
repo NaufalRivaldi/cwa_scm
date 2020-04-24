@@ -29,6 +29,7 @@ class BarangImport implements ToModel, WithHeadingRow
                 'nama' => $row['nama'],
                 'base' => $base,
                 'berat' => $row['berat'],
+                'kemasan' => $row['kemasan'],
                 'merkId' => $data->id,
             ]);
         }

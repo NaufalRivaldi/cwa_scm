@@ -8,7 +8,7 @@ class Barang extends Model
 {
     protected $table = 'barang';
     protected $fillable = [
-        'kodeBarang', 'nama', 'base', 'berat', 'merkId'
+        'kodeBarang', 'nama', 'base', 'berat', 'kemasan', 'merkId'
     ];
 
     public $timestamps = false;
