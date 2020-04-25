@@ -208,25 +208,25 @@ class PoController extends Controller
             $array = [
                 'harga' => '0',
                 'diskon' => '0',
-                'berat' => $barang->berat
+                'kemasan' => $barang->kemasan
             ];
         }elseif(empty($data->harga)){
             $array = [
                 'harga' => '0',
                 'diskon' => $data->diskon,
-                'berat' => $barang->berat
+                'kemasan' => $barang->kemasan
             ];
         }elseif(empty($data->diskon)){
             $array = [
                 'harga' => $data->harga,
                 'diskon' => '0',
-                'berat' => $barang->berat
+                'kemasan' => $barang->kemasan
             ];
         }else{
             $array = [
                 'harga' => $data->harga,
                 'diskon' => $data->diskon,
-                'berat' => $barang->berat
+                'kemasan' => $barang->kemasan
             ];
         }
 
