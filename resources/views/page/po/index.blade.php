@@ -75,7 +75,7 @@
                     <td>{{ $row->nomer }}</td>
                     <td>{{ dateReverse($row->tglPO) }}</td>
                     <td>{{ $row->supplier->nama }}</td>
-                    <td>{{ number_format($row->grandTotal) }}</td>
+                    <td>{{ number_format($row->total) }}</td>
                     <td>{!! statusPO($row->status) !!}</td>
                     <td>{{ $row->user->nama }}</td>
                     <td>
