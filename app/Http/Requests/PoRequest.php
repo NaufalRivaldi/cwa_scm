@@ -35,8 +35,10 @@ class PoRequest extends FormRequest
             'supplierId' => 'required',
             'nomer' => 'required',
             'tglPO' => 'required|date',
-            'masaPembayaran' => 'required|numeric',
-            'grandTotal' => 'required|numeric'
+            'kredit' => 'required|numeric',
+            'metodePembayaran' => 'required',
+            'jml' => 'required',
+            'cabangId' => 'required',
         ];
     }
 }

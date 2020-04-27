@@ -71,7 +71,7 @@
         NO.{{ $po->nomer }}
       </p>
     </div>
-    <div class="header1" style="font-size:.8em">
+    <div class="header1" style="font-size:.9em">
       <p>
         No Form : FO-SCM-001<br>
         No Revisi : 01<br>
@@ -83,11 +83,9 @@
   <hr>
   <div class="row-n">
     <div class="column">
-      <p>
-        Kepada Yth,<br>
-        {{ $po->supplier->nama }}<br>
-        {{ $po->supplier->alamat }}<br>
-      </p>
+      Kepada Yth,<br>
+      {{ $po->supplier->nama }}<br>
+      {{ $po->supplier->alamat }}<br>
       <table>
         <tr>
           <td>Phone</td>
@@ -134,6 +132,11 @@
           <td>{{ date('d F Y', strtotime($po->tglPengiriman)) }}</td>
         </tr>
         <tr>
+          <td>Jenis Pembayaran</td>
+          <td>:</td>
+          <td>{{ metodePembayaran($po->metodePembayaran) }}</td>
+        </tr>
+        <tr>
           <td>Contact Person</td>
           <td>:</td>
           <td>{{ $po->user->nama }}</td>
@@ -164,9 +167,6 @@
       <tbody>
         @foreach($po->detailPO as $row)
         <tr>
-          @php
-            $total = ($row->qty * $row->harga) - (($row->qty * $row->harga) * ($row->disc / 100));
-          @endphp
           <td width="5%">{{ $no++ }}</td>
           <td width="15">{{ $row->barang->kodeBarang }}</td>
           <td width="30%">{{ $row->barang->nama }}</td>
@@ -174,30 +174,27 @@
           <td>{{ $row->satuan }}</td>
           <td>{{ number_format($row->harga) }}</td>
           <td>{{ $row->disc }}</td>
-          <td class="text-right">{{ number_format($total) }}</td>
+          <td class="text-right">{{ number_format(diskon($row->harga, $row->qty, $row->disc)) }}</td>
         </tr>
         @endforeach
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="3" rowspan="3">
+          <th colspan="3">
             <p>Note :<br>{{ $po->note }}</p>
           </th>
           <th colspan="4" class="text-center">Total</th>
           <th class="text-right">{{ number_format($po->total) }}</th>
         </tr>
         <tr>
-          <th colspan="4" class="text-center">PPN</th>
-          <th class="text-right">{{ number_format($po->ppn) }}</th>
-        </tr>
-        <tr>
-          <th colspan="4" class="text-center">Grand Total</th>
-          <th class="text-right">{{ number_format($po->grandTotal) }}</th>
+          <th colspan="8">
+            Terbilang : {{ ucwords(terbilang($po->total)) }}
+          </th>
         </tr>
       </tfoot>
     </table>
   </div>
-  <br><br><br><br>
+  <br><br>
   <div class="row-n">
     <table class='table table-custom'>
       <thead>

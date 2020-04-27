@@ -43,7 +43,7 @@ class PoController extends Controller
             $data['po'] = (object)[
                 'nomer' => '',
                 'tglPO' => date('Y-m-d'),
-                'tglPengiriman' => '',
+                'tglPengiriman' => date('Y-m-d'),
                 'total' => '',
                 'ppn' => '',
                 'disc' => '',
@@ -97,10 +97,9 @@ class PoController extends Controller
             'tglPO' => $request->tglPO,
             'tglPengiriman' => $tglPengiriman,
             'total' => $request->jml,
-            'ppn' => $request->ppn,
-            'grandTotal' => $request->grandTotal,
             'note' => $request->note,
             'status' => $status,
+            'metodePembayaran' => $request->metodePembayaran,
             'userId' => Auth::user()->id,
             'cabangId' => $request->cabangId,
             'supplierId' => $request->supplierId
@@ -120,7 +119,7 @@ class PoController extends Controller
             }
         }
 
-        return redirect()->route('po.index')->with('success', 'PO berhasil di buat.');
+        return redirect()->route('po.view', ['id' => $data->id])->with('success', 'PO berhasil di buat.');
     }
 
     public function update(PoRequest $request){

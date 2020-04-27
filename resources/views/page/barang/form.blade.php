@@ -296,7 +296,7 @@
     @if(empty($barang->id))
       var i = {{ $no }};
     @else
-      var i = 1;
+      var i = 2;
     @endif
     $('#plus').click(function (e) {
         e.preventDefault();

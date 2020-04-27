@@ -137,8 +137,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="jenisPembayaran">Jenis Pembayaran</label>
-                    <select name="jenisPembayaran" id="jenisPembayaran" class="form-control" required>
+                    <label for="metodePembayaran">Jenis Pembayaran</label>
+                    <select name="metodePembayaran" id="metodePembayaran" class="form-control" required>
                       <option value="">Pilih</option>
                       <option value="TF">Transfer</option>
                       <option value="BG">BG</option>
@@ -146,9 +146,9 @@
                     </select>
     
                     <!-- error -->
-                    @if($errors->has('jenisPembayaran'))
+                    @if($errors->has('metodePembayaran'))
                       <div class="text-danger">
-                        {{ $errors->first('jenisPembayaran') }}
+                        {{ $errors->first('metodePembayaran') }}
                       </div>
                     @endif
                   </div>
@@ -181,60 +181,67 @@
                   
                   <div id="formPlus">
                     @if(empty($po->id))
-                    <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
-                      <div class="col-md-5">
-                        <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1" required>
-                        </select>
-
-                        <!-- error -->
-                          @if($errors->has('barangId'))
-                          <div class="text-danger">
-                            {{ $errors->first('barangId') }}
+                    <div id="row1">
+                      <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
+                        <div class="col-md-5">
+                          <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1" required>
+                          </select>
+  
+                          <!-- error -->
+                            @if($errors->has('barangId'))
+                            <div class="text-danger">
+                              {{ $errors->first('barangId') }}
+                            </div>
+                          @endif
+                        </div>
+                        <div class="col-md-1">
+                          <input type="number" name="qty[]" class="form-control dataQty1" placeholder="Qty" required>
+  
+                          <!-- error -->
+                          @if($errors->has('qty'))
+                            <div class="text-danger">
+                              {{ $errors->first('qty') }}
+                            </div>
+                          @endif
+                        </div>
+                        <div class="col-md-1">
+                          <input type="text" name="kemasan[]" class="form-control dataKemasan1 kemasan1" placeholder="" readonly>
+  
+                          <!-- error -->
+                          @if($errors->has('kemasan'))
+                            <div class="text-danger">
+                              {{ $errors->first('kemasan') }}
+                            </div>
+                          @endif
+                        </div>
+                        <div class="col-md-2">
+                          <input type="number" name="harga[]" id="harga1" class="form-control price1 dataHarga1" placeholder="Harga" required>
+  
+                          <!-- error -->
+                          @if($errors->has('harga'))
+                            <div class="text-danger">
+                              {{ $errors->first('harga') }}
+                            </div>
+                          @endif
+                        </div>
+                        <div class="col-md-1">
+                          <input type="text" name="disc[]" class="form-control disc1 dataDiskon1" placeholder="Disc" step="0.01" required>
+  
+                          <!-- error -->
+                          @if($errors->has('disc'))
+                            <div class="text-danger">
+                              {{ $errors->first('disc') }}
+                            </div>
+                          @endif
+                        </div>
+                        <div class="col-md-2">
+                          <div class="input-group">
+                            <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
+                            <div class="input-group-append">
+                              <button class="btn btn-danger cil-minus remove" type="button" id="1"></button>
+                            </div>
                           </div>
-                        @endif
-                      </div>
-                      <div class="col-md-1">
-                        <input type="number" name="qty[]" class="form-control dataQty1" placeholder="Qty" required>
-
-                        <!-- error -->
-                        @if($errors->has('qty'))
-                          <div class="text-danger">
-                            {{ $errors->first('qty') }}
-                          </div>
-                        @endif
-                      </div>
-                      <div class="col-md-1">
-                        <input type="text" name="kemasan[]" class="form-control dataKemasan1 kemasan1" placeholder="" readonly>
-
-                        <!-- error -->
-                        @if($errors->has('kemasan'))
-                          <div class="text-danger">
-                            {{ $errors->first('kemasan') }}
-                          </div>
-                        @endif
-                      </div>
-                      <div class="col-md-2">
-                        <input type="number" name="harga[]" id="harga1" class="form-control price1 dataHarga1" placeholder="Harga" required>
-
-                        <!-- error -->
-                        @if($errors->has('harga'))
-                          <div class="text-danger">
-                            {{ $errors->first('harga') }}
-                          </div>
-                        @endif
-                      </div>
-                      <div class="col-md-1">
-                        <input type="text" name="disc[]" class="form-control disc1 dataDiskon1" placeholder="Disc" step="0.01" required>
-
-                        <!-- error -->
-                        @if($errors->has('disc'))
-                          <div class="text-danger">
-                            {{ $errors->first('disc') }}
-                          </div>
-                        @endif
-                      </div>
-                      <div class="col-md-2">
-                        <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
+                        </div>
                       </div>
                     </div>
                     
@@ -268,7 +275,7 @@
                           <div class="col-md-1">
                             @if(!empty($po->id))
                             @endif
-                            <input type="text" name="kemasan[]" class="form-control dataKemasan{{ $i }} kemasan{{ $i }}" placeholder="" readonly value="<?= $row->satuan ?>">
+                            <input type="text" name="kemasan[]" class="form-control dataKemasan{{ $i }} kemasan{{ $i }}" placeholder="" readonly value="<?= $row->kemasan ?>">
               
                             <!-- error -->
                             @if($errors->has('kemasan'))
@@ -335,6 +342,13 @@
                     <label for="jml">Total</label>
                     <input type="number" name="jml" class="form-control jml" step="0.01" readonly value="{{ $po->total }}">
                     <small class="text-info">*include ppn</small>
+
+                    <!-- error -->
+                    @if($errors->has('jml'))
+                      <div class="text-danger">
+                        {{ $errors->first('jml') }}
+                      </div>
+                    @endif
                 </div>
               </div>
 
@@ -473,7 +487,6 @@
       
       var code = e.keyCode || e.which;
       if(code == '9'){
-        console.log('asd');
         $('#formPlus').append(`
         <div id="row`+i+`">
           <div class="form-row mb-2 formChange" data-classqty="dataQty`+i+`" data-classharga="dataHarga`+i+`" data-classdiskon="dataDiskon`+i+`" data-classtotal="dataTotal`+i+`">
@@ -581,7 +594,6 @@
         let harga = $(classHarga).val();
         let diskon = $(classDiskon).val();
         let valArray = diskon.split("+");
-        console.log(valArray);
 
         if(valArray.length == 0){
           valArray = array(0);
@@ -643,22 +655,22 @@
       let harga = $(classHarga).val();
       let diskon = $(classDiskon).val();
       let valArray = diskon.split("+");
+      let totalHarga = 0;
 
       if(diskon != 0){
         for(let i=0; i<valArray.length; i++){
-          if(valArray.lenght>1){
-            totalDiskon += (qty * $('.jml').val())*(valArray[i]/100);
+          if(i>0){
+            totalDiskon += (totalHarga)*(valArray[i]/100);
           }else{
             totalDiskon += (qty * harga)*(valArray[i]/100);
+            totalHarga = ((qty * harga) - totalDiskon);
           }
-          
         }
       }else{
         totalDiskon = 0;
       }
 
       total = (harga * qty) - totalDiskon;
-      console.log(totalDiskon);
       $(classTotal).val(total);
       
       // ppn
