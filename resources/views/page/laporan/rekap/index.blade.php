@@ -64,38 +64,35 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>NO PO</th>
                     <th>Tanggal</th>
-                    <th>Supplier</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Pembuat</th>
-                    <th>Aksi</th>
+                    <th>NO.PO</th>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                    <th>Kemasan</th>
+                    <th>Tonase</th>
+                    <th>TRD</th>
+                    <th>TDO</th>
+                    <th>TD</th>
+                    <th>Keterangan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($po as $row)
-                  @php $total += $row->grandTotal; @endphp
+                  @foreach($detailpo as $row)
                   <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $row->nomer }}</td>
-                    <td>{{ dateReverse($row->tglPO) }}</td>
-                    <td>{{ $row->supplier->nama }}</td>
-                    <td>{{ number_format($row->grandTotal) }}</td>
-                    <td>{!! statusPO($row->status) !!}</td>
-                    <td>{{ $row->user->nama }}</td>
-                    <td>
-                      <a href ="{{ route('laporan.rekap.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
-                    </td>
+                    <td>{!! dateReverse($row->po->tglPO) !!}</td>
+                    <td>{{ $row->po->nomer }}</td>
+                    <td>{{ $row->barang->nama }}</td>
+                    <td>{{ $row->qty }}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ (!empty($row->rekap->trd))?$row->rekap->trd:'' }}</td>
+                    <td>{{ (!empty($row->rekap->tdo))?$row->rekap->tdo:'' }}</td>
+                    <td>{{ (!empty($row->rekap->td))?$row->rekap->td:'' }}</td>
+                    <td>{{ (!empty($row->rekap->keterangan))?$row->rekap->keterangan:'' }}</td>
                   </tr>
                   @endforeach
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th colspan="4" class="text-center">Total</th>
-                    <th colspan="4">{{ number_format($total) }}</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
           </div>
