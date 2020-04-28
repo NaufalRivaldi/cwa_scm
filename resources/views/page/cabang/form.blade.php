@@ -54,7 +54,7 @@
 
                   <div class="form-group">
                     <label for="telp">Telp</label>
-                    <input type="number" class="form-control" id="telp" name="telp" value="{{ $cabang->telp }}">
+                    <input type="text" class="form-control" id="telp" name="telp" value="{{ $cabang->telp }}">
 
                     <!-- error -->
                     @if($errors->has('telp'))

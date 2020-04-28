@@ -35,7 +35,7 @@ class CabangRequest extends FormRequest
         return [
             'nama' => 'required|min:6',
             'alamat' => 'required',
-            'telp' => 'required|numeric',
+            'telp' => 'required',
             'pic' => 'required'
         ];
     }

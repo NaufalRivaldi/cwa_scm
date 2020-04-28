@@ -14,6 +14,9 @@
                 <a href="{{ route('barang.form') }}" class="btn btn-primary">
                   <i class="cil-plus"></i> Tambah
                 </a>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">
+                  <i class="cil-file"></i> Import
+                </button>
               </div>
               <div class="col-md-6">
                 <form action="" method="GET" id="form-filter">
@@ -29,7 +32,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped dataTable">
+              <table class="table table-striped table-custom dataTable">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -37,6 +40,7 @@
                     <th>Merk</th>
                     <th>Nama</th>
                     <th>Berat (Kg)</th>
+                    <th>Kemasan</th>
                     <th>Base</th>
                     <th>Aksi</th>
                   </tr>
@@ -49,6 +53,7 @@
                     <td>{{ $row->merk->kodeMerk }}</td>
                     <td>{{ $row->nama }}</td>
                     <td>{{ $row->berat }}</td>
+                    <td>{{ $row->kemasan }}</td>
                     <td>{!! boolean($row->base) !!}</td>
                     <td>
                       <a href ="{{ route('barang.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
@@ -72,7 +77,40 @@
 
 @section('modal')
 
+<!-- Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importModalLabel">Import Data Excel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('barang.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Pastikan merk sudah ada dimasukkan kedalam data master dan kode merk sama dengan di excel, jika berbeda data tidak akan masuk ke sistem.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
 
+          <div class="form-group">
+            <label for="file">Pilih file excel</label>
+            <input type="file" name="file" id="file" class="form-control" required>
+            <small>*format file excel dapat di download <a href="{{ asset('format/barang.xlsx') }}">disini</a></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 @endsection
 

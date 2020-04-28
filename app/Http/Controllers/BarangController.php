@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\BarangRequest;
+use App\Imports\BarangImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Barang;
 use App\Supplier;
@@ -34,6 +36,7 @@ class BarangController extends Controller
                 'nama' => '',
                 'base' => '',
                 'berat' => '',
+                'kemasan' => '',
                 'merkId' => '',
             ];
         }else{
@@ -56,6 +59,7 @@ class BarangController extends Controller
             'nama' => $request->nama,
             'base' => $request->base,
             'berat' => $request->berat,
+            'kemasan' => $request->kemasan,
             'merkId' => $request->merkId
         ]);
 
@@ -74,12 +78,27 @@ class BarangController extends Controller
         return redirect()->route('barang.index')->with('success', 'Data berhasil disimpan.');
     }
 
+    public function import(Request $request){
+        $this->validate($request,[
+            'file' => 'required|mimes:csv,xlsx,xls'
+        ]);
+
+        $file = $request->file('file');
+        $fileName = date('Y-m-d').'-barang.'.$file->getClientOriginalExtension();
+        $file->move(public_path('import/barang'), $fileName);
+
+        Excel::import(new BarangImport, public_path('/import/barang/'.$fileName));
+        
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diimport');
+    }
+
     public function update(BarangRequest $request){
         $data = Barang::find($request->id);
         $data->kodeBarang = $request->kodeBarang;
         $data->nama = $request->nama;
         $data->base = $request->base;
         $data->berat = $request->berat;
+        $data->kemasan = $request->kemasan;
         $data->merkId = $request->merkId;
         $data->save();
 

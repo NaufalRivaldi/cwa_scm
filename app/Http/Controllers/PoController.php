@@ -41,9 +41,9 @@ class PoController extends Controller
     public function form($id = null){
         if(empty($id)){
             $data['po'] = (object)[
-                'nomer' => $this->nomerPo(),
+                'nomer' => '',
                 'tglPO' => date('Y-m-d'),
-                'tglPengiriman' => '',
+                'tglPengiriman' => date('Y-m-d'),
                 'total' => '',
                 'ppn' => '',
                 'disc' => '',
@@ -78,7 +78,7 @@ class PoController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadview('page.po.print_invoice', $data)->setPaper('a5', 'potrait');
         return $pdf->stream();
-        // return view('page.po.print', $data);
+        // return view('page.po.print_invoice', $data);
     }   
 
     public function store(PoRequest $request){
@@ -97,10 +97,9 @@ class PoController extends Controller
             'tglPO' => $request->tglPO,
             'tglPengiriman' => $tglPengiriman,
             'total' => $request->jml,
-            'ppn' => $request->ppn,
-            'grandTotal' => $request->grandTotal,
             'note' => $request->note,
             'status' => $status,
+            'metodePembayaran' => $request->metodePembayaran,
             'userId' => Auth::user()->id,
             'cabangId' => $request->cabangId,
             'supplierId' => $request->supplierId
@@ -120,7 +119,7 @@ class PoController extends Controller
             }
         }
 
-        return redirect()->route('po.index')->with('success', 'PO berhasil di buat.');
+        return redirect()->route('po.view', ['id' => $data->id])->with('success', 'PO berhasil di buat.');
     }
 
     public function update(PoRequest $request){
@@ -202,28 +201,64 @@ class PoController extends Controller
 
     public function dataHarga(Request $request){
         $data = Supply::where('barangId', $request->barangId)->where('supplierId', $request->supplierId)->first();
-        $array = [
-            'harga' => $data->harga,
-            'diskon' => $data->diskon,
-            'berat' => $data->barang->berat
-        ];
+        $barang = Barang::find($request->barangId);
+        
+        if(empty($data)){
+            $array = [
+                'harga' => '0',
+                'diskon' => '0',
+                'kemasan' => $barang->kemasan
+            ];
+        }elseif(empty($data->harga)){
+            $array = [
+                'harga' => '0',
+                'diskon' => $data->diskon,
+                'kemasan' => $barang->kemasan
+            ];
+        }elseif(empty($data->diskon)){
+            $array = [
+                'harga' => $data->harga,
+                'diskon' => '0',
+                'kemasan' => $barang->kemasan
+            ];
+        }else{
+            $array = [
+                'harga' => $data->harga,
+                'diskon' => $data->diskon,
+                'kemasan' => $barang->kemasan
+            ];
+        }
 
         return response()->json($array);
     }
 
-    public function nomerPo(){
+    public function nomerPo(Request $request){
         $nomor = '';
+        $supplierId = $request->id;
+        $supplier = Supplier::find($supplierId);
+        $kodeSupplier = $supplier->kode.'-'.$supplier->wilayah->nama;
+        
         $bulan = $this->romawi(date('n'));
         $tahun = date('Y');
-        $key = $bulan.'/'.$tahun;
+        $key = $kodeSupplier.'/'.$bulan.'/'.$tahun;
 
         $data = PO::where('nomer', 'like', '%'.$key.'%')->orderBy('id', 'desc')->first();
         if(empty($data)){
-            $nomor = '1/WLDN-DPS/'.$bulan.'/'.$tahun;
+            $nomor = '0001/'.$kodeSupplier.'/'.$bulan.'/'.$tahun;
         }else{
             $row = explode('/', $data->nomer);
             $row[0] += 1;
-            $nomor = $row[0].'/'.$row[1].'/'.$row[2].'/'.$row[3];
+            
+            if(strlen($row[0]) == 1){
+                $que = '000'.$row[0];
+            }elseif(strlen($row[0]) == 2){
+                $que = '00'.$row[0];
+            }elseif(strlen($row[0]) == 3){
+                $que = '0'.$row[0];
+            }else{
+                $que = $row[0];
+            }
+            $nomor = $que.'/'.$row[1].'/'.$row[2].'/'.$row[3];
         }
 
         return $nomor;

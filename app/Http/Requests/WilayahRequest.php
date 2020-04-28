@@ -24,14 +24,14 @@ class WilayahRequest extends FormRequest
     public function messages(){
         return [
             'required' => 'Kolom ini tidak boleh kosong!',
-            'min' => 'Minimal 6 karakter'
+            'min' => 'Minimal 3 karakter'
         ];
     }
     
     public function rules()
     {
         return [
-            'nama' => 'required|min:6'
+            'nama' => 'required|min:3'
         ];
     }
 }

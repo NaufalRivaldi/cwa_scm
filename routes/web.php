@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::put('/update', 'BarangController@update')->name('barang.update');
       Route::post('/destroy', 'BarangController@destroy')->name('barang.destroy');
       
+      // import
+      Route::post('/import', 'BarangController@import')->name('barang.import');
    });
 
    // po
@@ -124,6 +126,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/cari/merk', 'PoController@loadMerk')->name('po.merk');
       Route::post('/data/supplier', 'PoController@dataSupplier')->name('po.data.supplier');
       Route::get('/data/harga', 'PoController@dataHarga')->name('po.data.harga');
+      Route::get('/data/nomer', 'PoController@nomerPo')->name('po.data.nomer');
       Route::post('/store', 'PoController@store')->name('po.store');
       Route::put('/update', 'PoController@update')->name('po.update');
       Route::post('/destroy', 'PoController@destroy')->name('po.destroy');

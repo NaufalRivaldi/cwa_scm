@@ -2,52 +2,67 @@
 <html>
 <head>
 	<title>PO - {{ $po->nomer }}</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-  <style type="text/css">
+  
+  <style>
     body{
-      font-size: .6em;
+      font-size: 9px;
+      padding: 0;
+      margin: 0;
     }
 
-		table tr td,
-		table tr th{
-			font-size: 1em;
-		}
+    .row-n{
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .header1{
+      float:left;
+      width:20%;
+    }
 
-    .page-break {
-      page-break-after: always;
+    .header2{
+      float:left;
+      width:60%;
+      text-align:center;
+      font-weight:bold;
     }
 
     .column{
+      float: left;
       width: 50%;
-      float: left;
     }
 
-    .columnHeader1{
-      float: left;
-      width: 20%;
+    .img-ttd{
+      position: absolute;
+      top: 5;
     }
 
-    .columnHeader2{
-      float: left;
-      width: 60%;
+    .img-cap{
+      position: absolute;
+      top: 5;
+      opacity: .5;
     }
-	</style>
-  
-  <div class="row">
-    <div class="columnHeader1">
-      <img src="{{ asset('img/logo/logo-trans.png') }}" alt="logo" width="100px">
+
+    .table-custom {background-color:#000;}
+    .table-custom td,th,caption{background-color:#fff}
+
+  </style>
+</head>
+<body>
+  <div class="row-n">
+    <div class="header1">
+      <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
     </div>
-    <div class="columnHeader2 text-center">
-      <h6>
+    <div class="header2">
+      <p>
         FORMULIR PURCHASE ORDER<br>
         {{ strtoupper($perusahaan->nama) }}<br>
         PESANAN PEMBELIAN/PURCHASE ORDER (PO)<br>
         NO.{{ $po->nomer }}
-      </h6>
+      </p>
     </div>
-    <div class="columnHeader1">
+    <div class="header1" style="font-size:.8em">
       <p>
         No Form : FO-SCM-001<br>
         No Revisi : 01<br>
@@ -55,14 +70,13 @@
       </p>
     </div>
   </div>
-  <br><br><br><br><br><br><hr>
-  <div class="row">
+  <br><br><br><br><br>
+  <hr>
+  <div class="row-n">
     <div class="column">
-      <p>
-        Kepada Yth,<br>
-        {{ $po->supplier->nama }}<br>
-        {{ $po->supplier->alamat }}<br>
-      </p>
+      Kepada Yth,<br>
+      {{ $po->supplier->nama }}<br>
+      {{ $po->supplier->alamat }}<br>
       <table>
         <tr>
           <td>Phone</td>
@@ -122,85 +136,86 @@
     </div>
   </div>
   <br><br><br><br><br><br><br><br><br><br>
-	<div class="row mb-2">
-    <div class="col-xs-12">
-      <table class='table-bordered' width="100%">
-        <thead>
-          <tr>
-            <th width="5%">No</th>
-            <th width="100px">Kode</th>
-            <th width="250px">Nama</th>
-            <th>Qty</th>
-            <th>Kemasan</th>
-            <th>Harga (Rp.)</th>
-            <th>Diskon(%)</th>
-            <th>Jumlah (Rp.)</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($po->detailPO as $row)
-          <tr>
-            @php
-              $total = ($row->qty * $row->harga) - (($row->qty * $row->harga) * ($row->disc / 100));
-            @endphp
-            <td width="5%">{{ $no++ }}</td>
-            <td width="15">{{ $row->barang->kodeBarang }}</td>
-            <td width="30%">{{ $row->barang->nama }}</td>
-            <td>{{ $row->qty }}</td>
-            <td>{{ $row->satuan }}</td>
-            <td>{{ number_format($row->harga) }}</td>
-            <td>{{ $row->disc }}</td>
-            <td class="text-right">{{ number_format($total) }}</td>
-          </tr>
-          @endforeach
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="3" rowspan="3">
-              <p>Note :<br>{{ $po->note }}</p>
-            </th>
-            <th colspan="4" class="text-center">Total</th>
-            <th class="text-right">{{ number_format($po->total) }}</th>
-          </tr>
-          <tr>
-            <th colspan="4" class="text-center">PPN</th>
-            <th class="text-right">{{ number_format($po->ppn) }}</th>
-          </tr>
-          <tr>
-            <th colspan="4" class="text-center">Grand Total</th>
-            <th class="text-right">{{ number_format($po->grandTotal) }}</th>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+  <div class="row-n">
+    <table class='table-custom' cellspacing="1" width="100%">
+      <thead>
+        <tr>
+          <th width="5%">No</th>
+          <th width="70px">Kode</th>
+          <th width="120px">Nama</th>
+          <th>Qty</th>
+          <th>Kemasan</th>
+          <th>Harga (Rp.)</th>
+          <th>Disc(%)</th>
+          <th width="70px">Jumlah (Rp.)</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($po->detailPO as $row)
+        <tr>
+          @php
+            $total = ($row->qty * $row->harga) - (($row->qty * $row->harga) * ($row->disc / 100));
+          @endphp
+          <td width="5%">{{ $no++ }}</td>
+          <td width="15">{{ $row->barang->kodeBarang }}</td>
+          <td width="30%">{{ $row->barang->nama }}</td>
+          <td align="right">{{ $row->qty }}</td>
+          <td align="right">{{ $row->satuan }}</td>
+          <td align="right">{{ number_format($row->harga) }}</td>
+          <td align="right">{{ $row->disc }}</td>
+          <td align="right">{{ number_format($total) }}</td>
+        </tr>
+        @endforeach
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="3" rowspan="3" valign="top" align="left">
+            Note :<br>{{ $po->note }}
+          </th>
+          <th colspan="4" class="text-center">Total</th>
+          <th align="right">{{ number_format($po->total) }}</th>
+        </tr>
+        <tr>
+          <th colspan="4" class="text-center">PPN</th>
+          <th align="right">{{ number_format($po->ppn) }}</th>
+        </tr>
+        <tr>
+          <th colspan="4" class="text-center">Grand Total</th>
+          <th align="right">{{ number_format($po->grandTotal) }}</th>
+        </tr>
+      </tfoot>
+    </table>
   </div>
-  
-  <div class="row">
-    <div class="col-xs-12">
-      <table class='table table-bordered'>
+  <br><br>
+  <div class="row-n">
+    <table class='table table-custom' cellspacing="1" width="100%">
+      <thead>
         <tr>
           <th>Alamat Pengiriman:</th>
           <th>Alamat Penagihan:</th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
-          <th>
+          <td>
             {{ $po->cabang->nama }}<br>
             {{ $po->cabang->alamat }}<br>
             P : {{ $po->cabang->alamat }}<br>
             UP : {{ $po->cabang->pic }}
-          </th>
-          <th>
+          </td>
+          <td>
             {{ $perusahaan->nama }}<br>
             {{ $perusahaan->alamat }}<br>
             P : {{ $perusahaan->alamat }}<br>
             UP : {{ $perusahaan->pic }}
-          </th>
+          </td>
         </tr>
-      </table>
-    </div>
+      </tbody>
+    </table>
   </div>
-
-  <div class="row">
+  
+  <br><br><br>
+  <div class="row-n">
     <div class="column">
       <br>
         <br>
@@ -211,6 +226,8 @@
         Sales Manajer
     </div>
     <div class="column">
+      <img src="{{ asset('upload/ttd/'.$po->user->ttd) }}" alt="ttd-user" width="75" class="img-ttd">
+      <img src="{{ asset('upload/cap/'.$perusahaan->cap) }}" alt="ttd-user" width="75" class="img-cap">
       Diterbitkan oleh,<br>
         <br>
         <br>
@@ -226,6 +243,5 @@
         @endphp
     </div>
   </div>
- 
 </body>
 </html>

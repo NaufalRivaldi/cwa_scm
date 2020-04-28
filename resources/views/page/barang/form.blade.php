@@ -104,6 +104,19 @@
                   </div>
                 @endif
               </div>
+
+              
+              <div class="form-group">
+                <label for="kemasan">Kemasan</label>
+                <input type="text" class="form-control" id="kemasan" name="kemasan" value="{{ $barang->kemasan }}">
+
+                <!-- error -->
+                @if($errors->has('kemasan'))
+                  <div class="text-danger">
+                    {{ $errors->first('kemasan') }}
+                  </div>
+                @endif
+              </div>
             </div>
           </div>
         </div>
@@ -283,7 +296,7 @@
     @if(empty($barang->id))
       var i = {{ $no }};
     @else
-      var i = 1;
+      var i = 2;
     @endif
     $('#plus').click(function (e) {
         e.preventDefault();

@@ -43,13 +43,7 @@ class SupplierRequest extends FormRequest
             'kode' => 'required|unique:supplier,kode'.$id,
             'nama' => 'required',
             'tax' => 'required',
-            'alamat' => 'required',
-            'wilayahId' => 'required',
-            'telp' => 'required|numeric',
-            'fax' => 'required',
-            'email' => 'required|email',
-            'kredit' => 'required',
-            'pic' => 'required'
+            'wilayahId' => 'required'
         ];
     }
 }
