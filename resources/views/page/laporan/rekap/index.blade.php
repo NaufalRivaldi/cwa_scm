@@ -21,14 +21,12 @@
                   <i class="cil-print"></i> Export
                 </a>
               </div>
-              <div class="col-md-9">
+              <div class="col-md-6 ml-auto">
                 @php
-                  $status = '';
                   $tglPO = '';
                   $supplierId = '';
                   $total = 0;
                   if($_GET){
-                    $status = $_GET['status'];
                     $tglPO = $_GET['tglPO'];
                     $supplierId = $_GET['supplierId'];
                   }
@@ -36,20 +34,13 @@
                 <form action="" method="GET" id="form-filter">
                   <div class="form-row">
                     <div class="col">
-                      <select name="status" id="status" class="form-control">
-                        <option value="">Pilih Status...</option>
-                        <option value="2" {{ ($status == '2')?'selected':'' }}>Acc</option>
-                        <option value="4" {{ ($status == '4')?'selected':'' }}>Selesai</option>
-                      </select>
-                    </div>
-                    <div class="col">
                       <input type="date" name="tglPO" id="tglPo" class="form-control" value="{{ $tglPO }}">
                     </div>
                     <div class="col">
                       <select name="supplierId" id="supplierId" class="form-control">
                         <option value="">Pilih Supplier...</option>
                         @foreach($supplier as $sply)
-                          <option value="{{ $sply->id }}" {{ ($supplierId == $sply->id)?'selected':'' }}>{{ $sply->nama }}</option>
+                          <option value="{{ $sply->id }}" {{ ($supplierId == $sply->id)?'selected':'' }}>{{ $sply->kode.' - '.$sply->nama }}</option>
                         @endforeach
                       </select>
                     </div>

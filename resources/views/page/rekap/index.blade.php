@@ -88,7 +88,7 @@
                       <td>{{ $row->barang->nama }}</td>
                       <td>{{ $row->qty }}</td>
                       <td>{{ $row->satuan }}</td>
-                      <td>{{ $row->satuan * $row->qty }}</td>
+                      <td>{{ $row->barang->berat * $row->qty }}</td>
                       <td><input type="date" name="trd" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="1" value="{{ (!empty($row->rekap->trd))?$row->rekap->trd:'' }}"></td>
                       <td><input type="date" name="tdo" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="2" value="{{ (!empty($row->rekap->tdo))?$row->rekap->tdo:'' }}"></td>
                       <td><input type="date" name="td" class="form-control form-control-sm form-rekap" data-id="{{ $row->id }}" data-type="3" value="{{ (!empty($row->rekap->td))?$row->rekap->td:'' }}"></td>
