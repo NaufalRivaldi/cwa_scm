@@ -84,7 +84,7 @@
                         <td>{{ $row->barang->merk->nama }}</td>
                         <td>{{ $row->barang->nama }}</td>
                         <td>
-                          <a href ="" class="btn btn-info btn-sm cil-magnifying-glass"></a>
+                          <a href ="{{ route('barang.view', ['id' => $row->barangId]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
                         </td>
                       </tr>
                       @endforeach

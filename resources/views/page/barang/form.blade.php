@@ -162,7 +162,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="diskon">Diskon <span class="text-info">*%</span></label>
-                      <input type="number" class="form-control" id="diskon" name="diskon[]" value="" step="0.01">
+                      <input type="text" class="form-control" id="diskon" name="diskon[]" value="">
                       <small class="mini-text text-muted">Diskon supplier terkait.</small>
   
                       <!-- error -->
@@ -335,7 +335,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="diskon">Diskon <span class="text-info">*%</span></label>
-                <input type="number" class="form-control" id="diskon" name="diskon[]" value="">
+                <input type="text" class="form-control" id="diskon" name="diskon[]" value="">
                 <small class="mini-text text-muted">Diskon supplier terkait.</small>
 
                 <!-- error -->
