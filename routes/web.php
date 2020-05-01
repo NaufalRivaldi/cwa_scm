@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function(){
    Route::group(['prefix' => 'po/', 'middleware' => 'AuthLevel:1,2'], function(){
       Route::get('/', 'PoController@index')->name('po.index');
       Route::get('/form', 'PoController@form')->name('po.form');
+      Route::post('/import', 'PoController@import')->name('po.import');
       Route::get('/{id}/edit', 'PoController@form')->name('po.edit');
       Route::get('/{id}/view', 'PoController@view')->name('po.view');
       Route::get('/cari/supplier', 'PoController@loadSupplier')->name('po.supplier');

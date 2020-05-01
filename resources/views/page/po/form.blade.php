@@ -14,6 +14,10 @@
                 <a href="{{ route('po.index') }}" class="btn btn-success">
                   <i class="cil-arrow-circle-left"></i> Kembali
                 </a>
+
+                <button class="btn btn-info" data-toggle="modal" data-target="#modalImport">
+                  <i class="cil-file"></i> Import Barang
+                </button>
               </div>
             </div>
           </div>
@@ -357,6 +361,38 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+@endsection
+
+@section('modal')
+
+<!-- Modal -->
+<div class="modal fade" id="modalImport" tabindex="-1" role="dialog" aria-labelledby="modalImportLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalImportLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="{{ route('po.import') }}" method="POST">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="file">File excel:</label>
+            <input type="file" name="file" class="form-control" required>
+            <small class="small-text">*Format xlsx, lihat format import <a href="">disini</a>.</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import Data</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -721,7 +757,14 @@
           $('#tglPengiriman').val('');
           $('#tglPengiriman').attr('readonly', 'readonly');
         }else{
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+
+          today = yyyy + '-' + mm + '-' + dd;
           $('#tglPengiriman').removeAttr('readonly');
+          $('#tglPengiriman').val(today);
         }
       });
 
