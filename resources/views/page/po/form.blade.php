@@ -373,18 +373,24 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalImportLabel">Modal title</h5>
+        <h5 class="modal-title" id="modalImportLabel">Import List Barang</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <form action="{{ route('po.import') }}" method="POST">
+      <form action="{{ route('po.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="modal-body">
           <div class="form-group">
             <label for="file">File excel:</label>
             <input type="file" name="file" class="form-control" required>
-            <small class="small-text">*Format xlsx, lihat format import <a href="">disini</a>.</small>
+            <small class="small-text">*Format xlsx, lihat format import <a href="">disini</a>.</small><br>
+            
+            <!-- error -->
+            @if($errors->has('file'))
+              <small class="text-danger">{{ $errors->first('file') }}</small>
+            @endif
           </div>
         </div>
         <div class="modal-footer">

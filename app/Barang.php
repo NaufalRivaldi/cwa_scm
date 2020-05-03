@@ -25,4 +25,8 @@ class Barang extends Model
     public function supply(){
         return $this->hasMany('App\Supply', 'barangId');
     }
+
+    public function viewBarang(){
+        return $this->hasMany('App\View\Barang', 'barangId');
+    }
 }

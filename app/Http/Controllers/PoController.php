@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PoRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\PO;
 use App\Supplier;
@@ -12,6 +13,9 @@ use App\Supply;
 use App\Cabang;
 use App\DetailPO;
 use App\Perusahaan;
+use App\View\Barang as vwBarang;
+
+use App\Imports\ViewBarangImport;
 
 use Auth;
 use PDF;
@@ -158,6 +162,19 @@ class PoController extends Controller
     public function destroy(Request $request){
         $data = PO::find($request->id);
         $data->delete();
+    }
+
+    public function import(Request $request){
+        vwBarang::truncate();
+        
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx,csv,xls'
+        ]);
+
+        $nameFile = 'import-list-barang.'.$request->file->getClientOriginalExtension();
+        $request->file->move(public_path('import/listBarang'), $nameFile);
+
+        Excel::import(new ViewBarangImport, public_path('import/listBarang/'.$nameFile));
     }
 
     public function loadSupplier(Request $request){
