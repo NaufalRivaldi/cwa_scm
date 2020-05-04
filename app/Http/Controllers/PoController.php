@@ -58,6 +58,8 @@ class PoController extends Controller
                 'cabangId' => '',
                 'supplierId' => ''
             ];
+
+            $data['imports'] = vwBarang::all();
         }else{
             $data['po'] = PO::find($id);
         }
@@ -175,6 +177,8 @@ class PoController extends Controller
         $request->file->move(public_path('import/listBarang'), $nameFile);
 
         Excel::import(new ViewBarangImport, public_path('import/listBarang/'.$nameFile));
+
+        return $this->form()->with('success', 'Data telah diimport.');
     }
 
     public function loadSupplier(Request $request){

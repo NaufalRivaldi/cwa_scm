@@ -184,73 +184,143 @@
                 <div class="col-md-12">
                   
                   <div id="formPlus">
+                    @php $i=1; @endphp
                     @if(empty($po->id))
-                    <div id="row1">
-                      <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
-                        <div class="col-md-5">
-                          <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1" required>
-                          </select>
-  
-                          <!-- error -->
-                            @if($errors->has('barangId'))
-                            <div class="text-danger">
-                              {{ $errors->first('barangId') }}
+                      @if(!$_POST)
+                        <div id="row1">
+                          <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
+                            <div class="col-md-5">
+                              <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1" required>
+                              </select>
+      
+                              <!-- error -->
+                                @if($errors->has('barangId'))
+                                <div class="text-danger">
+                                  {{ $errors->first('barangId') }}
+                                </div>
+                              @endif
                             </div>
-                          @endif
-                        </div>
-                        <div class="col-md-1">
-                          <input type="number" name="qty[]" class="form-control dataQty1" placeholder="Qty" required>
-  
-                          <!-- error -->
-                          @if($errors->has('qty'))
-                            <div class="text-danger">
-                              {{ $errors->first('qty') }}
+                            <div class="col-md-1">
+                              <input type="number" name="qty[]" class="form-control dataQty1" placeholder="Qty" required>
+      
+                              <!-- error -->
+                              @if($errors->has('qty'))
+                                <div class="text-danger">
+                                  {{ $errors->first('qty') }}
+                                </div>
+                              @endif
                             </div>
-                          @endif
-                        </div>
-                        <div class="col-md-1">
-                          <input type="text" name="kemasan[]" class="form-control dataKemasan1 kemasan1" placeholder="" readonly>
-  
-                          <!-- error -->
-                          @if($errors->has('kemasan'))
-                            <div class="text-danger">
-                              {{ $errors->first('kemasan') }}
+                            <div class="col-md-1">
+                              <input type="text" name="kemasan[]" class="form-control dataKemasan1 kemasan1" placeholder="" readonly>
+      
+                              <!-- error -->
+                              @if($errors->has('kemasan'))
+                                <div class="text-danger">
+                                  {{ $errors->first('kemasan') }}
+                                </div>
+                              @endif
                             </div>
-                          @endif
-                        </div>
-                        <div class="col-md-2">
-                          <input type="number" name="harga[]" id="harga1" class="form-control price1 dataHarga1" placeholder="Harga" required>
-  
-                          <!-- error -->
-                          @if($errors->has('harga'))
-                            <div class="text-danger">
-                              {{ $errors->first('harga') }}
+                            <div class="col-md-2">
+                              <input type="number" name="harga[]" id="harga1" class="form-control price1 dataHarga1" placeholder="Harga" required>
+      
+                              <!-- error -->
+                              @if($errors->has('harga'))
+                                <div class="text-danger">
+                                  {{ $errors->first('harga') }}
+                                </div>
+                              @endif
                             </div>
-                          @endif
-                        </div>
-                        <div class="col-md-1">
-                          <input type="text" name="disc[]" class="form-control disc1 dataDiskon1" placeholder="Disc" step="0.01" required>
-  
-                          <!-- error -->
-                          @if($errors->has('disc'))
-                            <div class="text-danger">
-                              {{ $errors->first('disc') }}
+                            <div class="col-md-1">
+                              <input type="text" name="disc[]" class="form-control disc1 dataDiskon1" placeholder="Disc" step="0.01" required>
+      
+                              <!-- error -->
+                              @if($errors->has('disc'))
+                                <div class="text-danger">
+                                  {{ $errors->first('disc') }}
+                                </div>
+                              @endif
                             </div>
-                          @endif
-                        </div>
-                        <div class="col-md-2">
-                          <div class="input-group">
-                            <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
-                            <div class="input-group-append">
-                              <button class="btn btn-danger cil-minus remove" type="button" id="1"></button>
+                            <div class="col-md-2">
+                              <div class="input-group">
+                                <input type="number" name="total[]" class="form-control total dataTotal1" placeholder="Total" readonly>
+                                <div class="input-group-append">
+                                  <button class="btn btn-danger cil-minus remove" type="button" id="1"></button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      @else
+                        @foreach($imports as $import)
+                          <div id="row{{$i}}">
+                            <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga{{$i}}" data-classdiskon="dataDiskon{{$i}}" data-classtotal="dataTotal{{$i}}">
+                              <div class="col-md-5">
+                                <select name="barangId[]" name="barangId" id="barangId{{$i}}" class="barangId form-control formSelect2 changeForm" data-setharga="price{{$i}}" data-setdisc="disc{{$i}}" data-setkemasan="kemasan{{$i}}" required>
+                                  <option value="{{ $import->barangId }}">{{ $import->barang->kodeBarang.' - '.$import->barang->nama }}</option>
+                                </select>
+        
+                                <!-- error -->
+                                  @if($errors->has('barangId'))
+                                  <div class="text-danger">
+                                    {{ $errors->first('barangId') }}
+                                  </div>
+                                @endif
+                              </div>
+                              <div class="col-md-1">
+                                <input type="number" name="qty[]" class="form-control dataQty{{$i}}" placeholder="Qty" value="0" required>
+        
+                                <!-- error -->
+                                @if($errors->has('qty'))
+                                  <div class="text-danger">
+                                    {{ $errors->first('qty') }}
+                                  </div>
+                                @endif
+                              </div>
+                              <div class="col-md-1">
+                                <input type="text" name="kemasan[]" class="form-control dataKemasan{{$i}} kemasan{{$i}}" value="{{ $import->barang->kemasan }}" placeholder="" readonly>
+        
+                                <!-- error -->
+                                @if($errors->has('kemasan'))
+                                  <div class="text-danger">
+                                    {{ $errors->first('kemasan') }}
+                                  </div>
+                                @endif
+                              </div>
+                              <div class="col-md-2">
+                                <input type="number" name="harga[]" id="harga{{$i}}" class="form-control price1 dataHarga{{$i}}" placeholder="Harga" value="0" required>
+        
+                                <!-- error -->
+                                @if($errors->has('harga'))
+                                  <div class="text-danger">
+                                    {{ $errors->first('harga') }}
+                                  </div>
+                                @endif
+                              </div>
+                              <div class="col-md-1">
+                                <input type="text" name="disc[]" class="form-control disc{{$i}} dataDiskon{{$i}}" value="0" placeholder="Disc" step="0.01" required>
+        
+                                <!-- error -->
+                                @if($errors->has('disc'))
+                                  <div class="text-danger">
+                                    {{ $errors->first('disc') }}
+                                  </div>
+                                @endif
+                              </div>
+                              <div class="col-md-2">
+                                <div class="input-group">
+                                  <input type="number" name="total[]" class="form-control total dataTotal{{$i}}" placeholder="Total" value="0" readonly>
+                                  <div class="input-group-append">
+                                    <button class="btn btn-danger cil-minus remove" type="button" id="{{ $i++ }}"></button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endforeach
+                      @endif
+                    
                     
                     @else
-                      @php $i = 1; @endphp
                       @foreach($po->detailPO as $row) 
                       <div id="row{{ $i }}">
                         <div class="form-row mb-2 formChange" data-classqty="dataQty{{ $i }}" data-classharga="dataHarga{{ $i }}" data-classdiskon="dataDiskon{{ $i }}" data-classtotal="dataTotal{{ $i }}">
@@ -385,7 +455,7 @@
           <div class="form-group">
             <label for="file">File excel:</label>
             <input type="file" name="file" class="form-control" required>
-            <small class="small-text">*Format xlsx, lihat format import <a href="">disini</a>.</small><br>
+            <small class="small-text">*Format xlsx, lihat format import <a href="{{ asset('format/list-barang.xlsx') }}">disini</a>.</small><br>
             
             <!-- error -->
             @if($errors->has('file'))
@@ -407,7 +477,7 @@
 @section('javascript')
   <script>
     var supId = {{ (!empty($po->id))? $po->supplierId : '0' }};
-    var i = {{ (!empty($po->id))? $i : '1' }};
+    var i = {{ $i }};
 
     $('.supplierId').select2({
       placeholder: 'Cari supplier...',
