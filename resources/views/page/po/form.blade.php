@@ -824,6 +824,13 @@
             <p>`+data.pic+`</p>
           `);
         }
+
+        // $('#formPo').keydown(function(event){
+        //   if(event.keyCode == 13) {
+        //     event.preventDefault();
+        //     return false;
+        //   }
+        // });
       });
       @endif
 
@@ -851,6 +858,14 @@
       //     return false;
       //   }
       // }
+    });
+
+    $(document).keypress(
+      function(event){
+        if (event.which == '13') {
+          $(this).next().focus();
+          event.preventDefault();
+        }
     });
     
   </script>
