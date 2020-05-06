@@ -48,10 +48,9 @@ class PoController extends Controller
                 'nomer' => '',
                 'tglPO' => date('Y-m-d'),
                 'tglPengiriman' => date('Y-m-d'),
+                'metodePembayaran' => '',
                 'total' => '',
-                'ppn' => '',
                 'disc' => '',
-                'grandTotal' => '',
                 'note' => '',
                 'status' => '',
                 'userId' => '',
@@ -62,6 +61,7 @@ class PoController extends Controller
             $data['imports'] = vwBarang::all();
         }else{
             $data['po'] = PO::find($id);
+            // dd($data['po']);
         }
 
         return view('page.po.form', $data);
@@ -90,7 +90,7 @@ class PoController extends Controller
     public function store(PoRequest $request){
         $status = 1;
         $tglPengiriman = '1000-01-01';
-        if($request->grandTotal < 20000000){
+        if($request->jml < 20000000){
             $status = 2;
         }
 
@@ -130,10 +130,12 @@ class PoController extends Controller
 
     public function update(PoRequest $request){
         $po = PO::find($request->id);
+        
+        $po->nomer = $request->nomer;
+        $po->tglPO = $request->tglPO;
         $po->total = $request->jml;
-        $po->ppn = $request->ppn;
-        $po->grandTotal = $request->grandTotal;
         $po->note = $request->note;
+        $po->metodePembayaran = $request->metodePembayaran;
         $po->cabangId = $request->cabangId;
         $po->supplierId = $request->supplierId;
 
@@ -142,6 +144,12 @@ class PoController extends Controller
             $tglPengiriman = $request->tglPengiriman;
         }
         $po->tglPengiriman = $tglPengiriman;
+
+        if($request->jml < 20000000){
+            $po->status = 2;
+        }else{
+            $po->status = 1;
+        }
         $po->save();
 
         $detailPo = DetailPO::where('poId', $request->id)->delete();
@@ -158,7 +166,7 @@ class PoController extends Controller
             }
         }
 
-        return redirect()->route('po.index')->with('success', 'PO berhasil diupdate.');
+        return redirect()->route('po.view', ['id' => $request->id])->with('success', 'PO berhasil diupdate.');
     }
 
     public function destroy(Request $request){

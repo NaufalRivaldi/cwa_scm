@@ -144,9 +144,9 @@
                     <label for="metodePembayaran">Jenis Pembayaran</label>
                     <select name="metodePembayaran" id="metodePembayaran" class="form-control" required>
                       <option value="">Pilih</option>
-                      <option value="TF">Transfer</option>
-                      <option value="BG">BG</option>
-                      <option value="CASH">Cash</option>
+                      <option value="TF" {{ ($po->metodePembayaran == 'TF')?'selected':'' }}>Transfer</option>
+                      <option value="BG" {{ ($po->metodePembayaran == 'BG')?'selected':'' }}>BG</option>
+                      <option value="CASH" {{ ($po->metodePembayaran == 'CASH')?'selected':'' }}>Cash</option>
                     </select>
     
                     <!-- error -->
@@ -267,7 +267,7 @@
                                 @endif
                               </div>
                               <div class="col-md-1">
-                                <input type="number" name="qty[]" class="form-control dataQty{{$i}}" placeholder="Qty" value="0" required>
+                                <input type="number" name="qty[]" class="form-control dataQty{{$i}}" placeholder="Qty" value="{{ $import->order }}" required>
         
                                 <!-- error -->
                                 @if($errors->has('qty'))
@@ -349,7 +349,7 @@
                           <div class="col-md-1">
                             @if(!empty($po->id))
                             @endif
-                            <input type="text" name="kemasan[]" class="form-control dataKemasan{{ $i }} kemasan{{ $i }}" placeholder="" readonly value="<?= $row->kemasan ?>">
+                            <input type="text" name="kemasan[]" class="form-control dataKemasan{{ $i }} kemasan{{ $i }}" placeholder="" readonly value="<?= $row->barang->kemasan ?>">
               
                             <!-- error -->
                             @if($errors->has('kemasan'))
@@ -369,7 +369,7 @@
                             @endif
                           </div>
                           <div class="col-md-1">
-                            <input type="text" name="disc[]" class="form-control disc{{ $i }} dataDiskon{{ $i }}" placeholder="Disc" step="0.01" value="<?= $row->disc ?>">
+                            <input type="text" name="disc[]" class="form-control disc{{ $i }} dataDiskon{{ $i }}" placeholder="Disc" value="<?= $row->disc ?>">
               
                             <!-- error -->
                             @if($errors->has('disc'))
@@ -386,11 +386,9 @@
                           <div class="col-md-2">
                             <div class="input-group">
                               <input type="number" name="total[]" class="form-control total dataTotal{{ $i }}" placeholder="Total" readonly value="{{ $total }}">
-                              @if($i != 1)
                               <div class="input-group-append">
                                 <button class="btn btn-danger cil-minus remove" type="button" id="{{ $i }}"></button>
                               </div>
-                              @endif
                             </div>
                           </div>
                         </div>
@@ -588,11 +586,11 @@
       }
     });
 
-    $(document).on('click', '.remove', function(e){
-      e.preventDefault();
-      var button_id = $(this).attr("id");
-      $('#row'+button_id+'').remove();
-    });
+    // $(document).on('click', '.remove', function(e){
+    //   e.preventDefault();
+    //   var button_id = $(this).attr("id");
+    //   $('#row'+button_id+'').remove();
+    // });
 
     $(document).on('keydown', '.total', function(e){
       i++;
@@ -697,29 +695,29 @@
         let totalDiskon = 0;
         let ppn = 0;
         let grandTotal = 0;
-        let classQty = '.'+$(this).data('classqty');
-        let classHarga = '.'+$(this).data('classharga');
-        let classDiskon = '.'+$(this).data('classdiskon');
-        let classTotal = '.'+$(this).data('classtotal');
+        // let classQty = '.'+$(this).data('classqty');
+        // let classHarga = '.'+$(this).data('classharga');
+        // let classDiskon = '.'+$(this).data('classdiskon');
+        // let classTotal = '.'+$(this).data('classtotal');
 
-        let qty = $(classQty).val();
-        let harga = $(classHarga).val();
-        let diskon = $(classDiskon).val();
-        let valArray = diskon.split("+");
+        // let qty = $(classQty).val();
+        // let harga = $(classHarga).val();
+        // let diskon = $(classDiskon).val();
+        // let valArray = diskon.split("+");
 
-        if(valArray.length == 0){
-          valArray = array(0);
-        }
-        for(let i=0; i<valArray.length; i++){
-          totalDiskon += (harga * qty) - ((qty * harga)*(valArray[i]/100));
-        }
+        // if(valArray.length == 0){
+        //   valArray = array(0);
+        // }
+        // for(let i=0; i<valArray.length; i++){
+        //   totalDiskon += (harga * qty) - ((qty * harga)*(valArray[i]/100));
+        // }
 
-        total = (harga * qty) - totalDiskon;
-        $(classTotal).val(total);
+        // total = (harga * qty) - totalDiskon;
+        // $(classTotal).val(total);
         
         // ppn
         let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
-        // console.log(arrayTotal);
+        console.log('test total');
         for(let i=0; i<arrayTotal.length; i++){
           grandTotal += parseFloat(arrayTotal[i]);
         }
