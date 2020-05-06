@@ -379,13 +379,9 @@
                             @endif
                           </div>
 
-                          @php
-                            $total = ($row->harga * $row->qty) - (($row->harga * $row->qty) * ($row->disc / 100));
-                          @endphp
-
                           <div class="col-md-2">
                             <div class="input-group">
-                              <input type="number" name="total[]" class="form-control total dataTotal{{ $i }}" placeholder="Total" readonly value="{{ $total }}">
+                              <input type="number" name="total[]" class="form-control total dataTotal{{ $i }}" placeholder="Total" readonly value="{{ diskon($row->harga, $row->qty, $row->disc) }}">
                               <div class="input-group-append">
                                 <button class="btn btn-danger cil-minus remove" type="button" id="{{ $i }}"></button>
                               </div>

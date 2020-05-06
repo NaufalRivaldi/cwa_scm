@@ -112,6 +112,7 @@ Route::group(['middleware' => 'auth'], function(){
       
       // import
       Route::post('/import', 'BarangController@import')->name('barang.import');
+      Route::post('/import.harga', 'BarangController@importHarga')->name('barang.import.harga');
    });
 
    // po

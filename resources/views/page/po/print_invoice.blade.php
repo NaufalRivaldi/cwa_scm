@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>PO - {{ $po->nomer }}</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
   <style>
     body{
@@ -41,21 +40,13 @@
 
     .img-cap{
       position: absolute;
-      top: 15;
+      top: 5;
       opacity: .5;
     }
 
-    .table-custom > thead > tr > th{
-      border: 1px solid #000 !important;
-    }
+    .table-custom {background-color:#000;}
+    .table-custom td,th,caption{background-color:#fff}
 
-    .table-custom > tbody > tr > td{
-      border: 1px solid #000 !important;
-    }
-
-    .table-custom > tfoot > tr > th{
-      border: 1px solid #000 !important;
-    }
   </style>
 </head>
 <body>
@@ -71,7 +62,7 @@
         NO.{{ $po->nomer }}
       </p>
     </div>
-    <div class="header1" style="font-size:.9em">
+    <div class="header1" style="font-size:.8em">
       <p>
         No Form : FO-SCM-001<br>
         No Revisi : 01<br>
@@ -127,14 +118,14 @@
           <td>{{ $po->supplier->kredit }} Hari</td>
         </tr>
         <tr>
-          <td>Tanggal Pengiriman</td>
-          <td>:</td>
-          <td>{{ date('d F Y', strtotime($po->tglPengiriman)) }}</td>
-        </tr>
-        <tr>
           <td>Jenis Pembayaran</td>
           <td>:</td>
           <td>{{ metodePembayaran($po->metodePembayaran) }}</td>
+        </tr>
+        <tr>
+          <td>Tanggal Pengiriman</td>
+          <td>:</td>
+          <td>{{ date('d F Y', strtotime($po->tglPengiriman)) }}</td>
         </tr>
         <tr>
           <td>Contact Person</td>
@@ -151,7 +142,7 @@
   </div>
   <br><br><br><br><br><br><br><br><br><br>
   <div class="row-n">
-    <table class='table-custom' width="100%">
+    <table class='table-custom' cellspacing="1" width="100%">
       <thead>
         <tr>
           <th width="5%">No</th>
@@ -170,33 +161,28 @@
           <td width="5%">{{ $no++ }}</td>
           <td width="15">{{ $row->barang->kodeBarang }}</td>
           <td width="30%">{{ $row->barang->nama }}</td>
-          <td>{{ $row->qty }}</td>
-          <td>{{ $row->satuan }}</td>
-          <td>{{ number_format($row->harga) }}</td>
-          <td>{{ $row->disc }}</td>
-          <td class="text-right">{{ number_format(diskon($row->harga, $row->qty, $row->disc)) }}</td>
+          <td align="right">{{ $row->qty }}</td>
+          <td align="right">{{ $row->satuan }}</td>
+          <td align="right">{{ number_format($row->harga) }}</td>
+          <td align="right">{{ $row->disc }}</td>
+          <td align="right">{{ number_format(diskon($row->harga, $row->qty, $row->disc)) }}</td>
         </tr>
         @endforeach
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="3">
-            <p>Note :<br>{{ $po->note }}</p>
+          <th colspan="3" valign="top" align="left">
+            Note :<br>{{ $po->note }}
           </th>
           <th colspan="4" class="text-center">Total</th>
-          <th class="text-right">{{ number_format($po->total) }}</th>
-        </tr>
-        <tr>
-          <th colspan="8">
-            Terbilang : {{ ucwords(terbilang($po->total)) }}
-          </th>
+          <th align="right">{{ number_format($po->total) }}</th>
         </tr>
       </tfoot>
     </table>
   </div>
   <br><br>
   <div class="row-n">
-    <table class='table table-custom'>
+    <table class='table table-custom' cellspacing="1" width="100%">
       <thead>
         <tr>
           <th>Alamat Pengiriman:</th>
@@ -221,7 +207,8 @@
       </tbody>
     </table>
   </div>
-
+  
+  <br><br><br>
   <div class="row-n">
     <div class="column">
       <br>
@@ -234,7 +221,7 @@
     </div>
     <div class="column">
       <img src="{{ asset('upload/ttd/'.$po->user->ttd) }}" alt="ttd-user" width="75" class="img-ttd">
-      <img src="{{ asset('upload/cap/'.$perusahaan->cap) }}" alt="ttd-user" width="65" class="img-cap">
+      <img src="{{ asset('upload/cap/'.$perusahaan->cap) }}" alt="ttd-user" width="75" class="img-cap">
       Diterbitkan oleh,<br>
         <br>
         <br>
@@ -250,12 +237,5 @@
         @endphp
     </div>
   </div>
-
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

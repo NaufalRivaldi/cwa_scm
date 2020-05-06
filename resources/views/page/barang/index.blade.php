@@ -15,7 +15,10 @@
                   <i class="cil-plus"></i> Tambah
                 </a>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">
-                  <i class="cil-file"></i> Import
+                  <i class="cil-file"></i> Import Master
+                </button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importBarangSupplier">
+                  <i class="cil-file"></i> Import Harga Barang
                 </button>
               </div>
               <div class="col-md-6">
@@ -101,6 +104,41 @@
             <label for="file">Pilih file excel</label>
             <input type="file" name="file" id="file" class="form-control" required>
             <small>*format file excel dapat di download <a href="{{ asset('format/barang.xlsx') }}">disini</a></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="importBarangSupplier" tabindex="-1" role="dialog" aria-labelledby="importBarangSupplierLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importBarangSupplierLabel">Import Data Harga Barang + Supplier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('barang.import.harga') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Pastikan barang dan supplier sudah dimasukkan ke sistem, jika tidak maka proses akan berhenti pada barang atau supplier yang belum diinputkan.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label for="file">Pilih file excel</label>
+            <input type="file" name="file" id="file" class="form-control" required>
+            <small>*format file excel dapat di download <a href="{{ asset('format/harga-supplier.xlsx') }}">disini</a></small>
           </div>
         </div>
         <div class="modal-footer">
