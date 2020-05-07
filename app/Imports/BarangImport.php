@@ -7,6 +7,8 @@ use App\Merk;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+use Illuminate\Support\Facades\Session;
+
 class BarangImport implements ToModel, WithHeadingRow
 {
     /**
@@ -43,9 +45,12 @@ class BarangImport implements ToModel, WithHeadingRow
                 $barang->save();
             }
         }else{
-            echo $row['merk'];
+            echo 'Merk dengan kode: '.$row['merk'].' tidak ada disistem, masukkan terlebih dahulu. <a href="'.route('barang.index').'">kembali</a>.';
+        
+            // redirect()->route('barang.index')->with('danger', 'Merk dengan kode: '.$row['merk'].' tidak ada disistem, masukkan terlebih dahulu.');
+            // Session::put('asd', 'asd');
+            // header("Location:".route('barang.index'));
             die();
-            return redirect()->route('barang.index')->with('danger', 'Merk dengan kode: '.$row['merk'].' tidak ada disistem, masukkan terlebih dahulu.');
         }
     }
 

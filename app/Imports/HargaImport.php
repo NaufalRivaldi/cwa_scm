@@ -36,12 +36,12 @@ class HargaImport implements ToModel, WithHeadingRow
                     $data->save();
                 }
             }else{
-                echo $row['kodesupplier'];
+                echo 'Supplier dengan kode: '.$row['kodesupplier'].' tidak ada disistem, masukkan terlebih dahulu. <a href="'.route('barang.index').'">kembali</a>.';
                 die();
                 return redirect()->route('barang.index')->with('danger', 'Supplier kode: '.$row['kodesupplier'].' belum ada disistem, masukan terlebih dahulu.');
             }
         }else{
-            echo $row['kodebarang'];
+            echo 'Barang dengan kode: '.$row['kodebarang'].' tidak ada disistem, masukkan terlebih dahulu. <a href="'.route('barang.index').'">kembali</a>.';
             die();
             return redirect()->route('barang.index')->with('danger', 'Barang kode: '.$row['kodebarang'].' belum ada disistem, masukan terlebih dahulu atau update data master.');
         }
