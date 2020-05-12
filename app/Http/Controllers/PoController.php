@@ -195,7 +195,7 @@ class PoController extends Controller
         }else{
             $cari = '';
         }
-        $data = Supplier::where('nama', 'like', '%'.$cari.'%')->get();
+        $data = Supplier::where('kode', 'like', '%'.$cari.'%')->orWhere('nama', 'like', '%'.$cari.'%')->get();
 
         return response()->json($data);
     }

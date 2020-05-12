@@ -188,6 +188,7 @@
                     @if(empty($po->id))
                       @if(!$_POST)
                         <div id="row1">
+                          <input type="hidden" name="item[]" value="{{ $i }}">
                           <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga1" data-classdiskon="dataDiskon1" data-classtotal="dataTotal1">
                             <div class="col-md-5">
                               <select name="barangId[]" name="barangId" id="barangId1" class="barangId form-control formSelect2 changeForm" data-setharga="price1" data-setdisc="disc1" data-setkemasan="kemasan1" required>
@@ -253,7 +254,8 @@
                       @else
                         @foreach($imports as $import)
                           <div id="row{{$i}}">
-                            <div class="form-row mb-2 formChange" data-classqty="dataQty1" data-classharga="dataHarga{{$i}}" data-classdiskon="dataDiskon{{$i}}" data-classtotal="dataTotal{{$i}}">
+                            <input type="hidden" name="item[]" value="{{ $i }}">
+                            <div class="form-row mb-2 formChange" data-classqty="dataQty{{$i}}" data-classharga="dataHarga{{$i}}" data-classdiskon="dataDiskon{{$i}}" data-classtotal="dataTotal{{$i}}">
                               <div class="col-md-5">
                                 <select name="barangId[]" name="barangId" id="barangId{{$i}}" class="barangId form-control formSelect2 changeForm" data-setharga="price{{$i}}" data-setdisc="disc{{$i}}" data-setkemasan="kemasan{{$i}}" required>
                                   <option value="{{ $import->barangId }}">{{ $import->barang->kodeBarang.' - '.$import->barang->nama }}</option>
@@ -317,12 +319,14 @@
                             </div>
                           </div>
                         @endforeach
+                        @php $i-- @endphp
                       @endif
                     
                     
                     @else
                       @foreach($po->detailPO as $row) 
                       <div id="row{{ $i }}">
+                        <input type="hidden" name="item[]" value="{{ $i }}">
                         <div class="form-row mb-2 formChange" data-classqty="dataQty{{ $i }}" data-classharga="dataHarga{{ $i }}" data-classdiskon="dataDiskon{{ $i }}" data-classtotal="dataTotal{{ $i }}">
                           <div class="col-md-5">
                             <select name="barangId[]" name="barangId" id="barangId{{ $i }}" class="barangId form-control formSelect2" data-setharga="price{{ $i }}" data-setdisc="disc{{ $i }}" data-setkemasan="kemasan{{ $i }}" required>
@@ -391,6 +395,7 @@
                       </div>
                       @php $i++ @endphp
                       @endforeach
+                      @php $i-- @endphp
                     @endif
 
                   </div>
@@ -472,6 +477,7 @@
   <script>
     var supId = {{ (!empty($po->id))? $po->supplierId : '0' }};
     var i = {{ $i }};
+    console.log(i);
 
     $('.supplierId').select2({
       placeholder: 'Cari supplier...',
@@ -519,6 +525,9 @@
 
     $('.supplierId').change(function(){
       var supplierId = $(this).val();
+      var countItem = $('#countItem').data('val');
+      let jumlah = 0;
+
       supId = supplierId;
 
       // view data supplier
@@ -558,6 +567,50 @@
           $('#nomer').val(data);
         }
       });
+
+      // set harga
+      $('input[name^="item"]').each(function() {
+        var item = $(this).val();
+
+        $.ajax({
+          url: "{{ route('po.data.harga') }}",
+          type: 'GET',
+          data: {
+            'barangId': $('#barangId'+item).val(),
+            'supplierId': supId
+          },
+          success: function(data){
+            $('.dataHarga'+item).val(data.harga);
+            $('.dataDiskon'+item).val(data.diskon);
+
+            let qty = $('.dataQty'+item).val();
+            let harga = data.harga;
+            let diskon = data.diskon;
+            let valArray = diskon.split("+");
+            let totalHarga = 0;
+            let totalDiskon = 0;
+            let total = 0;
+
+            if(diskon != 0){
+              for(let i=0; i<valArray.length; i++){
+                if(i>0){
+                  totalDiskon += (totalHarga)*(valArray[i]/100);
+                }else{
+                  totalDiskon += (qty * harga)*(valArray[i]/100);
+                  totalHarga = ((qty * harga) - totalDiskon);
+                }
+              }
+            }else{
+              totalDiskon = 0;
+            }
+
+            total = (harga * qty) - totalDiskon;
+            $('.dataTotal'+item).val(total);
+            jumlah += total;
+            $('.jml').val(jumlah);
+          }
+        });
+      });
     });
 
     $('.barangId').select2({
@@ -582,19 +635,16 @@
       }
     });
 
-    // $(document).on('click', '.remove', function(e){
-    //   e.preventDefault();
-    //   var button_id = $(this).attr("id");
-    //   $('#row'+button_id+'').remove();
-    // });
-
     $(document).on('keydown', '.total', function(e){
       i++;
       
       var code = e.keyCode || e.which;
+      var countItem = parseInt($('#countItem').data('val'), 10);
+
       if(code == '9'){
         $('#formPlus').append(`
         <div id="row`+i+`">
+          <input type="hidden" name="item[]" value="`+i+`">
           <div class="form-row mb-2 formChange" data-classqty="dataQty`+i+`" data-classharga="dataHarga`+i+`" data-classdiskon="dataDiskon`+i+`" data-classtotal="dataTotal`+i+`">
             <div class="col-md-5">
               <select name="barangId[]" name="barangId" id="barangId`+i+`" class="barangId form-control formSelect2" data-setharga="price`+i+`" data-setdisc="disc`+i+`" data-setkemasan="kemasan`+i+`" required>
@@ -691,37 +741,13 @@
         let totalDiskon = 0;
         let ppn = 0;
         let grandTotal = 0;
-        // let classQty = '.'+$(this).data('classqty');
-        // let classHarga = '.'+$(this).data('classharga');
-        // let classDiskon = '.'+$(this).data('classdiskon');
-        // let classTotal = '.'+$(this).data('classtotal');
 
-        // let qty = $(classQty).val();
-        // let harga = $(classHarga).val();
-        // let diskon = $(classDiskon).val();
-        // let valArray = diskon.split("+");
-
-        // if(valArray.length == 0){
-        //   valArray = array(0);
-        // }
-        // for(let i=0; i<valArray.length; i++){
-        //   totalDiskon += (harga * qty) - ((qty * harga)*(valArray[i]/100));
-        // }
-
-        // total = (harga * qty) - totalDiskon;
-        // $(classTotal).val(total);
-        
-        // ppn
         let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
-        console.log('test total');
         for(let i=0; i<arrayTotal.length; i++){
           grandTotal += parseFloat(arrayTotal[i]);
         }
-        // ppn = grandTotal * 0.1;
-        // $('.ppn').val(ppn);
+
         $('.jml').val(grandTotal);
-        // grandTotal = grandTotal + ppn;
-        // $('.grandTotal').val(grandTotal);
     });
 
     // price set
@@ -778,18 +804,12 @@
 
       total = (harga * qty) - totalDiskon;
       $(classTotal).val(total);
-      
-      // ppn
+
       let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
-      // console.log(arrayTotal);
       for(let i=0; i<arrayTotal.length; i++){
         grandTotal += parseFloat(arrayTotal[i]);
       }
-      // ppn = grandTotal * 0.1;
-      // $('.ppn').val(ppn);
       $('.jml').val(grandTotal);
-      // grandTotal = grandTotal + ppn;
-      // $('.grandTotal').val(grandTotal);
     });
 
     $(document).ready(function(){
@@ -818,13 +838,6 @@
             <p>`+data.pic+`</p>
           `);
         }
-
-        // $('#formPo').keydown(function(event){
-        //   if(event.keyCode == 13) {
-        //     event.preventDefault();
-        //     return false;
-        //   }
-        // });
       });
       @endif
 
@@ -844,14 +857,6 @@
           $('#tglPengiriman').val(today);
         }
       });
-
-      // enter disable
-      // $('#formPo').keydown(function(event)){
-      //   if(event.keyCode == 13){
-      //     event.preventDefault();
-      //     return false;
-      //   }
-      // }
     });
 
     $(document).keypress(
