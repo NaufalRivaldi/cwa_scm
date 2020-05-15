@@ -134,7 +134,10 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/destroy', 'PoController@destroy')->name('po.destroy');
 
       // print
-      route::get('/{id}/print', 'PoController@print')->name('po.print');
+      Route::get('/{id}/print', 'PoController@print')->name('po.print');
+
+      // memo
+      Route::get('{id}/memo', 'PoController@memo')->name('po.memo');
    });
    
    // verifikasi

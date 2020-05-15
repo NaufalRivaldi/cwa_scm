@@ -17,6 +17,9 @@
                 <a href="{{ route('po.print', ['id' => $po->id]) }}" class="btn btn-primary {{ ($po->status == '2')?'':'disabled' }}" target="_BLANK">
                   <i class="cil-print"></i> Print
                 </a>
+                <a href="{{ route('po.memo', ['id' => $po->id]) }}" class="btn btn-info">
+                  <i class="cil-car-alt"></i> Memo Pengambilan
+                </a>
               </div>
             </div>
           </div>

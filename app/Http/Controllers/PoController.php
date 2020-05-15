@@ -74,6 +74,13 @@ class PoController extends Controller
         return view('page.po.view', $data);
     }
 
+    public function memo($id){
+        $data['no'] = 1;
+        $data['po'] = PO::find($id);
+
+        return view('page.po.memo', $data);
+    }
+
     public function print($id){
         $po = PO::find($id);
         $date = date('Y-m-d', strtotime($po->tglPO));
