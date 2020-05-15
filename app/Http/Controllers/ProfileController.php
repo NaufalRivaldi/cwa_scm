@@ -60,8 +60,9 @@ class ProfileController extends Controller
         if(Hash::check($request->oldPassword, $user->password)){
             $user->password = $newPassword;
             $user->save();
+            Auth::logout();
 
-            return redirect()->route('dashboard')->with('success', 'Password berhasil di ubah.');
+            return redirect()->route('login')->with('success', 'Password berhasil di ubah, silahkan login kembali.');
         }else{
             return redirect()->route('profile.ubahpassword')->with('danger', 'Password tidak valid!');
         }

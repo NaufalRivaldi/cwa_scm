@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     public function messages(){
         return [
             'required' => 'Kolom ini tidak boleh kosong!',
-            'min' => 'Minimal 6 karakter',
+            'min' => 'Minimal 3 karakter',
             'mimes' => 'Masukkan tipe file dengan benar!',
             'unique' => 'Username sudah terpakai, coba yang lain.'
         ];
@@ -38,8 +38,8 @@ class UserRequest extends FormRequest
             $id = ','.$this->input('id');
         }
         return [
-            'nama' => 'required|min:6',
-            'username' => 'required|min:6|unique:user,username'.$id,
+            'nama' => 'required|min:3',
+            'username' => 'required|min:3|unique:user,username'.$id,
             'ttd' => 'mimes:jpeg,jpg,png|max:2048',
             'level' => 'required|numeric'
         ];

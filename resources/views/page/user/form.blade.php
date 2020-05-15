@@ -84,8 +84,9 @@
                     @if($errors->has('level'))
                       <div class="text-danger">
                         {{ $errors->first('level') }}
-                      </div>
+                      </div><br>
                     @endif
+                    <small class="text-info">*Password akan tergenerate default '12345'</small>
                   </div>
                   <button type="submit" class="btn btn-primary"><i class="cil-save"></i> Simpan</button>
                 </form>

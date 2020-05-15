@@ -182,6 +182,9 @@ return [
 
         // excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        // newhelper
+        App\Providers\UserServiceProvider::class,
     ],
 
     /*
@@ -238,6 +241,9 @@ return [
 
         // excel
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        // helper
+        'UserHelper' => App\Helpers\User::class,
 
     ],
 

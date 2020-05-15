@@ -87,6 +87,18 @@
 
         <main class="c-main">
           @include('dashboard.shared.alert')
+
+          @if(UserHelper::checkPass())
+          <div class="container-fluid">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              Anda masih menggunakan password default. Ubah password <a href="{{ route('profile.ubahpassword') }}">disini</a>.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          @endif
+
           @yield('content') 
         </main>
         
