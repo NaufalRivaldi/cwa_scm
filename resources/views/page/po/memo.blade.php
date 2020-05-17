@@ -84,13 +84,20 @@
   <script>
     $(document).ready(function(){
       $('.print').on('click', function(){
-        let item = [];
+        let item = '';
 
         $.each($(".item:checked"), function(){
-          item.push($(this).val());
+          item = item+$(this).val()+',';
         });
 
-        console.log(item);
+        let newItem = item.substring(0, item.length - 1);
+        let link = "{{ url('po/memo/print/').'/'.$po->id }}"+'/'+newItem;
+        
+        if(item != ''){
+          window.open(link);
+        }else{
+          alert('Barang tidak dipilih!');
+        }
       });
     });
   </script>

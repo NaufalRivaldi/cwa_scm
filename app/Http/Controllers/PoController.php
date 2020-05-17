@@ -92,7 +92,22 @@ class PoController extends Controller
         $pdf->loadview('page.po.print_invoice', $data)->setPaper('a5', 'potrait');
         return $pdf->stream();
         // return view('page.po.print_invoice', $data);
-    }   
+    }
+    
+    public function printMemo($id, $item){
+        $po = PO::find($id);
+        $date = date('Y-m-d', strtotime($po->tglPO));
+        $data['no'] = 1;
+        $data['po'] = $po;
+        $data['perusahaan'] = Perusahaan::orderBy('id', 'asc')->first();
+        $itemArray = explode(',', $item);
+        $data['item'] = $itemArray;
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadview('page.po.print_memo', $data)->setPaper('a5', 'potrait');
+        return $pdf->stream();
+        // return view('page.po.print_memo', $data);
+    }
 
     public function store(PoRequest $request){
         $status = 1;

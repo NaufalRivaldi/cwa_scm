@@ -58,13 +58,13 @@
       <p>
         FORMULIR PURCHASE ORDER<br>
         {{ strtoupper($perusahaan->nama) }}<br>
-        PESANAN PEMBELIAN/PURCHASE ORDER (PO)<br>
+        PESANAN PEMBELIAN/MEMO<br>
         NO.{{ $po->nomer }}
       </p>
     </div>
     <div class="header1" style="font-size:.8em">
       <p>
-        No Form : FO-SCM-001<br>
+        No Form : FO-SCM-022<br>
         No Revisi : 01<br>
         Tgl Terbit : 29 Mei 2017
       </p>
@@ -150,9 +150,7 @@
           <th width="120px">Nama</th>
           <th>Qty</th>
           <th>Kemasan</th>
-          <th>Harga (Rp.)</th>
-          <th>Disc(%)</th>
-          <th width="70px">Jumlah (Rp.)</th>
+          <th>Keterangan</th>
         </tr>
       </thead>
       <tbody>
@@ -163,21 +161,10 @@
           <td width="30%">{{ $row->barang->nama }}</td>
           <td align="right">{{ $row->qty }}</td>
           <td align="right">{{ $row->satuan }}</td>
-          <td align="right">{{ number_format($row->harga) }}</td>
-          <td align="right">{{ $row->disc }}</td>
-          <td align="right">{{ number_format(diskon($row->harga, $row->qty, $row->disc)) }}</td>
+          <td>{{ (in_array($row->id, $item))?'Diambil':'' }}</td>
         </tr>
         @endforeach
       </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3" valign="top" align="left">
-            Note :<br>{{ $po->note }}
-          </th>
-          <th colspan="4" class="text-center">Total</th>
-          <th align="right">{{ number_format($po->total) }}</th>
-        </tr>
-      </tfoot>
     </table>
   </div>
   <br><br>
