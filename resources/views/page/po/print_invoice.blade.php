@@ -51,27 +51,30 @@
 </head>
 <body>
   <div class="row-n">
-    <div class="header1">
-      <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
-    </div>
-    <div class="header2">
-      <p>
-        FORMULIR PURCHASE ORDER<br>
-        {{ strtoupper($perusahaan->nama) }}<br>
-        PESANAN PEMBELIAN/PURCHASE ORDER (PO)<br>
-        NO.{{ $po->nomer }}
-      </p>
-    </div>
-    <div class="header1" style="font-size:.8em">
-      <p>
-        No Form : FO-SCM-001<br>
-        No Revisi : 01<br>
-        Tgl Terbit : 29 Mei 2017
-      </p>
-    </div>
+    <table class='table table-custom' cellspacing="1" width="100%">
+      <tr>
+        <td align="center" width="20%">
+          <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
+        </td>
+        <td align="center" width="60%">
+          <p>
+            FORMULIR PURCHASE ORDER<br>
+            {{ strtoupper($perusahaan->nama) }}<br>
+            PESANAN PEMBELIAN/PURCHASE ORDER (PO)<br>
+            NO.{{ $po->nomer }}
+          </p>
+        </td>
+        <td style="font-size:.8em" width="20%">
+          <p>
+            No Form : FO-SCMD-001<br>
+            No Revisi : 01<br>
+            Tgl Terbit : 25/05/2020
+          </p>
+        </td>
+      </tr>
+    </table>
   </div>
-  <br><br><br><br><br>
-  <hr>
+  <br>
   <div class="row-n">
     <div class="column">
       Kepada Yth,<br>
@@ -150,9 +153,9 @@
           <th width="120px">Nama</th>
           <th>Qty</th>
           <th>Kemasan</th>
-          <th>Harga (Rp.)</th>
+          <th>Harga Satuan(Rp.)</th>
           <th>Disc(%)</th>
-          <th width="70px">Jumlah (Rp.)</th>
+          <th width="70px">Jumlah Harga(Rp.)</th>
         </tr>
       </thead>
       <tbody>
@@ -161,10 +164,10 @@
           <td width="5%">{{ $no++ }}</td>
           <td width="15">{{ $row->barang->kodeBarang }}</td>
           <td width="30%">{{ $row->barang->nama }}</td>
-          <td align="right">{{ $row->qty }}</td>
-          <td align="right">{{ $row->satuan }}</td>
+          <td align="center">{{ $row->qty }}</td>
+          <td align="center">{{ $row->satuan }}</td>
           <td align="right">{{ number_format($row->harga) }}</td>
-          <td align="right">{{ $row->disc }}</td>
+          <td align="center">{{ $row->disc }}</td>
           <td align="right">{{ number_format(diskon($row->harga, $row->qty, $row->disc)) }}</td>
         </tr>
         @endforeach
@@ -194,7 +197,7 @@
           <td>
             {{ $po->cabang->nama }}<br>
             {{ $po->cabang->alamat }}<br>
-            P : {{ $po->cabang->alamat }}<br>
+            P : {{ $po->cabang->telp }}<br>
             UP : {{ $po->cabang->pic }}
           </td>
           <td>

@@ -80,8 +80,8 @@
                     <td>{{ $row->user->nama }}</td>
                     <td>
                       <a href ="{{ route('po.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
+                      <a href="{{ route('po.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
                       @if(Auth::user()->id == $row->userId && $row->status < '3')
-                        <a href="{{ route('po.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
                         <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
                       @endif
                     </td>

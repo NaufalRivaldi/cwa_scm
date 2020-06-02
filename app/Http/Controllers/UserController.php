@@ -91,15 +91,21 @@ class UserController extends Controller
     }
 
     public function upload($req){
-        $filename = time().'-'.Str::random(10).'.'.$req->ttd->extension();
-        $req->ttd->move(public_path('upload/ttd'), $filename);
+        if($req->hasFile('ttd')){
+            $filename = time().'-'.Str::random(10).'.'.$req->ttd->extension();
+            $req->ttd->move(public_path('upload/ttd'), $filename);
 
-        return $filename;
+            return $filename;
+        }
+
+        return 'ttd.png';
     }
 
     public function deleteFile(Request $request){
         $user = User::find($request->id);
-        unlink(public_path('upload/ttd/'.$user->ttd));
+        if($user->ttd != 'ttd.png'){
+            unlink(public_path('upload/ttd/'.$user->ttd));
+        }
         $user->ttd = '';
         $user->save();
         
@@ -108,7 +114,11 @@ class UserController extends Controller
 
     public function destroy(Request $request){
         $user = User::find($request->id);
-        unlink(public_path('upload/ttd/'.$user->ttd));
+
+        if($user->ttd != 'ttd.png'){
+            unlink(public_path('upload/ttd/'.$user->ttd));
+        }
+
         $user->delete();
     }
 }

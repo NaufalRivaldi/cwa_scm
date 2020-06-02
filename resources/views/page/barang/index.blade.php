@@ -22,8 +22,8 @@
                 </button>
               </div>
               <div class="col-md-6">
-                <form action="" method="GET" id="form-filter">
-                  <select name="merkId" id="merkId" class="form-control col-md-6 float-right">
+                <form action="" method="GET">
+                  <select name="merkId" id="merkId" class="form-control col-md-6 float-right filter-merk">
                     <option value="">Pilih Merk...</option>
                     @foreach($merk as $mr)
                       <option value="{{ $mr->id }}">{{ $mr->nama }}</option>
@@ -35,7 +35,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped table-custom dataTable">
+              <table class="table table-striped table-custom tableBarang">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -48,24 +48,6 @@
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-                  @foreach($barang as $row)
-                  <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ $row->kodeBarang }}</td>
-                    <td>{{ $row->merk->kodeMerk }}</td>
-                    <td>{{ $row->nama }}</td>
-                    <td>{{ $row->berat }}</td>
-                    <td>{{ $row->kemasan }}</td>
-                    <td>{!! boolean($row->base) !!}</td>
-                    <td>
-                      <a href ="{{ route('barang.view', ['id' => $row->id]) }}" class="btn btn-info btn-sm cil-magnifying-glass"></a>
-                      <a href="{{ route('barang.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
-                      <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
               </table>
             </div>
           </div>
@@ -155,6 +137,41 @@
 @section('javascript')
 
   <script>
+    $(document).ready(function(){
+      // table fill able
+      fillTable();
+
+      function fillTable(merkId = ''){
+        $('.tableBarang').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: {
+            url: "{{ route('barang.index') }}",
+            type: 'GET',
+            data: {
+              'merkId': merkId
+            }
+          },
+          columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'kodeBarang', name: 'kdoeBarang' },
+            { data: 'kodeMerk', name: 'kodeMerk' },
+            { data: 'nama', name: 'nama' },
+            { data: 'berat', name: 'berat' },
+            { data: 'kemasan', name: 'kemasan' },
+            { data: 'bolBase', name: 'bolBase' },
+            { data: 'action', name: 'action' }
+          ]
+        });
+      }
+
+      $('.filter-merk').on('change', function(){
+        let val = $(this).val();
+        $('.tableBarang').DataTable().destroy();
+        fillTable(val);
+      });
+    });
+
     $(document).on('click', '.btn-delete', function(e){
       e.preventDefault();
 

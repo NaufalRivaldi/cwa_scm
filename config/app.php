@@ -185,6 +185,9 @@ return [
 
         // newhelper
         App\Providers\UserServiceProvider::class,
+
+        // datatable
+        Yajra\DataTables\DataTablesServiceProvider::class,
     ],
 
     /*
@@ -244,6 +247,9 @@ return [
 
         // helper
         'UserHelper' => App\Helpers\User::class,
+
+        // datatable
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

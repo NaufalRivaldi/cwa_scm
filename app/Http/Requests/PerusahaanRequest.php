@@ -42,7 +42,7 @@ class PerusahaanRequest extends FormRequest
             'nama' => 'required|min:6',
             'alamat' => 'required',
             'telp' => 'required|numeric|min:6',
-            'fax' => 'required|numeric',
+            'fax' => 'required',
             'email' => 'required|email',
             'pic' => 'required',
             'logo' => 'mimes:jpeg,jpg,png|max:2048'.$val,

@@ -54,7 +54,7 @@
 
                   <div class="form-group">
                     <label for="telp">Telepon</label>
-                    <input type="text" class="form-control" id="telp" name="telp" value="{{ $perusahaan->telp }}">
+                    <input type="text" class="form-control" id="telp" name="telp" value="{{ $perusahaan->telp }}" placeholder="08123654xxxx">
 
                     <!-- error -->
                     @if($errors->has('telp'))
@@ -67,6 +67,7 @@
                   <div class="form-group">
                     <label for="fax">Fax</label>
                     <input type="text" class="form-control" id="fax" name="fax" value="{{ $perusahaan->fax }}">
+                    <small class="text-danger">Berikan tanda '-' jika tidak ada, tanpa tanda petik.</small>
 
                     <!-- error -->
                     @if($errors->has('fax'))
@@ -78,7 +79,7 @@
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ $perusahaan->email }}">
+                    <input type="email" class="form-control" id="email" name="email" value="{{ $perusahaan->email }}" placeholder="mailname@mail.com">
 
                     <!-- error -->
                     @if($errors->has('email'))

@@ -28,11 +28,11 @@ class HargaImport implements ToModel, WithHeadingRow
                         'barangId' => $barang->id,
                         'supplierId' => $supplier->id,
                         'harga' => $row['harga'],
-                        'diskon' => $row['diskon']*100
+                        'diskon' => $row['diskon']
                     ]);
                 }else{
                     $data->harga = $row['harga'];
-                    $data->diskon = $row['diskon']*100;
+                    $data->diskon = $row['diskon'];
                     $data->save();
                 }
             }else{

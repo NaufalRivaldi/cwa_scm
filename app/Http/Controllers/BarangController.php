@@ -15,15 +15,34 @@ use App\Supply;
 
 class BarangController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $data['no'] = 1;
         $data['merk'] = Merk::orderBy('nama', 'asc')->get();
-        
-        if($_GET){
-            $merkId = $_GET['merkId'];
-            $data['barang'] = Barang::where('merkId', $merkId)->orderBy('kodeBarang', 'asc')->get();
-        }else{
-            $data['barang'] = Barang::orderBy('kodeBarang', 'asc')->get();
+
+        if($request->ajax()){
+            if(empty($request->merkId)){
+                $barang = Barang::orderBy('kodeBarang', 'asc')->get();
+            }else{
+                $barang = Barang::where('merkId', $request->merkId)->orderBy('kodeBarang', 'asc')->get();
+            }
+            
+            return datatables()->of($barang)
+                                ->addColumn('action', function($data){
+                                    $button = '<a href ="'.route('barang.view', ['id' => $data->id]).'" class="btn btn-info btn-sm cil-magnifying-glass"></a> ';
+                                    $button .= '<a href="'.route('barang.edit', ['id' => $data->id]).'" class="btn btn-warning btn-sm cil-cog"></a> ';
+                                    $button .= '<a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="'.$data->id.'"></a>';
+
+                                    return $button;
+                                })
+                                ->addColumn('kodeMerk', function($data){
+                                    return $data->merk->kodeMerk;
+                                })
+                                ->addColumn('bolBase', function($data){
+                                    return booleanF($data->base);
+                                })
+                                ->rawColumns(['action', 'kodeMerk', 'bolBase'])
+                                ->addIndexColumn()
+                                ->make(true);
         }
 
         return view('page.barang.index', $data);
