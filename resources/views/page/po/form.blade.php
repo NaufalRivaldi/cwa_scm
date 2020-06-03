@@ -477,7 +477,6 @@
   <script>
     var supId = {{ (!empty($po->id))? $po->supplierId : '0' }};
     var i = {{ $i }};
-    console.log(i);
 
     $('.supplierId').select2({
       placeholder: 'Cari supplier...',
@@ -587,25 +586,17 @@
             let harga = data.harga;
             let diskon = data.diskon;
             let valArray = diskon.split("+");
-            let totalHarga = 0;
-            let totalDiskon = 0;
+            let totalHarga = harga * qty;
             let total = 0;
 
             if(diskon != 0){
               for(let i=0; i<valArray.length; i++){
-                if(i>0){
-                  totalDiskon += (totalHarga)*(valArray[i]/100);
-                }else{
-                  totalDiskon += (qty * harga)*(valArray[i]/100);
-                  totalHarga = ((qty * harga) - totalDiskon);
-                }
+                totalHarga = totalHarga - (totalHarga * (valArray[i]/100));
               }
-            }else{
-              totalDiskon = 0;
             }
 
-            total = (harga * qty) - totalDiskon;
-            $('.dataTotal'+item).val(total);
+            total = totalHarga;
+            $('.dataTotal'+item).val(total.toFixed(2));
             jumlah += total;
             $('.jml').val(jumlah);
           }
@@ -775,8 +766,6 @@
 
     $(document).on('change', '.formChange', function(){
       let total = 0;
-      let totalDiskon = 0;
-      let ppn = 0;
       let grandTotal = 0;
       let classQty = '.'+$(this).data('classqty');
       let classHarga = '.'+$(this).data('classharga');
@@ -787,23 +776,16 @@
       let harga = $(classHarga).val();
       let diskon = $(classDiskon).val();
       let valArray = diskon.split("+");
-      let totalHarga = 0;
+      let totalHarga = harga * qty;
 
       if(diskon != 0){
         for(let i=0; i<valArray.length; i++){
-          if(i>0){
-            totalDiskon += (totalHarga)*(valArray[i]/100);
-          }else{
-            totalDiskon += (qty * harga)*(valArray[i]/100);
-            totalHarga = ((qty * harga) - totalDiskon);
-          }
+          totalHarga = totalHarga - (totalHarga * (valArray[i]/100));
         }
-      }else{
-        totalDiskon = 0;
       }
 
-      total = (harga * qty) - totalDiskon;
-      $(classTotal).val(total);
+      total = totalHarga;
+      $(classTotal).val(total.toFixed(2));
 
       let arrayTotal = $('.total').map(function(){return $(this).val();}).get();
       for(let i=0; i<arrayTotal.length; i++){

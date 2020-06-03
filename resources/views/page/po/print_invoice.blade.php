@@ -203,7 +203,7 @@
           <td>
             {{ $perusahaan->nama }}<br>
             {{ $perusahaan->alamat }}<br>
-            P : {{ $perusahaan->alamat }}<br>
+            P : {{ $perusahaan->telp }}<br>
             UP : {{ $perusahaan->pic }}
           </td>
         </tr>

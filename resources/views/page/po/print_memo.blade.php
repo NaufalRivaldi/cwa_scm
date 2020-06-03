@@ -181,13 +181,13 @@
           <td>
             {{ $po->cabang->nama }}<br>
             {{ $po->cabang->alamat }}<br>
-            P : {{ $po->cabang->alamat }}<br>
+            P : {{ $po->cabang->tlp }}<br>
             UP : {{ $po->cabang->pic }}
           </td>
           <td>
             {{ $perusahaan->nama }}<br>
             {{ $perusahaan->alamat }}<br>
-            P : {{ $perusahaan->alamat }}<br>
+            P : {{ $perusahaan->tlp }}<br>
             UP : {{ $perusahaan->pic }}
           </td>
         </tr>

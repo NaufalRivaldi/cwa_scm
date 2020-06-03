@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\MerkRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Merk;
+use App\Imports\MerkImport;
 
 class MerkController extends Controller
 {
@@ -55,5 +57,19 @@ class MerkController extends Controller
     public function destroy(Request $request){
         $merk = Merk::find($request->id);
         $merk->delete();
+    }
+
+    public function import(Request $request){
+        $this->validate($request,[
+            'file' => 'required|mimes:csv,xlsx,xls'
+        ]);
+
+        $file = $request->file('file');
+        $fileName = date('Y-m-d').'-merk.'.$file->getClientOriginalExtension();
+        $file->move(public_path('import/merk'), $fileName);
+
+        Excel::import(new MerkImport, public_path('/import/merk/'.$fileName));
+        
+        return redirect()->route('merk.index')->with('success', 'Merk berhasil diimport');
     }
 }

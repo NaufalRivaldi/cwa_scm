@@ -14,6 +14,9 @@
                 <a href="{{ route('merk.form') }}" class="btn btn-primary">
                   <i class="cil-plus"></i> Tambah
                 </a>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">
+                  <i class="cil-file"></i> Import Master
+                </button>
               </div>
             </div>
           </div>
@@ -53,7 +56,33 @@
 
 @section('modal')
 
-
+<!-- Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="importModalLabel">Import Data Excel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('merk.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="file">Pilih file excel</label>
+            <input type="file" name="file" id="file" class="form-control" required>
+            <small>*format file excel dapat di download <a href="{{ asset('format/merk.xlsx') }}">disini</a></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Import</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 @endsection
 

@@ -86,6 +86,9 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/store', 'MerkController@store')->name('merk.store');
       Route::put('/update', 'MerkController@update')->name('merk.update');
       Route::post('/destroy', 'MerkController@destroy')->name('merk.destroy');
+
+      // import
+      Route::post('/import', 'MerkController@import')->name('merk.import');
    });
 
    // perusahaan

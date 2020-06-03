@@ -7,7 +7,7 @@ use App\Merk;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-use Illuminate\Support\Facades\Session;
+// use Illuminate\Support\Facades\Session;
 
 class BarangImport implements ToModel, WithHeadingRow
 {
