@@ -66,7 +66,7 @@
         <li class="c-sidebar-nav-item">
           <a href="{{ route('verifikasi.index') }}" class="c-sidebar-nav-link">
           <i class="cil-file c-sidebar-nav-icon"></i>
-          Verifikasi PO
+          Verifikasi PO <span class="badge badge-pill badge-warning">{{ UserHelper::countVerifikasi() }}</span>
           </a>
         </li>
         @endif

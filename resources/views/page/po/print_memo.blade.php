@@ -50,28 +50,30 @@
   </style>
 </head>
 <body>
-  <div class="row-n">
-    <div class="header1">
-      <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
-    </div>
-    <div class="header2">
-      <p>
-        FORMULIR PURCHASE ORDER<br>
-        {{ strtoupper($perusahaan->nama) }}<br>
-        PESANAN PEMBELIAN/MEMO<br>
-        NO.{{ $po->nomer }}
-      </p>
-    </div>
-    <div class="header1" style="font-size:.8em">
-      <p>
-        No Form : FO-SCM-022<br>
-        No Revisi : 01<br>
-        Tgl Terbit : 29 Mei 2017
-      </p>
-    </div>
+   <div class="row-n">
+    <table class='table table-custom' cellspacing="1" width="100%">
+      <tr>
+        <td align="center" width="20%">
+          <img src="{{ asset('upload/logo/'.$perusahaan->logo) }}" alt="logo" width="70px">
+        </td>
+        <td align="center" width="60%">
+          <p>
+            FORMULIR<br>MEMO<br>
+            {{ strtoupper($perusahaan->nama) }}<br>
+            NO.{{ $po->nomer }}
+          </p>
+        </td>
+        <td style="font-size:.8em" width="20%">
+          <p>
+            No Form : FO-SCMD-002<br>
+            No Revisi : 01<br>
+            Tgl Terbit : 25/05/2020
+          </p>
+        </td>
+      </tr>
+    </table>
   </div>
-  <br><br><br><br><br>
-  <hr>
+  <br>
   <div class="row-n">
     <div class="column">
       Kepada Yth,<br>
@@ -125,7 +127,7 @@
         <tr>
           <td>Tanggal Pengiriman</td>
           <td>:</td>
-          <td>{{ date('d F Y', strtotime($po->tglPengiriman)) }}</td>
+          <td>{{ ($po->tglPengiriman != '1000-01-01')?dateReverse($po->tglPengiriman):'Pengiriman Bertahap' }}</td>
         </tr>
         <tr>
           <td>Contact Person</td>
@@ -149,18 +151,21 @@
           <th width="70px">Kode</th>
           <th width="120px">Nama</th>
           <th>Qty</th>
+          <th>Jumlah Ambil</th>
           <th>Kemasan</th>
           <th>Keterangan</th>
         </tr>
       </thead>
       <tbody>
+        @php $i=0; @endphp
         @foreach($po->detailPO as $row)
         <tr>
           <td width="5%">{{ $no++ }}</td>
           <td width="15">{{ $row->barang->kodeBarang }}</td>
           <td width="30%">{{ $row->barang->nama }}</td>
-          <td align="right">{{ $row->qty }}</td>
-          <td align="right">{{ $row->satuan }}</td>
+          <td align="center">{{ $row->qty }}</td>
+          <td align="center">{{ (in_array($row->id, $item))?$qty[$i++]:'' }}</td>
+          <td align="center">{{ $row->satuan }}</td>
           <td>{{ (in_array($row->id, $item))?'Diambil':'' }}</td>
         </tr>
         @endforeach

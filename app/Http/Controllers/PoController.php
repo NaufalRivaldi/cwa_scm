@@ -94,14 +94,17 @@ class PoController extends Controller
         // return view('page.po.print_invoice', $data);
     }
     
-    public function printMemo($id, $item){
+    public function printMemo($id, $item, $qty){
         $po = PO::find($id);
         $date = date('Y-m-d', strtotime($po->tglPO));
         $data['no'] = 1;
         $data['po'] = $po;
         $data['perusahaan'] = Perusahaan::orderBy('id', 'asc')->first();
+        $qty = $this->fixQty($qty);
         $itemArray = explode(',', $item);
+        $qtyArray = explode(',', $qty);
         $data['item'] = $itemArray;
+        $data['qty'] = $qtyArray;
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadview('page.po.print_memo', $data)->setPaper('a5', 'potrait');
@@ -318,6 +321,14 @@ class PoController extends Controller
     public function romawi($bulan){
         $array = array('0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII');
         return $array[$bulan];
+    }
+
+    public function fixQty($qty){
+        if($qty[0] === ','){
+            return substr($qty, 1);
+        }
+
+        return $qty;
     }
 
 }

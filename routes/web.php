@@ -141,7 +141,7 @@ Route::group(['middleware' => 'auth'], function(){
 
       // memo
       Route::get('{id}/memo', 'PoController@memo')->name('po.memo');
-      Route::get('memo/print/{id}/{item}', 'PoController@printMemo')->name(('po.memo.print'));
+      Route::get('memo/print/{id}/{item}/{qty}', 'PoController@printMemo')->name(('po.memo.print'));
    });
    
    // verifikasi

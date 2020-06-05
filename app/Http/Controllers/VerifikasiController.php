@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\PO;
 use App\DetailPO;
 
+use Auth;
+
 class VerifikasiController extends Controller
 {
     public function index(){
@@ -34,6 +36,7 @@ class VerifikasiController extends Controller
         for($i=0; $i<count($data); $i++){
             $po = PO::find($data[$i]);
             $po->status = $status;
+            $po->userId = Auth::user()->id;
             $po->save();
         }
 
@@ -47,8 +50,9 @@ class VerifikasiController extends Controller
         }else{
             $po->status = '3';
         }
-
+        $po->userId = Auth::user()->id;
         $po->save();
+        
         return redirect()->route('verifikasi.index')->with('success', 'PO sudah di verifikasi');
     }
 }

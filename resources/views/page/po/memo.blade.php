@@ -42,19 +42,22 @@
                       <th>Kode</th>
                       <th>Nama</th>
                       <th>Qty</th>
+                      <th>Jumlah Ambil</th>
                       <th>Kemasan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @php $i=1; @endphp
                     @foreach($po->detailPO as $row)
                     <tr>
                       <td>{{ $no++ }}</td>
                       <td>{{ $row->barang->kodeBarang }}</td>
                       <td>{{ $row->barang->nama }}</td>
                       <td>{{ $row->qty }}</td>
+                      <td><input type="number" nama="jmlAmbil[]" max="{{ $row->qty }}" class="form-control form-control-sm jmlAmbil jml{{ $i }}" disabled></td>
                       <td>{{ $row->satuan }}</td>
-                      <td><input type="checkbox" name="item[]" value="{{ $row->id }}" class="item"></td>
+                      <td><input type="checkbox" name="item[]" value="{{ $row->id }}" class="item" data-i="{{ $i++ }}"></td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -85,18 +88,36 @@
     $(document).ready(function(){
       $('.print').on('click', function(){
         let item = '';
+        let qty = '';
 
         $.each($(".item:checked"), function(){
           item = item+$(this).val()+',';
         });
 
+        console.log($('.jmlAmbil').val());
+
+        $.each($(".jmlAmbil"), function(){
+          qty = qty+$(this).val()+',';
+        });
+
         let newItem = item.substring(0, item.length - 1);
-        let link = "{{ url('po/memo/print/').'/'.$po->id }}"+'/'+newItem;
+        let newQty = qty.substring(0, qty.length - 1);
+        let link = "{{ url('po/memo/print/').'/'.$po->id }}"+'/'+newItem+'/'+newQty;
         
         if(item != ''){
           window.open(link);
         }else{
           alert('Barang tidak dipilih!');
+        }
+      });
+
+      $('.item').on('click', function(){
+        let i = $(this).data('i');
+        
+        if($(this).is(':checked')) {
+          $('.jml'+i).removeAttr('disabled');
+        }else{
+          $('.jml'+i).prop('disabled', true);
         }
       });
     });

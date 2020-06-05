@@ -58,7 +58,7 @@
         </td>
         <td align="center" width="60%">
           <p>
-            FORMULIR PURCHASE ORDER<br>
+            FORMULIR<br>PURCHASE ORDER<br>
             {{ strtoupper($perusahaan->nama) }}<br>
             PESANAN PEMBELIAN/PURCHASE ORDER (PO)<br>
             NO.{{ $po->nomer }}
@@ -128,7 +128,7 @@
         <tr>
           <td>Tanggal Pengiriman</td>
           <td>:</td>
-          <td>{{ date('d F Y', strtotime($po->tglPengiriman)) }}</td>
+          <td>{{ ($po->tglPengiriman != '1000-01-01')?dateReverse($po->tglPengiriman):'Pengiriman Bertahap' }}</td>
         </tr>
         <tr>
           <td>Contact Person</td>
