@@ -15,11 +15,17 @@ class HargaImport implements ToModel, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+
+    public function __construct(){
+
+        $this->i = 1;
+    }
+
     public function model(array $row)
     {
         $barang = Barang::where('kodeBarang', $row['kodebarang'])->first();
         $supplier = Supplier::where('kode', $row['kodesupplier'])->first();
-
+        $this->i += 1;
         if(!empty($barang)){
             if(!empty($supplier)){
                 $data = Supply::where('barangId', $barang->id)->where('supplierId', $supplier->id)->first();
@@ -38,12 +44,13 @@ class HargaImport implements ToModel, WithHeadingRow
             }else{
                 echo 'Supplier dengan kode: '.$row['kodesupplier'].' tidak ada disistem, masukkan terlebih dahulu. <a href="'.route('barang.index').'">kembali</a>.';
                 die();
-                return redirect()->route('barang.index')->with('danger', 'Supplier kode: '.$row['kodesupplier'].' belum ada disistem, masukan terlebih dahulu.');
+                // return redirect()->route('barang.index')->with('danger', 'Supplier kode: '.$row['kodesupplier'].' belum ada disistem, masukan terlebih dahulu.');
             }
         }else{
+            dd($this->i);
             echo 'Barang dengan kode: '.$row['kodebarang'].' tidak ada disistem, masukkan terlebih dahulu. <a href="'.route('barang.index').'">kembali</a>.';
             die();
-            return redirect()->route('barang.index')->with('danger', 'Barang kode: '.$row['kodebarang'].' belum ada disistem, masukan terlebih dahulu atau update data master.');
+            // return redirect()->route('barang.index')->with('danger', 'Barang kode: '.$row['kodebarang'].' belum ada disistem, masukan terlebih dahulu atau update data master.');
         }
     }
 

@@ -83,6 +83,10 @@
                       <a href="{{ route('po.edit', ['id' => $row->id]) }}" class="btn btn-warning btn-sm cil-cog"></a>
                       @if(Auth::user()->id == $row->userId && $row->status < '3')
                         <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
+                      @else
+                        @if(Auth::user()->status == 1)
+                          <a href="#" class="btn btn-danger btn-sm cil-trash btn-delete" data-id="{{ $row->id }}"></a>
+                        @endif
                       @endif
                     </td>
                   </tr>

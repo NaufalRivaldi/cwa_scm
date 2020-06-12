@@ -124,7 +124,7 @@ class PoController extends Controller
         }
 
         PO::create([
-            'nomer' => $request->nomer,
+            'nomer' => $this->nomerPo2($request->supplierId),
             'tglPO' => $request->tglPO,
             'tglPengiriman' => $tglPengiriman,
             'total' => $request->jml,
@@ -156,7 +156,7 @@ class PoController extends Controller
     public function update(PoRequest $request){
         $po = PO::find($request->id);
         
-        $po->nomer = $request->nomer;
+        $po->nomer = $this->nomerPo2($request->supplierId);
         $po->tglPO = $request->tglPO;
         $po->total = $request->jml;
         $po->note = $request->note;
@@ -289,6 +289,38 @@ class PoController extends Controller
     public function nomerPo(Request $request){
         $nomor = '';
         $supplierId = $request->id;
+        $supplier = Supplier::find($supplierId);
+        $kodeSupplier = $supplier->kode.'-'.$supplier->wilayah->nama;
+        
+        $bulan = $this->romawi(date('n'));
+        $tahun = date('Y');
+        $key = $kodeSupplier.'/'.$bulan.'/'.$tahun;
+
+        $data = PO::where('nomer', 'like', '%'.$key.'%')->orderBy('id', 'desc')->first();
+        if(empty($data)){
+            $nomor = '0001/'.$kodeSupplier.'/'.$bulan.'/'.$tahun;
+        }else{
+            $row = explode('/', $data->nomer);
+            $row[0] += 1;
+            
+            if(strlen($row[0]) == 1){
+                $que = '000'.$row[0];
+            }elseif(strlen($row[0]) == 2){
+                $que = '00'.$row[0];
+            }elseif(strlen($row[0]) == 3){
+                $que = '0'.$row[0];
+            }else{
+                $que = $row[0];
+            }
+            $nomor = $que.'/'.$row[1].'/'.$row[2].'/'.$row[3];
+        }
+
+        return $nomor;
+    }
+
+    public function nomerPo2($id){
+        $nomor = '';
+        $supplierId = $id;
         $supplier = Supplier::find($supplierId);
         $kodeSupplier = $supplier->kode.'-'.$supplier->wilayah->nama;
         
