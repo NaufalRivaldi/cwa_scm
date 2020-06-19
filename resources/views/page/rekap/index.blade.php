@@ -14,10 +14,10 @@
           <div class="card-body">
             <form action="" method="GET">
               <div class="form-group">
-                <label for="nomerPO">Nomer PO</label>
-                <select name="id" id="nomer" class="form-control formSelect2"></select>
+                <label for="nomerPO">Pilih Supplier</label>
+                <select name="supplierId" id="supplierId" class="form-control formSelect2"></select>
 
-                <small id="nomerPO" class="form-text text-muted">Cari nomer PO yang akan direkap.</small>
+                <small id="nomerPO" class="form-text text-muted">Cari supplier terlebih dahulu.</small>
               </div>
               <button type="submit" class="btn btn-primary"><i class="cil-search"></i> Cari Data</button>
             </form>
@@ -119,19 +119,19 @@
   <script>
 
     $(document).ready(function(){
-      $('#nomer').select2({
-        placeholder: 'Cari nomer PO...',
+      $('#supplierId').select2({
+        placeholder: 'Cari supplier...',
         theme: 'bootstrap',
         ajax: {
           type: 'GET',
-          url: '{{ route("rekap.nopo") }}',
+          url: '{{ route("po.supplier") }}',
           dataType: 'json',
           delay: 250,
           processResults: function(data){
             return {
               results: $.map(data, function(item){
                 return {
-                  text: item.nomer,
+                  text: item.kode+' - '+item.nama,
                   id: item.id
                 }
               })

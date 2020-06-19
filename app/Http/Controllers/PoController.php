@@ -156,7 +156,7 @@ class PoController extends Controller
     public function update(PoRequest $request){
         $po = PO::find($request->id);
         
-        $po->nomer = $this->nomerPo2($request->supplierId);
+        $po->nomer = $request->nomer;
         $po->tglPO = $request->tglPO;
         $po->total = $request->jml;
         $po->note = $request->note;
@@ -291,12 +291,13 @@ class PoController extends Controller
         $supplierId = $request->id;
         $supplier = Supplier::find($supplierId);
         $kodeSupplier = $supplier->kode.'-'.$supplier->wilayah->nama;
-        
+
         $bulan = $this->romawi(date('n'));
         $tahun = date('Y');
         $key = $kodeSupplier.'/'.$bulan.'/'.$tahun;
 
-        $data = PO::where('nomer', 'like', '%'.$key.'%')->orderBy('id', 'desc')->first();
+        $data = PO::where('nomer', 'like', '%/'.$key.'%')->orderBy('id', 'desc')->first();
+
         if(empty($data)){
             $nomor = '0001/'.$kodeSupplier.'/'.$bulan.'/'.$tahun;
         }else{
@@ -328,7 +329,7 @@ class PoController extends Controller
         $tahun = date('Y');
         $key = $kodeSupplier.'/'.$bulan.'/'.$tahun;
 
-        $data = PO::where('nomer', 'like', '%'.$key.'%')->orderBy('id', 'desc')->first();
+        $data = PO::where('nomer', 'like', '%/'.$key.'%')->orderBy('id', 'desc')->first();
         if(empty($data)){
             $nomor = '0001/'.$kodeSupplier.'/'.$bulan.'/'.$tahun;
         }else{

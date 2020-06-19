@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rekap extends Model
 {
     protected $table = 'rekap';
-    protected $fillable = [
-        'trd', 'tdo', 'td', 'keterangan', 'detailPoId', 'created_at', 'updated_at'
-    ];
+    protected $guarded = [];
 
     // fk
     public function detailPo(){

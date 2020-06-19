@@ -41,12 +41,7 @@
                       <input type="date" name="tglPO" id="tglPo" class="form-control" value="{{ $tglPO }}">
                     </div>
                     <div class="col">
-                      <select name="supplierId" id="supplierId" class="form-control">
-                        <option value="">Pilih Supplier...</option>
-                        @foreach($supplier as $sply)
-                          <option value="{{ $sply->id }}" {{ ($supplierId == $sply->id)?'selected':'' }}>{{ $sply->nama }}</option>
-                        @endforeach
-                      </select>
+                      <select name="supplierId" id="supplierId" class="form-control"></select>
                     </div>
                   </div>
                 </form>
@@ -57,7 +52,7 @@
             <div class="table-responsive">
               <table class="table table-striped dataTable">
                 <thead>
-                  <tr>
+                  <tr>  
                     <th>No</th>
                     <th>NO PO</th>
                     <th>Tanggal</th>
@@ -113,6 +108,30 @@
 @section('javascript')
 
   <script>
+    $(document).ready(function(){
+      $('#supplierId').select2({
+        placeholder: 'Cari supplier...',
+        theme: 'bootstrap',
+        ajax: {
+          type: 'GET',
+          url: '{{ route("po.supplier") }}',
+          dataType: 'json',
+          delay: 250,
+          processResults: function(data){
+            return {
+              results: $.map(data, function(item){
+                return {
+                  text: item.kode+' - '+item.nama,
+                  id: item.id
+                }
+              })
+            };
+          },
+          cache: true
+        }
+      });
+    });
+
     $(document).on('click', '.btn-delete', function(e){
       e.preventDefault();
 
